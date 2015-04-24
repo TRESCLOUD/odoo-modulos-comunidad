@@ -26,6 +26,25 @@ class stock_partial_picking(osv.osv_memory):
     _inherit = "stock.partial.picking"
 
     def _product_cost_for_average_update(self, cr, uid, move):
-        res = super(stock_partial_picking, self)._product_cost_for_average_update(cr, uid, move)       
-        res['cost'] = move.price_unit_with_costs
+        """
+        Este stock.move que le estamos pasando como parametro devuelve su valor de costo mediante
+          el tomar el price_unit_with_costs, para cuando se realiza el ponderado.
+        """
+        res = super(stock_partial_picking, self)._product_cost_for_average_update(cr, uid, move)
+        if move.picking_id.purchase_id and move.purchase_line_id:
+            res['cost'] = move.price_unit_with_costs
         return res
+
+    def _partial_move_for(self, cr, uid, move, context=None):
+        """
+        Si estamos hablando de un stock.picking.in, vamos a actualizar el costo con el valor que tenga
+          de precio-con-costos para el nuevo picking parcial. Si no, lo que va a tomar es el costo promedio
+          (para productos con metodo de costeo "promedio" ("average")) o normal ("standard").
+        """
+        result = super(stock_partial_picking, self)._partial_move_for(cr, uid, move, context=context)
+        if move.picking_id.purchase_id and move.purchase_line_id:
+            pur_currency = move.purchase_line_id.order_id.currency_id.id
+            result.update({
+                'cost': move.price_unit_with_costs
+            })
+        return result
