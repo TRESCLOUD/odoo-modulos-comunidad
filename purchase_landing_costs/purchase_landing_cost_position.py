@@ -26,7 +26,7 @@ import decimal_precision as dp
 class purchase_landing_cost_position(osv.osv):
     _name = "purchase.landing.cost.position"
     _columns = {
-        'product_id': fields.many2one('product.product','Landing Cost Name', required=True, domain=[('landing_cost','!=', False)]),
+        'product_id': fields.many2one('product.product','Landing Cost Name', required=False, domain=[('landing_cost','!=', False)]),
         'partner_id': fields.many2one('res.partner', 'Partner', help="The supplier of this cost component ."),
         'amount': fields.float('Amount', required=True, digits_compute=dp.get_precision('Product Price'), help="""Landing cost for stock valuation. It will be added to the price of the supplier price."""),
         'distribution_type': fields.selection( [('per_unit','Per Quantity'), ('per_value','Per Value')], 'Amount Type', required=True, help="Defines if the amount is to be calculated for each quantity or an absolute value"),

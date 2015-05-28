@@ -37,6 +37,7 @@ _column_sizes = [
     ('move', 20),
     ('journal', 12),
     ('partner', 30),
+    ('account_analytic', 12),
     ('label', 58),
     ('rec', 12),
     ('debit', 15), 
@@ -168,6 +169,7 @@ class partner_ledger_xls(report_xls):
             ('move', 1, 0, 'text', _('Entry'), None, c_hdr_cell_style),
             ('journal', 1, 0, 'text', _('Journal'), None, c_hdr_cell_style),
             ('partner', 1, 0, 'text', _('Partner'), None, c_hdr_cell_style),
+            ('account_analytic', 1, 0, 'text', _('Centro de Costo'), None, c_hdr_cell_style),
             ('label', 1, 0, 'text', _('Label'), None, c_hdr_cell_style),
             ('rec', 1, 0, 'text', _('Rec.'), None, c_hdr_cell_style),
             ('debit', 1, 0, 'text', _('Debit'), None, c_hdr_cell_style_right),
@@ -237,8 +239,8 @@ class partner_ledger_xls(report_xls):
                         cumul_balance += part_cumul_balance
                         cumul_balance_curr += part_cumul_balance_curr
 
-                        debit_cell = rowcol_to_cell(row_pos, 7)                
-                        credit_cell = rowcol_to_cell(row_pos, 8)
+                        debit_cell = rowcol_to_cell(row_pos, 8)                
+                        credit_cell = rowcol_to_cell(row_pos, 9)
                         init_bal_formula = debit_cell + '-' + credit_cell   
     
                         ################## Print row 'Initial Balance' by partner #################                            
@@ -273,8 +275,8 @@ class partner_ledger_xls(report_xls):
                             cumbal_formula = rowcol_to_cell(row_pos-1, 9) + '+'
                         else:
                             cumbal_formula = ''
-                        debit_cell = rowcol_to_cell(row_pos, 7)                
-                        credit_cell = rowcol_to_cell(row_pos, 8)
+                        debit_cell = rowcol_to_cell(row_pos, 8)                
+                        credit_cell = rowcol_to_cell(row_pos, 9)
                         cumbal_formula += debit_cell + '-' + credit_cell   
                         ################## Print row ledger line data #################
                         
@@ -291,6 +293,7 @@ class partner_ledger_xls(report_xls):
                             ('move', 1, 0, 'text', line.get('move_name') or ''),
                             ('journal', 1, 0, 'text', line.get('jcode') or ''),
                             ('partner', 1, 0, 'text', line.get('partner_name') or ''),
+                            ('account_analytic', 1, 0, 'text', line.get('account_analytic_name') or ''),
                             ('label', 1, 0, 'text', label),
                             ('rec_name', 1, 0, 'text', line.get('rec_name') or ''),
                             ('debit', 1, 0, 'number', line.get('debit'), None, ll_cell_style_decimal),

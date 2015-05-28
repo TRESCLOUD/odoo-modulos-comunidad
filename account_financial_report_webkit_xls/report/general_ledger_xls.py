@@ -37,6 +37,7 @@ _column_sizes = [
     ('move', 20),
     ('journal', 12),
     ('account_code', 12),
+    ('account_analytic', 12),
     ('partner', 30),
     ('label', 45),
     ('counterpart', 30),
@@ -86,12 +87,12 @@ class general_ledger_xls(report_xls):
         cell_style = xlwt.easyxf(cell_format)
         cell_style_center = xlwt.easyxf(cell_format + _xs['center'])
         c_specs = [
-            ('coa', 2, 0, 'text', _('Chart of Account')),
-            ('fy', 1, 0, 'text', _('Fiscal Year')),
-            ('df', 3, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Dates Filter') or _('Periods Filter')),
-            ('af', 1, 0, 'text', _('Accounts Filter')),
-            ('tm', 2, 0, 'text',  _('Target Moves')),
-            ('ib', 2, 0, 'text',  _('Initial Balance')),
+            ('coa', 2, 0, 'text', _('Plan de cuentas')),
+            ('fy', 1, 0, 'text', _('Año Fiscal')),
+            ('df', 3, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtro por Fechas') or _('Filtro por periodos')),
+            ('af', 1, 0, 'text', _('Filtro Cuentas')),
+            ('tm', 2, 0, 'text',  _('Movimientos')),
+            ('ib', 2, 0, 'text',  _('Balance Inicial')),
 
         ]       
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
@@ -144,16 +145,17 @@ class general_ledger_xls(report_xls):
         c_init_cell_style_decimal = xlwt.easyxf(cell_format + _xs['right'], num_format_str = report_xls.decimal_format)
 
         c_specs = [
-            ('date', 1, 0, 'text', _('Date'), None, c_hdr_cell_style),
-            ('period', 1, 0, 'text', _('Period'), None, c_hdr_cell_style),
-            ('move', 1, 0, 'text', _('Entry'), None, c_hdr_cell_style),
-            ('journal', 1, 0, 'text', _('Journal'), None, c_hdr_cell_style),
-            ('account_code', 1, 0, 'text', _('Account'), None, c_hdr_cell_style),
-            ('partner', 1, 0, 'text', _('Partner'), None, c_hdr_cell_style),
-            ('label', 1, 0, 'text', _('Label'), None, c_hdr_cell_style),
-            ('counterpart', 1, 0, 'text', _('Counterpart'), None, c_hdr_cell_style),
-            ('debit', 1, 0, 'text', _('Debit'), None, c_hdr_cell_style_right),
-            ('credit', 1, 0, 'text', _('Credit'), None, c_hdr_cell_style_right),
+            ('date', 1, 0, 'text', _('Fecha'), None, c_hdr_cell_style),
+            ('period', 1, 0, 'text', _('Periodo'), None, c_hdr_cell_style),
+            ('move', 1, 0, 'text', _('Asiento'), None, c_hdr_cell_style),
+            ('journal', 1, 0, 'text', _('Diario'), None, c_hdr_cell_style),
+            ('account_code', 1, 0, 'text', _('Cuenta'), None, c_hdr_cell_style),
+            ('account_analytic', 1, 0, 'text', _('Centro de Costo'), None, c_hdr_cell_style),
+            ('partner', 1, 0, 'text', _('Empresa'), None, c_hdr_cell_style),
+            ('label', 1, 0, 'text', _('Descripcion'), None, c_hdr_cell_style),
+            ('counterpart', 1, 0, 'text', _('Contrapartida'), None, c_hdr_cell_style),
+            ('debit', 1, 0, 'text', _('Debito'), None, c_hdr_cell_style_right),
+            ('credit', 1, 0, 'text', _('Credito'), None, c_hdr_cell_style_right),
             ('cumul_bal', 1, 0, 'text', _('Cumul. Bal.'), None, c_hdr_cell_style_right),                    
         ]  
         if _p.amount_currency(data):
@@ -240,6 +242,7 @@ class general_ledger_xls(report_xls):
                         ('move', 1, 0, 'text', line.get('move_name') or ''),
                         ('journal', 1, 0, 'text', line.get('jcode') or ''),
                         ('account_code', 1, 0, 'text', account.code),
+                        ('account_analytic', 1, 0, 'text', line.get('account_analytic_name') or ''),
                         ('partner', 1, 0, 'text', line.get('partner_name') or ''),
                         ('label', 1, 0, 'text', label),
                         ('counterpart', 1, 0, 'text', line.get('counterparts') or ''),
