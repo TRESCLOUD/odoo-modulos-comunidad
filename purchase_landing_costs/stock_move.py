@@ -40,9 +40,11 @@ class stock_move(osv.osv):
         if res.get('landing_costs_line_ids', False):
             res['landing_costs_line_ids'] = []
 
-        if res.get('price_unit_without_costs', False):
-            res['price_unit'] = res['price_unit_without_costs']
-            res['price_unit_without_costs'] = False
+        # Este comportamiento esta mal. Nos borra un campo que explicitamente queremos tener copiado.
+        #
+        #if res.get('price_unit_without_costs', False):
+        #    res['price_unit'] = res['price_unit_without_costs']
+        #    res['price_unit_without_costs'] = False
 
         return res
 
