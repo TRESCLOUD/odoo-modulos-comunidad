@@ -593,6 +593,7 @@ class Aeroo_report(report_sxw):
         if oo_parser.logo:
             logo = base64.decodestring(oo_parser.logo)
         create_doc = self.generators[report_xml.report_type]
+        self.tmpl = report_xml.report_file
         pdf = create_doc(etree.tostring(processed_rml),oo_parser.localcontext,logo,title.encode('utf8'))
         return (pdf, report_xml.report_type)
 
@@ -775,7 +776,7 @@ class Aeroo_report(report_sxw):
         if report_xml_ids:
             report_xml = ir_obj.browse(cr, uid, report_xml_ids[0], context=context)
             report_xml.report_rml = None
-            report_xml.report_rml_content = None
+            #report_xml.report_rml_content = None
             report_xml.report_sxw_content_data = None
             report_rml.report_sxw_content = None
             report_rml.report_sxw = None
