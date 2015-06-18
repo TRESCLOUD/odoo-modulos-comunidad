@@ -44,7 +44,8 @@ class stock_partial_picking(osv.osv_memory):
         result = super(stock_partial_picking, self)._partial_move_for(cr, uid, move, context=context)
         if move.picking_id.purchase_id and move.purchase_line_id:
             pur_currency = move.purchase_line_id.order_id.currency_id.id
-            result.update({
-                'cost': move.price_unit_with_costs
-            })
+            if move.picking_id.allow_landing_costs:
+                result.update({
+                    'cost': move.price_unit_with_costs
+                })
         return result
