@@ -193,7 +193,8 @@ class PartnersLedgerWebkit(report_sxw.rml_parse, CommonPartnersReportHeaderWebki
         return res
 
 
-HeaderFooterTextWebKitParser('report.account.account_report_partners_ledger_webkit',
-                             'account.account',
-                             'addons/account_financial_report_webkit/report/templates/account_report_partners_ledger.mako',
-                             parser=PartnersLedgerWebkit)
+# OJO aca
+# HeaderFooterTextWebKitParser('report.account.account_report_partners_ledger_webkit',
+#                             'account.account',
+#                              'addons/account_financial_report_webkit/report/templates/account_report_partners_ledger.mako',
+#                              parser=PartnersLedgerWebkit)

@@ -208,7 +208,5 @@ class GeneralLedgerWebkit(report_sxw.rml_parse, CommonReportHeaderWebkit):
         return res
 
 
-HeaderFooterTextWebKitParser('report.account.account_report_general_ledger_webkit',
-                             'account.account',
-                             'addons/account_financial_report_webkit/report/templates/account_report_general_ledger.mako',
-                             parser=GeneralLedgerWebkit)
+# OJO aca
+# HeaderFooterTextWebKitParser('report.account.account_report_general_ledger_webkit', 'account.account', 'addons/account_financial_report_webkit/report/templates/account_report_general_ledger.mako', parser=GeneralLedgerWebkit)

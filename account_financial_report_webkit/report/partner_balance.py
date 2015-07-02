@@ -84,7 +84,8 @@ class PartnerBalanceWebkit(report_sxw.rml_parse, CommonPartnerBalanceReportHeade
         return super(PartnerBalanceWebkit, self).set_context(objects, data, new_ids,
                                                             report_type=report_type)
 
-HeaderFooterTextWebKitParser('report.account.account_report_partner_balance_webkit',
-                             'account.account',
-                             'addons/account_financial_report_webkit/report/templates/account_report_partner_balance.mako',
-                             parser=PartnerBalanceWebkit)
+# OJO aca
+# HeaderFooterTextWebKitParser('report.account.account_report_partner_balance_webkit',
+#                              'account.account',
+#                              'addons/account_financial_report_webkit/report/templates/account_report_partner_balance.mako',
+#                              parser=PartnerBalanceWebkit)
