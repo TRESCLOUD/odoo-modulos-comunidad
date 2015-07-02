@@ -363,6 +363,6 @@ class partner_ledger_xls(report_xls):
                 row_pos = self.xls_write_row(ws, row_pos, row_data, account_cell_style) 
                 row_pos += 2
 
-# OJO aca
-partner_ledger_xls('report.account.account_report_partner_ledger_xls', 'account.account', parser=PartnersLedgerWebkit)
+partner_ledger_xls('report.account.account_report_partner_ledger_xls', 'account.account',
+    parser=PartnersLedgerWebkit)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

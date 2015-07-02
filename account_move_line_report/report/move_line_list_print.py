@@ -61,5 +61,7 @@ class move_line_list_print(report_sxw.rml_parse):
         res = self.pool.get(object._name).name_get(self.cr, self.uid, [object.id], self.context)
         return res[0][1]
 
-# OJO aca
-# report_sxw.report_sxw('report.move.line.list.print', 'account.move.line', 'addons/account_move_line_report/report/move_line_list_print.mako', parser=move_line_list_print)
+report_sxw.report_sxw('report.move.line.list.print',
+                       'account.move.line', 
+                       'addons/account_move_line_report/report/move_line_list_print.mako',
+                       parser=move_line_list_print)

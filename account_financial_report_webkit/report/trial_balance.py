@@ -78,8 +78,7 @@ class TrialBalanceWebkit(report_sxw.rml_parse, CommonBalanceReportHeaderWebkit):
         return super(TrialBalanceWebkit, self).set_context(objects, data, new_ids,
                                                             report_type=report_type)
 
-# OJO aca
-# HeaderFooterTextWebKitParser('report.account.account_report_trial_balance_webkit',
-#                              'account.account',
-#                              'addons/account_financial_report_webkit/report/templates/account_report_trial_balance.mako',
-#                              parser=TrialBalanceWebkit)
+HeaderFooterTextWebKitParser('report.account.account_report_trial_balance_webkit',
+                             'account.account',
+                             'addons/account_financial_report_webkit/report/templates/account_report_trial_balance.mako',
+                             parser=TrialBalanceWebkit)
