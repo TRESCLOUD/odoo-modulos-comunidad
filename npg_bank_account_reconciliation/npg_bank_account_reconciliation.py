@@ -237,24 +237,26 @@ class bank_acc_rec_statement(osv.osv):
 
     _name = "bank.acc.rec.statement"
     _columns = {
-        'name': fields.char('Name', required=True, size=64, states={'done':[('readonly', True)]}, help="This is a unique name identifying the statement (e.g. Bank X January 2012)."),
-        'account_id': fields.many2one('account.account', 'Account', required=True,
+        'name': fields.char('Name', track_visibility='always', required=True, size=64, states={'done':[('readonly', True)]}, help="This is a unique name identifying the statement (e.g. Bank X January 2012)."),
+        'account_id': fields.many2one('account.account', 'Account', track_visibility='always', required=True,
                                                  states={'done':[('readonly', True)]}, domain="[('company_id', '=', company_id), ('type', '!=', 'view')]",
                                                  help="The Bank/Gl Account that is being reconciled."),
-        'ending_date': fields.date('Ending Date', required=True, states={'done':[('readonly', True)]}, help="The ending date of your bank statement."),
-        'starting_balance': fields.float('Starting Balance', required=True, digits_compute=dp.get_precision('Account'), help="The Starting Balance on your bank statement.", states={'done':[('readonly', True)]}),
-        'ending_balance': fields.float('Ending Balance', required=True, digits_compute=dp.get_precision('Account'), help="The Ending Balance on your bank statement.", states={'done':[('readonly', True)]}),
-        'company_id': fields.many2one('res.company', 'Company', required=True, readonly=True,
+        'ending_date': fields.date('Ending Date', track_visibility='always', required=True, states={'done':[('readonly', True)]}, help="The ending date of your bank statement."),
+        'starting_balance': fields.float('Starting Balance', track_visibility='always', required=True, digits_compute=dp.get_precision('Account'), help="The Starting Balance on your bank statement.", states={'done':[('readonly', True)]}),
+        'ending_balance': fields.float('Ending Balance', track_visibility='always', required=True, digits_compute=dp.get_precision('Account'), help="The Ending Balance on your bank statement.", states={'done':[('readonly', True)]}),
+        'company_id': fields.many2one('res.company', 'Company', track_visibility='always', required=True, readonly=True,
                                       help="The Company for which the deposit ticket is made to"),
-        'notes': fields.text('Notes'),
+        'notes': fields.text('Notes', track_visibility='always'),
         'verified_date': fields.date('Verified Date', states={'done':[('readonly', True)]},
+                                     track_visibility='always',
                                      help="Date in which Deposit Ticket was verified."),
-        'verified_by_user_id': fields.many2one('res.users', 'Verified By', states={'done':[('readonly', True)]},
+        'verified_by_user_id': fields.many2one('res.users', 'Verified By', track_visibility='always', states={'done':[('readonly', True)]},
                                       help="Entered automatically by the “last user” who saved it. System generated."),
         'credit_move_line_ids': fields.one2many('bank.acc.rec.statement.line', 'statement_id', 'Credits',
+                                                track_visibility='always',
                                                 domain=[('type','=','cr')], context={'default_type':'cr'}, states={'done':[('readonly', True)]}),
         'debit_move_line_ids': fields.one2many('bank.acc.rec.statement.line', 'statement_id', 'Debits',
-                                               domain=[('type','=','dr')], context={'default_type':'dr'}, states={'done':[('readonly', True)]}),
+                                               track_visibility='always', domain=[('type','=','dr')], context={'default_type':'dr'}, states={'done':[('readonly', True)]}),
         'cleared_balance': fields.function(_get_balance, method=True, string='Cleared Balance', digits_compute=dp.get_precision('Account'),
                                   type='float', help="Total Sum of the Deposit Amount Cleared – Total Sum of Checks, Withdrawals, Debits, and Service Charges Amount Cleared",
                                   multi="balance"),
@@ -270,14 +272,15 @@ class bank_acc_rec_statement(osv.osv):
                                     multi="balance"),
         'sum_of_debits_lines': fields.function(_get_balance, method=True, type='float', string='Deposits, Credits, and Interest # of Items',
                                        help="Total of number of lines with Cleared = True",   multi="balance"),
-        'suppress_ending_date_filter': fields.boolean('Remove Ending Date Filter', help="If this is checked then the Statement End Date filter on the transactions below will not occur. All transactions would come over."),
+        'suppress_ending_date_filter': fields.boolean('Remove Ending Date Filter', track_visibility='always', help="If this is checked then the Statement End Date filter on the transactions below will not occur. All transactions would come over."),
         'state': fields.selection([
             ('draft','Draft'),
             ('to_be_reviewed','Ready for Review'),
             ('done','Done'),
             ('cancel', 'Cancel')
-            ],'State', select=True, readonly=True),
+            ],'State', select=True, track_visibility='always', readonly=True),
     }
+    _inherit = ['mail.thread']
     _defaults = {
         'state': 'draft',
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
