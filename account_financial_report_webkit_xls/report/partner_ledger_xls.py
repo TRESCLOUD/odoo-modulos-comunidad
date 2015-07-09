@@ -89,12 +89,12 @@ class partner_ledger_xls(report_xls):
         cell_style = xlwt.easyxf(cell_format)
         cell_style_center = xlwt.easyxf(cell_format + _xs['center'])
         c_specs = [
-            ('coa', 2, 0, 'text', _('Chart of Account')),
-            ('fy', 1, 0, 'text', _('Fiscal Year')),
-            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Dates Filter') or _('Periods Filter')),
-            ('af', 1, 0, 'text', _('Accounts Filter')),
-            ('tm', 2, 0, 'text',  _('Target Moves')),
-            ('ib', nbr_columns-8, 0, 'text',  _('Initial Balance')),
+            ('coa', 2, 0, 'text', _('Plan de Cuentas')),
+            ('fy', 1, 0, 'text', _('Año Fiscal')),
+            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtro fecha') or _('Filtro Periodos')),
+            ('af', 1, 0, 'text', _('Filtro Cuentas')),
+            ('tm', 2, 0, 'text',  _('Movimientos Contables')),
+            ('ib', nbr_columns-8, 0, 'text',  _('Balance Inicial')),
 
         ]       
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
@@ -164,17 +164,17 @@ class partner_ledger_xls(report_xls):
         c_part_cell_style = xlwt.easyxf(cell_format)
         
         c_specs = [
-            ('date', 1, 0, 'text', _('Date'), None, c_hdr_cell_style),
-            ('period', 1, 0, 'text', _('Period'), None, c_hdr_cell_style),
-            ('move', 1, 0, 'text', _('Entry'), None, c_hdr_cell_style),
-            ('journal', 1, 0, 'text', _('Journal'), None, c_hdr_cell_style),
-            ('partner', 1, 0, 'text', _('Partner'), None, c_hdr_cell_style),
+            ('date', 1, 0, 'text', _('Fecha'), None, c_hdr_cell_style),
+            ('period', 1, 0, 'text', _('Periodo'), None, c_hdr_cell_style),
+            ('move', 1, 0, 'text', _('Asiento'), None, c_hdr_cell_style),
+            ('journal', 1, 0, 'text', _('Diario'), None, c_hdr_cell_style),
+            ('partner', 1, 0, 'text', _('Empresa'), None, c_hdr_cell_style),
             ('account_analytic', 1, 0, 'text', _('Centro de Costo'), None, c_hdr_cell_style),
-            ('label', 1, 0, 'text', _('Label'), None, c_hdr_cell_style),
+            ('label', 1, 0, 'text', _('Descripcion'), None, c_hdr_cell_style),
             ('rec', 1, 0, 'text', _('Rec.'), None, c_hdr_cell_style),
-            ('debit', 1, 0, 'text', _('Debit'), None, c_hdr_cell_style_right),
-            ('credit', 1, 0, 'text', _('Credit'), None, c_hdr_cell_style_right),
-            ('cumul_bal', 1, 0, 'text', _('Cumul. Bal.'), None, c_hdr_cell_style_right),                    
+            ('debit', 1, 0, 'text', _('Debe'), None, c_hdr_cell_style_right),
+            ('credit', 1, 0, 'text', _('Haber'), None, c_hdr_cell_style_right),
+            ('cumul_bal', 1, 0, 'text', _('Bal. Acum.'), None, c_hdr_cell_style_right),                    
         ]
         if _p.amount_currency(data):
             c_specs += [
@@ -244,9 +244,9 @@ class partner_ledger_xls(report_xls):
                         init_bal_formula = debit_cell + '-' + credit_cell   
     
                         ################## Print row 'Initial Balance' by partner #################                            
-                        c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(5)]
+                        c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(6)]
                         c_specs += [
-                            ('init_bal', 1, 0, 'text', _('Initial Balance')),
+                            ('init_bal', 1, 0, 'text', _('Balance Inicial')),
                             ('rec', 1, 0, 'text', None),
                             ('debit', 1, 0, 'number', total_debit, None, c_init_cell_style_decimal),
                             ('credit', 1, 0, 'number', total_credit, None, c_init_cell_style_decimal),
@@ -310,21 +310,21 @@ class partner_ledger_xls(report_xls):
                     #end for line
 
                     ################## Print row Cumulated Balance by partner #################  
-                    debit_partner_start = rowcol_to_cell(row_start_partner, 7)                
-                    debit_partner_end = rowcol_to_cell(row_pos-1, 7)
+                    debit_partner_start = rowcol_to_cell(row_start_partner, 8)                
+                    debit_partner_end = rowcol_to_cell(row_pos-1, 8)
                     debit_partner_total = 'SUM(' + debit_partner_start + ':' + debit_partner_end + ')'
                       
-                    credit_partner_start = rowcol_to_cell(row_start_partner, 8)                
-                    credit_partner_end = rowcol_to_cell(row_pos-1, 8)
+                    credit_partner_start = rowcol_to_cell(row_start_partner, 9)                
+                    credit_partner_end = rowcol_to_cell(row_pos-1, 9)
                     credit_partner_total = 'SUM(' + credit_partner_start + ':' + credit_partner_end + ')'
                       
-                    bal_partner_debit = rowcol_to_cell(row_pos, 7)                
-                    bal_partner_credit = rowcol_to_cell(row_pos, 8)
+                    bal_partner_debit = rowcol_to_cell(row_pos, 8)                
+                    bal_partner_credit = rowcol_to_cell(row_pos, 9)
                     bal_partner_total = bal_partner_debit + '-' + bal_partner_credit                 
                                          
-                    c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(5)]
+                    c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(6)]
                     c_specs += [
-                         ('init_bal', 1, 0, 'text', _('Cumulated balance on Partner')),
+                         ('init_bal', 1, 0, 'text', _('Balance Acumulado por Empresa')),
                          ('rec', 1, 0, 'text', None),
                          ('debit', 1, 0, 'number', None, debit_partner_total, c_cumul_cell_style_decimal),  
                          ('credit', 1, 0, 'number', None, credit_partner_total, c_cumul_cell_style_decimal),  
@@ -345,9 +345,9 @@ class partner_ledger_xls(report_xls):
                     account_balance_cumul_curr += cumul_balance_curr                                 
                         
                 ################## Print row Cumulated Balance by account #################   
-                c_specs = [('acc_title', 5, 0, 'text', ' - '.join([account.code, account.name])),      ]
+                c_specs = [('acc_title', 6, 0, 'text', ' - '.join([account.code, account.name])),      ]
                 c_specs += [
-                    ('label', 1, 0, 'text', _('Cumulated balance on Account')),
+                    ('label', 1, 0, 'text', _('Balance Acumulado por Cuenta')),
                     ('rec', 1, 0, 'text', None),
                     ('debit', 1, 0, 'number', account_total_debit, None, account_cell_style_decimal),
                     ('credit', 1, 0, 'number', account_total_credit, None, account_cell_style_decimal),

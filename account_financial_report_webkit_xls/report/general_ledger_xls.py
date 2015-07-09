@@ -202,9 +202,9 @@ class general_ledger_xls(report_xls):
                     debit_cell = rowcol_to_cell(row_pos, 8)                
                     credit_cell = rowcol_to_cell(row_pos, 9)
                     bal_formula = debit_cell + '-' + credit_cell                              
-                    c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(6)]
+                    c_specs = [('empty%s' %x, 1, 0, 'text', None) for x in range(7)]
                     c_specs += [
-                        ('init_bal', 1, 0, 'text', _('Initial Balance')),
+                        ('init_bal', 1, 0, 'text', _('Balance Inicial')),
                         ('counterpart', 1, 0, 'text', None),
                         ('debit', 1, 0, 'number', cumul_debit, None, c_init_cell_style_decimal),
                         ('credit', 1, 0, 'number', cumul_credit, None, c_init_cell_style_decimal),
@@ -258,18 +258,18 @@ class general_ledger_xls(report_xls):
                     row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
                     row_pos = self.xls_write_row(ws, row_pos, row_data, ll_cell_style) 
                 
-                debit_start = rowcol_to_cell(row_start, 8)                
-                debit_end = rowcol_to_cell(row_pos-1, 8)
+                debit_start = rowcol_to_cell(row_start, 9)                
+                debit_end = rowcol_to_cell(row_pos-1, 9)
                 debit_formula = 'SUM(' + debit_start + ':' + debit_end + ')'
-                credit_start = rowcol_to_cell(row_start, 9)                
-                credit_end = rowcol_to_cell(row_pos-1, 9)
+                credit_start = rowcol_to_cell(row_start, 10)                
+                credit_end = rowcol_to_cell(row_pos-1, 10)
                 credit_formula = 'SUM(' + credit_start + ':' + credit_end + ')'
-                balance_debit = rowcol_to_cell(row_pos, 8)                
-                balance_credit = rowcol_to_cell(row_pos, 9)
+                balance_debit = rowcol_to_cell(row_pos, 9)                
+                balance_credit = rowcol_to_cell(row_pos, 10)
                 balance_formula = balance_debit + '-' + balance_credit
                 c_specs = [
-                    ('acc_title', 7, 0, 'text', ' - '.join([account.code, account.name])),
-                    ('cum_bal', 1, 0, 'text', _('Cumulated Balance on Account'), None, c_hdr_cell_style_right),
+                    ('acc_title', 8, 0, 'text', ' - '.join([account.code, account.name])),
+                    ('cum_bal', 1, 0, 'text', _('Balance Acumulado en la Cuenta'), None, c_hdr_cell_style_right),
                     ('debit', 1, 0, 'number', None, debit_formula, c_hdr_cell_style_decimal),             
                     ('credit', 1, 0, 'number', None, credit_formula, c_hdr_cell_style_decimal),             
                     ('balance', 1, 0, 'number', None, balance_formula, c_hdr_cell_style_decimal),                       

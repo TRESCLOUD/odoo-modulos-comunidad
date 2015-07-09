@@ -69,12 +69,12 @@ class trial_balance_xls(report_xls):
         cell_style = xlwt.easyxf(cell_format)
         cell_style_center = xlwt.easyxf(cell_format + _xs['center'])
         c_specs = [
-            ('fy', 1, 0, 'text', _('Fiscal Year')),
-            ('af', 2, 0, 'text', _('Accounts Filter')),
-            ('df', 1, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Dates Filter') or _('Periods Filter')),
-            ('tm', 2, 0, 'text',  _('Target Moves'), None, cell_style_center),
-            ('ib', 1, 0, 'text',  _('Initial Balance'), None, cell_style_center),
-            ('coa', 1, 0, 'text', _('Chart of Account'), None, cell_style_center),
+            ('fy', 1, 0, 'text', _('Año Fiscal')),
+            ('af', 2, 0, 'text', _('Filtro Cuentas')),
+            ('df', 1, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtro Fechas') or _('Filtro Periodos')),
+            ('tm', 2, 0, 'text',  _('Movimientos Contables'), None, cell_style_center),
+            ('ib', 1, 0, 'text',  _('Balance Inicial'), None, cell_style_center),
+            ('coa', 1, 0, 'text', _('Plan de Cuentas'), None, cell_style_center),
         ]       
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(ws, row_pos, row_data, row_style=cell_style)
@@ -219,8 +219,8 @@ class trial_balance_xls(report_xls):
             ]
             if _p.comparison_mode == 'no_comparison':
                 
-                debit_cell = rowcol_to_cell(row_pos, 3)                
-                credit_cell = rowcol_to_cell(row_pos, 4)
+                debit_cell = rowcol_to_cell(row_pos, 4)                
+                credit_cell = rowcol_to_cell(row_pos, 5)
                 bal_formula = debit_cell + '-' + credit_cell
                 
                 if _p.initial_balance_mode:
