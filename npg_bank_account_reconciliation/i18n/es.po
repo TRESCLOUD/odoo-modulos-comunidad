@@ -7,12 +7,12 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-03 16:26+0000\n"
-"PO-Revision-Date: 2015-07-03 16:26+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2015-07-09 17:14-0500\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: npg_bank_account_reconciliation
@@ -89,7 +89,7 @@ msgstr "A ser revisado"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Enter Starting Balance"
-msgstr "Ingrese balance inicial"
+msgstr "Ingrese saldo inicial"
 
 #. module: npg_bank_account_reconciliation
 #: help:bank.acc.rec.statement.line,amount:0
@@ -121,7 +121,7 @@ msgstr "Notas"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement.line,move_line_id:0
 msgid "Journal Item"
-msgstr "Item de Diario"
+msgstr "Apunte de Asiento"
 
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement.line,amount:0
@@ -131,7 +131,7 @@ msgstr "Cantidad"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,starting_balance:0
 msgid "Starting Balance"
-msgstr "Balance inicial"
+msgstr "Saldo inicial"
 
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
@@ -255,7 +255,7 @@ msgstr "# de Items de cheques, retiros, débitos, y cargos de servicios"
 #: field:account.move.line,cleared_bank_account:0
 #: field:bank.acc.rec.statement.line,cleared_bank_account:0
 msgid "Cleared? "
-msgstr "Cleared? "
+msgstr "Verificado? "
 
 #. module: npg_bank_account_reconciliation
 #: help:bank.acc.rec.statement,verified_date:0
@@ -455,7 +455,7 @@ msgstr "Listo para revisión"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Bank Account Reconciliation Statement"
-msgstr "Bank Account Reconciliation Statement"
+msgstr "Estado de cuenta del banco"
 
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement.line,currency_id:0
@@ -475,7 +475,7 @@ msgstr "Diferencia"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,ending_balance:0
 msgid "Ending Balance"
-msgstr "Balance final"
+msgstr "Saldo final"
 
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,name:0
@@ -496,7 +496,7 @@ msgstr "Actualizar"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Enter Ending Balance"
-msgstr "Ingrese balance final"
+msgstr "Ingrese saldo final"
 
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
@@ -511,7 +511,7 @@ msgstr "Eliminar filtro de fecha final"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,cleared_balance:0
 msgid "Cleared Balance"
-msgstr "Cleared Balance"
+msgstr "Balance validado"
 
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
@@ -521,7 +521,7 @@ msgstr "Ingrese el usuario que verificó"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,sum_of_debits_lines:0
 msgid "Deposits, Credits, and Interest # of Items"
-msgstr "# of elementos de Depósitos, Créditos, e interés"
+msgstr "# de elementos de Depósitos, Créditos, e interés"
 
 #. module: npg_bank_account_reconciliation
 #: help:bank.acc.rec.statement,ending_balance:0
