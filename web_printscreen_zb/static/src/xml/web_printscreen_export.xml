@@ -3,12 +3,12 @@
 <t t-extend="ViewPager">
     <t t-jquery=".oe_pager_value" t-operation="prepend">
         <a t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'" 
-                    class="oe_bold oe_list_button_import_pdf"
+                    class="oe_bold oe_sidebar_printscreen_pdf"
                     id="button_export_pdf"
                     href="#">PDF</a>
-                    <label t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'">or</label>
+                    <label t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'"> or </label>
         <a t-if="(widget.ViewManager &amp;&amp; widget.ViewManager.active_view) === 'list'" 
-                    class="oe_bold oe_list_button_import_excel"
+                    class="oe_bold oe_sidebar_printscreen_xls"
                     id="button_export_excel"
                     href="#">Excel</a>
     </t>

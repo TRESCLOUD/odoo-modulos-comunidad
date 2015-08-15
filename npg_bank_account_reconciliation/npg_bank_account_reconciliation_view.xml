@@ -122,7 +122,7 @@
 	                        </group>
 			            </page>
 			            <page string="Notes">
-			            	<field name="notes" nolabel="1" placeholder="Enter notes about reconciliation"/>
+			            	<field name="notes" attrs="{'readonly':[('state', 'in' ,('cancel','done'))]}" nolabel="1" placeholder="Enter notes about reconciliation"/>
 			            </page>
 			        </notebook>
 			     </sheet>

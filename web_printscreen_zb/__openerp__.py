@@ -1,38 +1,38 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (c) 2013 ZestyBeanz Technologies Pvt. Ltd.
-#    (http://wwww.zbeanztech.com)
-#    contact@zbeanztech.com
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+#    GNU Affero General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
+#    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
+
 {
-    'name': 'Web Printscreen ZB',
-    'version': '1.1',
-    'category': 'Web',
-    'description': """
-        Module to export current active tree view in to excel report
+    'name': 'Web Printscreen',
+    'category': 'Reporting',
+    'description':"""
+        Module to add printscreen functionality in OpenERP web
     """,
     'author': 'Zesty Beanz Technologies',
-    'website': 'http://www.zbeanztech.com',
-    'depends': ['web'],
-    'js': ['static/src/js/web_printscreen_export.js'],
+    'website': 'http://www.zbeanztech.com/',
+    'version': '2.1',
+    'depends': [],
+    'js': ['static/src/js/web_printscreen_export.js', 'static/*/js/*.js'],
     'qweb': ['static/src/xml/web_printscreen_export.xml'],
-    'installable': True,
+    'css': [],
     'auto_install': False,
     'web_preload': False,
 }

@@ -1,0 +1,7 @@
+Authors
+=======
+
+Simone Orsi <simone.orsi@domsense.com> [simahawk]
+Zesty Beanz Technologies <contact@zbeanztech.com>
+
+Thanks to www.domsense.com for the excel export code(module : web_export_view)

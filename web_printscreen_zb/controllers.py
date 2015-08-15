@@ -24,81 +24,20 @@ try:
     import json
 except ImportError:
     import simplejson as json
+
 import web.http as openerpweb
 from web.controllers.main import ExcelExport
 from web.controllers.main import Export
-import re
-from cStringIO import StringIO
+
+import time, os
 from lxml  import etree
 import trml2pdf
-import time, os
 import locale
 import openerp.tools as tools
-try:
-    import xlwt
-except ImportError:
-    xlwt = None
 
-class ZbExcelExport(ExcelExport):
-    _cp_path = '/web/export/zb_excel_export'
-
-    def from_data(self, fields, rows):
-        workbook = xlwt.Workbook()
-        worksheet = workbook.add_sheet('Sheet 1')
-        style = xlwt.easyxf('align: wrap yes')
-        font = xlwt.Font()
-        font.bold = True
-        style.font = font
-        ignore_index = []
-        count = 0
-        for i, fieldname in enumerate(fields):
-            if fieldname.get('header_data_id', False):
-                field_name = fieldname.get('header_name', '')
-                worksheet.write(0, i-count, field_name, style)
-                worksheet.col(i).width = 8000
-            else:
-                count += 1
-                ignore_index.append(i)
-        for row_index, row in enumerate(rows):
-            count = 0
-            for cell_index, cell_value in enumerate(row):
-                if cell_index not in ignore_index:
-                    style = xlwt.easyxf('align: wrap yes')
-                    if cell_value.get('bold', False):
-                        font = xlwt.Font()
-                        font.bold = True
-                        style.font = font
-                    cellvalue = cell_value.get('data', '')
-                    if isinstance(cellvalue, basestring):
-                        cellvalue = re.sub("\r", " ", cellvalue)
-                    if cell_value.get('number', False) and cellvalue:
-                        cellvalue = float(cellvalue)
-                    if cellvalue is False: cellvalue = None
-                    worksheet.write(row_index + 1, cell_index - count, cellvalue, style)
-                else:
-                    count += 1
-        fp = StringIO()
-        workbook.save(fp)
-        fp.seek(0)
-        data = fp.read()
-        fp.close()
-        return data
-    
-    @openerpweb.httprequest
-    def index(self, req, data, token):
-        data = json.loads(data)
-        return req.make_response(
-            self.from_data(data.get('headers', []), data.get('rows', [])),
-                           headers=[
-                                    ('Content-Disposition', 'attachment; filename="%s"'
-                                        % data.get('model', 'Export.xls')),
-                                    ('Content-Type', self.content_type)
-                                    ],
-                                 cookies={'fileToken': token}
-                                 )
 
 class ExportPdf(Export):
-    _cp_path = '/web/export/zb_pdf'
+    _cp_path = '/web/export/pdf'
     fmt = {
         'tag': 'pdf',
         'label': 'PDF',
@@ -111,7 +50,7 @@ class ExportPdf(Export):
     def filename(self, base):
         return base + '.pdf'
     
-    def from_data(self, uid, fields, rows, company_name):
+    def from_data(self, uid, fields, rows, model):
         pageSize=[210.0,297.0]
         new_doc = etree.Element("report")
         config = etree.SubElement(new_doc, 'config')
@@ -124,57 +63,54 @@ class ExportPdf(Export):
         _append_node('PageHeight', '%.2f' %(pageSize[1] * 2.8346,))
         _append_node('PageFormat', 'a4')
         _append_node('header-date', time.strftime(str(locale.nl_langinfo(locale.D_FMT).replace('%y', '%Y'))))
-        _append_node('company', company_name)
         l = []
         t = 0
         temp = []
         tsum = []
-        skip_index = []
         header = etree.SubElement(new_doc, 'header')
-        i = 0
         for f in fields:
-            if f.get('header_data_id', False):
-                value = f.get('header_name', "")
-                field = etree.SubElement(header, 'field')
-                field.text = tools.ustr(value)
-            else:
-                skip_index.append(i)
-            i += 1
+            field = etree.SubElement(header, 'field')
+            field.text = tools.ustr(f)
         lines = etree.SubElement(new_doc, 'lines')
         for row_lines in rows:
             node_line = etree.SubElement(lines, 'row')
-            j = 0
             for row in row_lines:
-                if not j in skip_index:
-                    para = "yes"
-                    tree = "no"
-                    value = row.get('data', '')
-                    if row.get('bold', False):
-                        para = "group"
-                    if row.get('number', False):
-                        tree = "float"
-                    col = etree.SubElement(node_line, 'col', para=para, tree=tree)
-                    col.text = tools.ustr(value)
-                j += 1
+                col = etree.SubElement(node_line, 'col', para='yes', tree='no')
+                col.text = tools.ustr(row)
         transform = etree.XSLT(
             etree.parse(os.path.join(tools.config['root_path'],
                                      'addons/base/report/custom_new.xsl')))
         rml = etree.tostring(transform(new_doc))
         self.obj = trml2pdf.parseNode(rml, title='Printscreen')
         return self.obj
-
-class ZbPdfExport(ExportPdf):
-    _cp_path = '/web/export/zb_pdf_export'
+        
+class PdfExportView(ExportPdf):
+    _cp_path = '/web/export/pdf_view'
     
     @openerpweb.httprequest
     def index(self, req, data, token):
         data = json.loads(data)
+        model = data.get('model',[])
+        columns_headers = data.get('headers',[])
+        rows = data.get('rows',[])
         uid = data.get('uid', False)
-        return req.make_response(self.from_data(uid, data.get('headers', []), data.get('rows', []),
-                                                data.get('company_name','')),
-                                 headers=[('Content-Disposition',
-                                           'attachment; filename=PDF Export'),
-                                          ('Content-Type', self.content_type)],
-                                 cookies={'fileToken': int(token)})
+        return req.make_response(self.from_data(uid, columns_headers, rows, model),
+            headers=[('Content-Disposition', 'attachment; filename="%s"' % self.filename(model)),
+                     ('Content-Type', self.content_type)],
+            cookies={'fileToken': int(token)})
+    
+class ExcelExportView(ExcelExport):
+    _cp_path = '/web/export/xls_view'
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    @openerpweb.httprequest
+    def index(self, req, data, token):
+        data = json.loads(data)
+        model = data.get('model',[])
+        columns_headers = data.get('headers',[])
+        rows = data.get('rows',[])
+
+        return req.make_response(self.from_data(columns_headers, rows),
+            headers=[('Content-Disposition', 'attachment; filename="%s"' % self.filename(model)),
+                     ('Content-Type', self.content_type)],
+            cookies={'fileToken': int(token)})
+
