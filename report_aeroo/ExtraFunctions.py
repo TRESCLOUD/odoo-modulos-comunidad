@@ -45,6 +45,7 @@ from tools.translate import _
 import netsvc
 from tools.safe_eval import safe_eval as eval
 from aeroolib.plugins.opendocument import _filter
+import pytz, datetime
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -162,7 +163,41 @@ class ExtraFunctions(object):
             'read_ids': self._read_ids,
             'sum_field_search': self._sum_field_search,
             'group_and_sum': self._group_and_sum,
+            'get_identification': self._get_identification,
+            'convert_datetime_to_ECT': self._convert_datetime_to_ECT,
         }
+        
+    def _get_identification(self, vat):
+        '''
+        Remueve las letras EC en caso de haberlas del campo vat del partner
+        '''
+        if vat!=False or vat is None:
+            if vat[:2] == 'EC':
+                partner_vat = vat[2:]
+            if vat[:2] != 'EC':
+                partner_vat = vat
+        else:
+            partner_vat = 'Especifique identificacion correcta.'        
+        return partner_vat
+    
+    def _convert_datetime_to_ECT(self, date_as_string):
+        '''
+        Convierte un string de datetime de Odoo a la hora del SRI (GMT -5)
+        '''
+        if not date_as_string:
+            return '' #si no se pasa la fecha retornamos una cadena vacia para impresion
+        #Odoo guarda las fechas en UTC, pero se requiere imprimir en GTM -5
+        #Aeroo no maneja conversion de zonas horarias, creamos nuestro propio metodo para la conversion a GMT -5
+        local = pytz.timezone("America/Guayaquil") #la zona horaria del SRI es GMT -5
+        utc = pytz.utc
+        try: #a veces el sri no responde con segundos 
+            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S.%f")
+        except:
+            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S")
+            
+        utc_dt = utc.localize(naive, is_dst=None)
+        auth_date_in_local = utc_dt.astimezone (local)
+        return auth_date_in_local
 
     def __filter(self, val):
         if isinstance(val, osv.orm.browse_null):
