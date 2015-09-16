@@ -326,17 +326,22 @@ class bank_acc_rec_statement_line(osv.osv):
         return super(bank_acc_rec_statement_line, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
+        """
+        Este método actualiza el valor de ciertos campos y se remueven los id con valor False de la lista de ids
+        a eliminar
+        :param cr: Cursor estándar de base de datos PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs de los elementos
+        :param context: Diccionario de datos de contexto adicional
+        """                
         account_move_line_obj = self.pool.get('account.move.line')
-        move_line_ids = map(lambda x: x.move_line_id.id, self.browse(cr, uid, ids, context=context))
-        #Sacamos de la lista los id False
-        for element in move_line_ids:
-            if not element:
-                move_line_ids.remove(element)
-         # Reset field values in move lines to be added later
-        account_move_line_obj.write(cr, uid, move_line_ids, {'draft_assigned_to_statement': False,
-                                                             'cleared_bank_account': False,
-                                                             'bank_acc_rec_statement_id': False,
-                                                             }, context=context)
+        move_line_ids = [element for element in map(lambda x: x.move_line_id.id, self.browse(cr, uid, ids, context=context)) if element]
+        # Reset field values in move lines to be added later
+        account_move_line_obj.write(cr, uid, move_line_ids, {
+            'draft_assigned_to_statement': False,
+            'cleared_bank_account': False,
+            'bank_acc_rec_statement_id': False
+        }, context=context)
         return super(bank_acc_rec_statement_line, self).unlink(cr, uid, ids, context=context)
 
 bank_acc_rec_statement_line()
