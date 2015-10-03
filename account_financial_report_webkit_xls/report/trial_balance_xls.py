@@ -151,6 +151,12 @@ class trial_balance_xls(report_xls):
 
         if _p.comparison_mode == 'no_comparison' or not _p.fiscalyear:
             c_specs += [('balance', 1, 0, 'text', _('Balance'), None, cell_style_right)]
+            c_specs += [('nivel1', 1, 0, 'text', _('Nivel 1'), None, cell_style_right)]
+            c_specs += [('nivel2', 1, 0, 'text', _('Nivel 2'), None, cell_style_right)]
+            c_specs += [('nivel3', 1, 0, 'text', _('Nivel 3'), None, cell_style_right)]
+            c_specs += [('nivel4', 1, 0, 'text', _('Nivel 4'), None, cell_style_right)]
+            c_specs += [('nivel5', 1, 0, 'text', _('Nivel 5'), None, cell_style_right)]
+            c_specs += [('nivel6', 1, 0, 'text', _('Nivel 6'), None, cell_style_right)]
         else:
             c_specs += [('balance_fy', 1, 0, 'text', _('Balance %s') % _p.fiscalyear.name, None, cell_style_right)]
         if _p.comparison_mode in ('single', 'multiple'):
@@ -164,7 +170,7 @@ class trial_balance_xls(report_xls):
                         ('diff', 1, 0, 'text', _('Difference'), None, cell_style_right),
                         ('diff_percent', 1, 0, 'text', _('% Difference'), None, cell_style_center),
                     ]       
-        c_specs += [('type', 1, 0, 'text', _('Type'), None, cell_style_center)]             
+        c_specs += [('type', 1, 0, 'text', _('Nivel'), None, cell_style_center)]             
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_pos = self.xls_write_row(ws, row_pos, row_data, row_style=cell_style)
         ws.set_horz_split_pos(row_pos) 
@@ -232,8 +238,55 @@ class trial_balance_xls(report_xls):
                 c_specs += [
                     ('debit', 1, 0, 'number', current_account.debit, None, cell_style_decimal),
                     ('credit', 1, 0, 'number', current_account.credit, None, cell_style_decimal),
+                    
                 ]       
                 c_specs += [('balance', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                if current_account.level:
+                    seteo='prueba'
+                    if current_account.level == 1 :
+                        c_specs += [('nivel1', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                        c_specs += [('nivel2', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel3', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel4', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel5', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel6', 1, 0, 'text', None, None, cell_style_center)]
+                    if current_account.level == 2 :
+                        c_specs += [('nivel1', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel2', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                        c_specs += [('nivel3', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel4', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel5', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel6', 1, 0, 'text', None, None, cell_style_center)]
+                    if current_account.level == 3 :
+                        c_specs += [('nivel1', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel2', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel3', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                        c_specs += [('nivel4', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel5', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel6', 1, 0, 'text', None, None, cell_style_center)]
+                    if current_account.level == 4 :
+                        c_specs += [('nivel1', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel2', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel3', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel4', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                        c_specs += [('nivel5', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel6', 1, 0, 'text', None, None, cell_style_center)]
+                    if current_account.level == 5 :
+                        c_specs += [('nivel1', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel2', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel3', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel4', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel5', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                        c_specs += [('nivel6', 1, 0, 'text', None, None, cell_style_center)]
+                    if current_account.level >= 6 :
+                        c_specs += [('nivel1', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel2', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel3', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel4', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel5', 1, 0, 'text', None, None, cell_style_center)]
+                        c_specs += [('nivel6', 1, 0, 'number', None, bal_formula, cell_style_decimal)]
+                      #  c_specs += [('nivel1', 1, 0, 'number', None, 0.00, cell_style_decimal)]
+                      #  c_specs += [('nivel2', 1, 0, 'number', None, 0.00, cell_style_decimal)]
             else:
                 c_specs += [('balance', 1, 0, 'number', current_account.balance, None, cell_style_decimal)]
                 
@@ -248,7 +301,7 @@ class trial_balance_xls(report_xls):
                             ('diff_percent', 1, 0, 'number', comp_account['percent_diff'] and comp_account['percent_diff'] or 0, None, cell_style_pct),
                         ]      
                         
-            c_specs += [('type', 1, 0, 'text', current_account.type, None, cell_style_center)]          
+            c_specs += [('type', 1, 0, 'number', current_account.level, None, cell_style_center)]          
             row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(ws, row_pos, row_data, row_style=cell_style)
             
