@@ -36,13 +36,19 @@
 			    </header>
 			    <sheet>
 				    <group col="4" colspan="4">
-				        <field name="account_id" placeholder="Enter Account Name" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+				        <field name="account_id" placeholder="Enter Account Name" 
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}"
+				         	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				        <field name="name" placeholder="Enter Name"/>
-				        <field name="ending_date" placeholder="Enter ending date" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+				        <field name="ending_date" placeholder="Enter ending date" 
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}" 
+				        	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				        <field name="starting_balance" placeholder="Enter Starting Balance"/>
 				        <field name="ending_balance" placeholder="Enter Ending Balance"/>
 				        <field name="company_id" groups="base.group_multi_company" placeholder="Enter Company Name"/>
-				        <field name="suppress_ending_date_filter" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+				        <field name="suppress_ending_date_filter" 
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}" 
+				        	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				    </group>
 			        <notebook colspan="5">
 			            <page string="Journal Items">
