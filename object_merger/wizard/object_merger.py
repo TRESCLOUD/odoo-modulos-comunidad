@@ -72,12 +72,14 @@ class object_merger(orm.TransientModel):
         """
         if context is None:
             context = {}
+        property_ids = []
         # Este código fue modificado por TRESCLOUD
         ##############################################################################
         object = {}                                                                  #
         #res = self.read(cr, uid, ids, context=context)[0]                           #
         ##############################################################################
         active_model = context.get('active_model')
+        property_obj = self.pool.get('ir.property')
         if not active_model:
             raise orm.except_orm(_('Configuration Error!'),
                  _('The is no active model defined!'))
@@ -102,6 +104,14 @@ class object_merger(orm.TransientModel):
         # For one2many fields on res.partner
         cr.execute("SELECT name, model FROM ir_model_fields WHERE relation=%s and ttype not in ('many2many', 'one2many');", (active_model, ))
         for name, model_raw in cr.fetchall():
+            # Este código fue modificado por TRESCLOUD
+            ################################################################################################################################
+            if name == 'property_account_position' and model_raw == 'res.partner':                                                         #
+                for id in object_ids:                                                                                                      #
+                    property_ids.extend(property_obj.search(cr, uid, [('name','=','property_account_position'),                            #
+                                                                      ('value_reference','ilike','%s' %(id,))], context=context))          #
+                property_obj.write(cr, uid, property_ids, {'value_reference':'account.fiscal.position,'+str(object_id)}, context=context)  #
+            ################################################################################################################################
             if hasattr(self.pool.get(model_raw), '_auto'):
                 if not self.pool.get(model_raw)._auto:
                     continue
