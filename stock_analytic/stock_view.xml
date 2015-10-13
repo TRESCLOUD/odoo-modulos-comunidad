@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
+<!-- Domain aniadido por TC -->
         <record id="view_inventory_form" model="ir.ui.view">
             <field name="name">stock.inventory.form</field>
             <field name="model">stock.inventory</field>
 			<field name="inherit_id" ref="stock.view_inventory_form"/>
             <field name="arch" type="xml">
 				<xpath expr="//sheet/notebook/page/field[@name='move_ids']/tree/field[@name='location_id']" position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</xpath>
             </field>
         </record>
@@ -19,7 +19,7 @@
 			<field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
 				<field name="location_dest_id" position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
             </field>
         </record>
@@ -30,7 +30,7 @@
 			<field name="inherit_id" ref="stock.view_move_picking_tree"/>
             <field name="arch" type="xml">
 				<field name="product_uom" position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
             </field>
         </record>
@@ -41,7 +41,7 @@
 			<field name="inherit_id" ref="stock.view_move_tree"/>
             <field name="arch" type="xml">
 				<field name='location_dest_id' position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
 			</field>
 		</record>
@@ -52,7 +52,7 @@
 			<field name="inherit_id" ref="stock.stock_move_tree2"/>
             <field name="arch" type="xml">
 				<field name='location_dest_id' position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
 			</field>
 		</record>
@@ -63,7 +63,7 @@
 			<field name="inherit_id" ref="stock.stock_move_tree"/>
             <field name="arch" type="xml">
 				<field name='location_dest_id' position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
 			</field>
 		</record>
@@ -96,7 +96,7 @@
 			<field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
 				<field name='partner_id' position="after">
-					<field name="account_analytic_id"/>
+					<field name="account_analytic_id" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('state','not in',('close','cancelled'))]"/>
 				</field>
 			</field>
 		</record>
