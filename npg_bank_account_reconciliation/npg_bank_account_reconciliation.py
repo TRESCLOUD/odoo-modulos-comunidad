@@ -41,9 +41,9 @@ class bank_acc_rec_statement(osv.osv):
                 group_verifier = res_groups_obj.browse(cr, uid, res_id, context=context)
                 group_user_ids = [user.id for user in group_verifier.users]
                 if statement.state!='draft' and uid not in group_user_ids:
-                    raise osv.except_osv(_('User Error !'),
-                                     _("Only a member of '%s' group may delete/edit bank statements when not in draft state!" %(group_verifier.name)))
-        return True
+                    raise osv.except_osv(_('!Error!'),
+                                         _('Solamente usuarios que sean miembros del grupo %s pueden editar o eliminar conciliaciones bancarias en estado diferente de borrador.') % group_verifier.name)
+        return True  
 
     def copy(self, cr, uid, id, default={}, context=None):
         default.update({
@@ -71,9 +71,8 @@ class bank_acc_rec_statement(osv.osv):
         "Check if difference balance is zero or not."
         for statement in self.browse(cr, uid, ids, context=context):
             if statement.difference != 0.0:
-                raise osv.except_osv(_('Warning!'),
-                                     _("Prior to reconciling a statement, all differences must be accounted for and the Difference balance must be zero." \
-                                     " Please review and make necessary changes."))
+                raise osv.except_osv(_('!Error!'),
+                                     _(u'No se puede realizar una conciliación bancaria en cero, debe tener al menos un movimiento de débito o crédito seleccionado.'))
         return True
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -316,7 +315,8 @@ class bank_acc_rec_statement_line(osv.osv):
         # Prevent manually adding new statement line.
         # This would allow only onchange method to pre-populate statement lines based on the filter rules.
         if not vals.get('move_line_id', False):
-            raise osv.except_osv(_('Processing Error'),_('You cannot add any new bank statement line manually as of this revision!'))
+            raise osv.except_osv(_('!Error!'),
+                                 _(u'No se puede agregar manualmente líneas de débito o crédito en estado listo para revisión.'))
         #Actualizamos el campo draft_assigned_to_statement a true cuando cleared_bank_account es true, las lineas restantes se vuelven a 
         #cargar cuando intenta hacer una nueva conciliacion para esa cuenta
         if vals and 'move_line_id' in vals:
