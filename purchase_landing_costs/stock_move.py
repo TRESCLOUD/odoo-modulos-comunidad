@@ -37,7 +37,7 @@ class stock_move(osv.osv):
     def copy_data(self, cr, uid, id, default=None, context=None):
         res = super(stock_move, self).copy_data(cr, uid, id, default, context)
 
-        if res.get('landing_costs_line_ids', False):
+        if res and res.get('landing_costs_line_ids', False):
             res['landing_costs_line_ids'] = []
 
         # Este comportamiento esta mal. Nos borra un campo que explicitamente queremos tener copiado.

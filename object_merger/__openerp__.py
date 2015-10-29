@@ -2,7 +2,7 @@
 #################################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012 Julius Network Solutions SARL <contact@julius.fr>
+#    Copyright (C) 2013 Julius Network Solutions SARL <contact@julius.fr>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,31 +20,27 @@
 #################################################################################
 
 {
-    "name" : "Stock analytic",
-    "version" : "1.0",
-    "author" : "Julius Network Solutions",
-    "website" : "http://www.julius.fr/",
-    'complexity': "easy",
-    "category" : "Warehouse Management",
-    "depends" : [
-        "base",
-        "stock",
-        "sale",
-        "purchase",
-        "account",
-    ],
-    "description": """
-    Adds an analytic account in stock move to be able to get analytic info when generating the account move line
-    """,
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-#        "security/service_security.xml",
-#        "security/ir.model.access.csv",
-        "stock_view.xml",
-    ],
-    'installable' : True,
-    'active' : True,
-}
+    'name': 'Object Merger',
+    'version': '1.0',
+    'category': 'Tools',
+    'description': """
 
+    This Module will give you the possibility to merge 2 or more objects:
+    Example: You want to merge 2 partners, select the Partner to merge, then which one to keep.
+    All SO, PO, Invoices, Pickings, products, etc. of selected partner will be add to the one to keep.
+
+    """,
+    'author': 'Julius Network Solutions',
+    'website': 'http://www.julius.fr',
+    'depends': [
+        'base',
+    ],
+    'data': [
+        "wizard/object_merger_view.xml",
+        "res_config_view.xml",
+    ],
+    'demo': [],
+    'installable': True,
+    "active": False,
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

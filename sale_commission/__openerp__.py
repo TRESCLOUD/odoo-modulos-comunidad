@@ -20,37 +20,49 @@
 #
 ##############################################################################
 {
-    'name' : 'Sales commissions',
-    'version': '1.0',
-    'author' : 'Pexego',
+    'name': 'Sales commissions',
+    'version': '1.1',
+    'author': "Pexego,Odoo Community Association (OCA)",
     "category": "Generic Modules/Sales & Purchases",
-    'depends' : [
-                    'base',
-                    'account',
-                    'product',
-                    'sale', 
-                    'hr',
-                    'stock'
-                ],
-    'description': 'Sales commissions',
-    'init_xml' : [],
-    'update_xml': [
-                    'security/ir.model.access.csv',
-                    'saleagent_view.xml',
-                    'partner_agent_view.xml',
-                    'wizard/wizard_invoice.xml',
-                    'partner_view.xml',
-                    'settled_view.xml',
-                    'invoice_view.xml',
-                    'sale_order_view.xml',
-                    'product_view.xml',
-                    'stock_picking_view.xml',
-                    'cc_commission_report.xml', 
-                ],
-    'demo_xml': [
-                ],
+    'depends': [
+        'base',
+        'account',
+        'product',
+        'sale',
+        'hr',
+        'stock'
+    ],
+    'description': """
+Sales commissions
+=================
+
+This modules allow you to define sales agents and assign customers to them.
+You can then generate the supplier invoices to pay their commissions.
+
+Video : http://www.youtube.com/watch?v=NDqRnF1qKS0
+
+Contributors
+============
+Davide Corio <davide.corio@domsense.com>
+Joao Alfredo Gama Batista <joao.gama@savoirfairelinux.com>
+Sandy Carter <sandy.carter@savoirfairelinux.com>
+    """,
+    'data': [
+        'security/ir.model.access.csv',
+        'sale_agent_view.xml',
+        'partner_agent_view.xml',
+        'wizard/wizard_invoice.xml',
+        'partner_view.xml',
+        'settled_view.xml',
+        'invoice_view.xml',
+        'sale_order_view.xml',
+        'product_view.xml',
+        'stock_picking_view.xml',
+        'cc_commission_report.xml',
+    ],
+    'demo': [
+    ],
     'active': False,
     'installable': True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
