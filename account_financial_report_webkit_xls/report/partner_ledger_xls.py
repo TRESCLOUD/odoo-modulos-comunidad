@@ -272,7 +272,7 @@ class partner_ledger_xls(report_xls):
                         cumul_balance += line.get('balance') or 0.0
                         
                         if init_line or row_pos > row_start_partner:
-                            cumbal_formula = rowcol_to_cell(row_pos-1, 9) + '+'
+                            cumbal_formula = rowcol_to_cell(row_pos-1, 10) + '+'
                         else:
                             cumbal_formula = ''
                         debit_cell = rowcol_to_cell(row_pos, 8)                
@@ -313,7 +313,7 @@ class partner_ledger_xls(report_xls):
                     debit_partner_start = rowcol_to_cell(row_start_partner, 8)                
                     debit_partner_end = rowcol_to_cell(row_pos-1, 8)
                     debit_partner_total = 'SUM(' + debit_partner_start + ':' + debit_partner_end + ')'
-                      
+                    
                     credit_partner_start = rowcol_to_cell(row_start_partner, 9)                
                     credit_partner_end = rowcol_to_cell(row_pos-1, 9)
                     credit_partner_total = 'SUM(' + credit_partner_start + ':' + credit_partner_end + ')'
