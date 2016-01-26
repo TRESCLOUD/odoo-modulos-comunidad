@@ -20,21 +20,7 @@
 #
 ##############################################################################
 
-{
-    'name': 'Web Printscreen ZB',
-    'version': '1.1',
-    'category': 'Web',
-    'description': """
-        Module to export current active tree view in to excel report
-    """,
-    'author': 'Zesty Beanz Technologies',
-    'website': 'http://www.zbeanztech.com',
-    'depends': ['web'],
-    'js': ['static/src/js/web_printscreen_export.js'],
-    'qweb': ['static/src/xml/web_printscreen_export.xml'],
-    'installable': True,
-    'auto_install': False,
-    'web_preload': False,
-}
+import trml2pdf
+import controllers
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
