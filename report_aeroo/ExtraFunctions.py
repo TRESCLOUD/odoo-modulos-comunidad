@@ -102,6 +102,9 @@ class ExtraFunctions(object):
     """ This class contains some extra functions which
         can be called from the report's template.
     """
+    #Global para realizar conteo ordenado
+    _sequence_value = 0
+
     def __init__(self, cr, uid, report_id, context):
         self.cr = cr
         self.uid = uid
@@ -165,8 +168,10 @@ class ExtraFunctions(object):
             'group_and_sum': self._group_and_sum,
             'get_identification': self._get_identification,
             'convert_datetime_to_ECT': self._convert_datetime_to_ECT,
+            'init_sequence': self._init_sequence,
+            'next_sequence': self._next_sequence,
         }
-        
+
     def _get_identification(self, vat):
         '''
         Remueve las letras EC en caso de haberlas del campo vat del partner
@@ -785,3 +790,17 @@ class ExtraFunctions(object):
                 groups.append(group)
             
         return groups
+
+    def _init_sequence(self, initial_value=0):
+        '''
+        This function set the initial value to count
+        :param initial_value: initial value
+        '''
+        self._sequence_value = initial_value        
+
+    def _next_sequence(self):
+        '''
+        This function add 1 and return the next value
+        '''
+        self._sequence_value = self._sequence_value + 1
+        return self._sequence_value
