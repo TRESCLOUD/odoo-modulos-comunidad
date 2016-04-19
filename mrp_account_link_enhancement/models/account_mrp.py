@@ -57,8 +57,12 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids, context=context):
             for move in production.move_lines2:
                 stock_move_obj._create_product_valuation_moves(cr, uid, move, context=context)
-            message = _("The production order number %s has been reprocessed by %s." + 
-                        "\n\nThe cost of the product must be updated manually by the users." if production.state == 'done' else '') %(production.name, self.pool.get('res.users').browse(cr, uid, uid, context=context).name)
+            extra_info = ''
+            if production.state == 'done':
+                extra_info = "\n\nThe cost of the product must be updated manually by the users." 
+
+            message = _("The production order number %s has been reprocessed by %s." + extra_info
+                        ) %(production.name, self.pool.get('res.users').browse(cr, uid, uid, context=context).name)
             self.message_post(cr, uid, production.id,
                         body=message,
                         subtype='mail.mt_comment',
