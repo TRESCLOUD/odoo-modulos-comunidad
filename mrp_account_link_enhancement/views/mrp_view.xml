@@ -11,7 +11,11 @@
 	        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
 	        <field name="arch" type="xml">
 	        	<xpath expr="//field[@name='state']" position="before">
-	        		<button name="action_account_reprocess" type="object" string="Reproccess Journal items"/>
+	        		<button name="action_account_reprocess" attrs="{'invisible': [('state','=','done')]}"
+	        		groups="mrp_account_link_enhancement.mrp_accounting_reprocess_actions" type="object" string="Reproccess Journal items"/>
+	        		<button name="action_account_reprocess" state="done" 
+	        		confirm="If you reprocess the production order, you will have to update cost of the product manually by the user."
+	        		groups="mrp_account_link_enhancement.mrp_accounting_reprocess_actions" type="object" string="Reproccess Journal items"/>
 	        	</xpath>
         	</field>
        	</record>
