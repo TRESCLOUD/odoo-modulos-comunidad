@@ -37,7 +37,7 @@
     ], 
     "data": [
              #Views
-             "views/mrp_view.xml"
+             "views/mrp_view.xml",
              # Security
              "security/security.xml"
              ], 
