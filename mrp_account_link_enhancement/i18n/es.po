@@ -23,7 +23,7 @@ msgstr "Reprocesar Asientos Contables"
 #. module: mrp_account_link_enhancement
 #: view:mrp.production:0
 msgid "If you reprocess the production order, you will have to update cost of the product manually by the user."
-msgstr "Si usted reprocesa los asientos contables de esta orden de producción, tendrá que actualizar el costo del producto manualmente por el usuario."
+msgstr "Si usted reprocesa los asientos contables de esta orden de producción, tendrá que actualizar el costo del producto manualmente por el usuario y hacer el asiento contable de liquidacion del producto"
 
 #. module: mrp_account_link_enhancement
 #: model:res.groups,name:mrp_account_link_enhancement.mrp_accounting_reprocess_actions

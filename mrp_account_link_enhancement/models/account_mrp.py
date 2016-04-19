@@ -59,9 +59,9 @@ class mrp_production(osv.Model):
                 stock_move_obj._create_product_valuation_moves(cr, uid, move, context=context)
             extra_info = ''
             if production.state == 'done':
-                extra_info = "\n\nThe cost of the product must be updated manually by the users." 
+                extra_info = "\n\nEl costo del producto debe ser actualizado manualmente por el usuario." 
 
-            message = _("The production order number %s has been reprocessed by %s." + extra_info
+            message = _("La orden de producción número %s ha sido reprocesada por %s." + extra_info
                         ) %(production.name, self.pool.get('res.users').browse(cr, uid, uid, context=context).name)
             self.message_post(cr, uid, production.id,
                         body=message,
@@ -71,3 +71,28 @@ class mrp_production(osv.Model):
     
 
 mrp_production()
+
+class stock_move(osv.osv):
+    
+    _inherit = "stock.move"
+    
+    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
+        '''
+        Generate the account.move.line values to post to track the stock valuation difference due to the
+        processing of the given stock move.
+        :param cr: Cursor de la base de datos
+        :param uid: Id de usuario para la transaccion
+        :param ids: Records de las lineas de movimiento
+        :param src_account_id: Cuenta contable de origen
+        :param dest_account_id: Cuenta contable de destino
+        :param reference_amount: Monto de la transaccion
+        :param reference_currency_id: Id de la moneda de transaccion
+        :param context: Variables de contexto como zona horaria, lenguaje, etc
+        '''
+        result = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+        for (opcode, id, debit_line_vals) in result:
+            debit_line_vals.update({'date': move.date})
+        return result
+
+
+stock_move()
