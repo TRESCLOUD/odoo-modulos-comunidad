@@ -56,17 +56,17 @@ class mrp_production(osv.Model):
         # Regeneramos los asientos contables y los apuntes
         for production in self.browse(cr, uid, ids, context=context):
             for move in production.move_lines2:
-                stock_move_obj._create_product_valuation_moves(cr, uid, move, context=context)
+                stock_move_obj._create_product_valuation_moves_mrp(cr, uid, move, context=context)
             extra_info = ''
             if production.state == 'done':
                 extra_info = "\n\nEl costo del producto debe ser actualizado manualmente por el usuario." 
-
             message = _("La orden de producción número %s ha sido reprocesada por %s." + extra_info
                         ) %(production.name, self.pool.get('res.users').browse(cr, uid, uid, context=context).name)
             self.message_post(cr, uid, production.id,
                         body=message,
                         subtype='mail.mt_comment',
                         context=context)
+            
         return True
     
 
@@ -75,6 +75,59 @@ mrp_production()
 class stock_move(osv.osv):
     
     _inherit = "stock.move"
+    
+    def _create_product_valuation_moves_mrp(self, cr, uid, move, context=None):
+        """
+        Generate the appropriate accounting moves if the product being moves is subject
+        to real_time valuation tracking, and the source or destination location is
+        a transit location or is outside of the company.
+        """
+        move_created = [] 
+        if move.product_id.valuation == 'real_time': # FIXME: product valuation should perhaps be a property?
+            if context is None:
+                context = {}
+            src_company_ctx = dict(context,force_company=move.location_id.company_id.id)
+            dest_company_ctx = dict(context,force_company=move.location_dest_id.company_id.id)
+            # do not take the company of the one of the user
+            # used to select the correct period
+            company_ctx = dict(context, company_id=move.company_id.id)
+            account_moves = []
+            # Outgoing moves (or cross-company output part)
+            if move.location_id.company_id \
+                and (move.location_id.usage == 'internal' and move.location_dest_id.usage != 'internal'\
+                     or move.location_id.company_id != move.location_dest_id.company_id):
+                journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, src_company_ctx)
+                reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
+                #returning goods to supplier
+                if move.location_dest_id.usage == 'supplier':
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_src, reference_amount, reference_currency_id, context))]
+                else:
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_dest, reference_amount, reference_currency_id, context))]
+
+            # Incoming moves (or cross-company input part)
+            if move.location_dest_id.company_id \
+                and (move.location_id.usage != 'internal' and move.location_dest_id.usage == 'internal'\
+                     or move.location_id.company_id != move.location_dest_id.company_id):
+                journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, dest_company_ctx)
+                reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
+                #goods return from customer
+                if move.location_id.usage == 'customer':
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_dest, acc_valuation, reference_amount, reference_currency_id, context))]
+                else:
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_src, acc_valuation, reference_amount, reference_currency_id, context))]
+
+            move_obj = self.pool.get('account.move')
+            account_period_obj = self.pool.get('account.period')
+            for j_id, move_lines in account_moves:
+                period_id = account_period_obj.find(cr, uid, move.date, context=context)
+                id = move_obj.create(cr, uid,
+                        {
+                         'journal_id': j_id,
+                         'line_id': move_lines,
+                         'date': move.date,
+                         'period_id': period_id and period_id[0] or False,
+                         'company_id': move.company_id.id,
+                         'ref': move.picking_id and move.picking_id.name}, context=company_ctx)
     
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
         '''
@@ -89,9 +142,14 @@ class stock_move(osv.osv):
         :param reference_currency_id: Id de la moneda de transaccion
         :param context: Variables de contexto como zona horaria, lenguaje, etc
         '''
+        account_period_obj = self.pool.get('account.period')
         result = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
         for (opcode, id, debit_line_vals) in result:
-            debit_line_vals.update({'date': move.date})
+            period_id = account_period_obj.find(cr, uid, move.date, context=context)
+            debit_line_vals.update({
+                                    'date': move.date,
+                                    'period_id': period_id and period_id[0] or False
+                                    })
         return result
 
 
