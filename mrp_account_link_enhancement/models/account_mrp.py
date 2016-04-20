@@ -128,29 +128,6 @@ class stock_move(osv.osv):
                          'period_id': period_id and period_id[0] or False,
                          'company_id': move.company_id.id,
                          'ref': move.picking_id and move.picking_id.name}, context=company_ctx)
-    
-    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        '''
-        Generate the account.move.line values to post to track the stock valuation difference due to the
-        processing of the given stock move.
-        :param cr: Cursor de la base de datos
-        :param uid: Id de usuario para la transaccion
-        :param ids: Records de las lineas de movimiento
-        :param src_account_id: Cuenta contable de origen
-        :param dest_account_id: Cuenta contable de destino
-        :param reference_amount: Monto de la transaccion
-        :param reference_currency_id: Id de la moneda de transaccion
-        :param context: Variables de contexto como zona horaria, lenguaje, etc
-        '''
-        account_period_obj = self.pool.get('account.period')
-        result = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
-        for (opcode, id, debit_line_vals) in result:
-            period_id = account_period_obj.find(cr, uid, move.date, context=context)
-            debit_line_vals.update({
-                                    'date': move.date,
-                                    'period_id': period_id and period_id[0] or False
-                                    })
-        return result
 
 
 stock_move()
