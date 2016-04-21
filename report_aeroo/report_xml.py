@@ -32,6 +32,7 @@
 from osv import osv,fields
 from osv.orm import transfer_modifiers_to_node
 import netsvc
+from openerp import pooler
 from report_aeroo import Aeroo_report, aeroo_ooo_test
 from report.report_sxw import rml_parse
 import base64, binascii
@@ -224,34 +225,40 @@ class report_xml(osv.osv):
         ########### Run OpenOffice service ###########
         try:
             from report_aeroo_ooo.report import OpenOffice_service
+            cr1 = pooler.get_db(cr.dbname).cursor()
         except Exception, e:
             OpenOffice_service = False
 
         if OpenOffice_service:
-            cr.execute("SELECT id, state FROM ir_module_module WHERE name='report_aeroo_ooo'")
-            helper_module = cr.dictfetchone()
+            cr1.execute("SELECT id, state FROM ir_module_module WHERE name='report_aeroo_ooo'")
+            helper_module = cr1.dictfetchone()
             helper_installed = helper_module and helper_module['state']=='installed'
 
         if OpenOffice_service and helper_installed:
-            cr.execute("SELECT host, port FROM oo_config")
-            host, port = cr.fetchone()
+            cr1.execute("SELECT host, port FROM oo_config")
+            host, port = cr1.fetchone()
             try:
-                OpenOffice_service(cr, host, port)
+                OpenOffice_service(cr1, host, port)
                 netsvc.Logger().notifyChannel('report_aeroo', netsvc.LOG_INFO, "OpenOffice.org connection successfully established")
             except Exception, e:
-                cr.rollback()
+                cr1.rollback()
                 netsvc.Logger().notifyChannel('report_aeroo', netsvc.LOG_WARNING, str(e))
         ##############################################
-
-        cr.execute("SELECT * FROM ir_act_report_xml WHERE report_type = 'aeroo' and active = true ORDER BY id") # change for OpenERP 6.0
-        records = cr.dictfetchall()
-        for record in records:
-            parser=rml_parse
-            if record['parser_state']=='loc' and record['parser_loc']:
-                parser=self.load_from_file(record['parser_loc'], cr.dbname, record['id']) or parser
-            elif record['parser_state']=='def' and record['parser_def']:
-                parser=self.load_from_source("from report import report_sxw\n"+record['parser_def']) or parser
-            self.register_report(cr, record['report_name'], record['model'], record['report_rml'], parser)
+        try:
+            cr1.execute("SELECT * FROM ir_act_report_xml WHERE report_type = 'aeroo' and active = true ORDER BY id") # change for OpenERP 6.0
+            records = cr1.dictfetchall()
+            for record in records:
+                parser=rml_parse
+                if record['parser_state']=='loc' and record['parser_loc']:
+                    parser=self.load_from_file(record['parser_loc'], cr1.dbname, record['id']) or parser
+                elif record['parser_state']=='def' and record['parser_def']:
+                    parser=self.load_from_source("from report import report_sxw\n"+record['parser_def']) or parser
+                self.register_report(cr1, record['report_name'], record['model'], record['report_rml'], parser)
+            cr1.commit()
+        except:
+            cr1.rollback()
+        finally:
+            cr1.close()
 
     def _report_content(self, cursor, user, ids, name, arg, context=None):
         res = {}
