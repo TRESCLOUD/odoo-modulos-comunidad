@@ -185,9 +185,9 @@ class ExtraFunctions(object):
             if regex.match(vat):
                 vat = vat[2:]
             else:
-                vat = 'Especifique identificacion correcta.'
+                vat = vat
         else:
-            vat = ''
+            vat = 'Especifique identificacion correcta.'
         return vat
     
     def _convert_datetime_to_ECT(self, date_as_string):
