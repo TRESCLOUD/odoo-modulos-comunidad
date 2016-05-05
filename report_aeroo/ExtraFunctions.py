@@ -40,6 +40,7 @@ from PIL import Image
 import pooler
 import time
 import osv
+import re
 from report import report_sxw
 from tools.translate import _
 import netsvc
