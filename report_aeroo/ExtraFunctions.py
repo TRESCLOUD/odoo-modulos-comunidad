@@ -171,20 +171,25 @@ class ExtraFunctions(object):
             'convert_datetime_to_ECT': self._convert_datetime_to_ECT,
             'init_sequence': self._init_sequence,
             'next_sequence': self._next_sequence,
+            'get_state_stock_move': self._get_state_stock_move,
         }
 
     def _get_identification(self, vat):
         '''
-        Remueve las letras EC en caso de haberlas del campo vat del partner
+        Verifica si es que la cedula o pasaporte hay que eliminar el 'EC'
+        :param vat: Cedula a analizar
+        :return: Devuelve la cedula ecuatoriana sin el ec si tuviera 'ec'
         '''
-        if vat!=False or vat is None:
-            if vat[:2] == 'EC':
-                partner_vat = vat[2:]
-            if vat[:2] != 'EC':
-                partner_vat = vat
+        if vat:
+            rex_product_code = '^EC[0-9]{10}$|^EC[0-9]{13}$'
+            regex = re.compile(rex_product_code, flags=re.IGNORECASE)
+            if regex.match(vat):
+                vat = vat[2:]
+            else:
+                vat = vat
         else:
-            partner_vat = 'Especifique identificacion correcta.'        
-        return partner_vat
+            vat = 'Especifique identificacion correcta.'
+        return vat
     
     def _convert_datetime_to_ECT(self, date_as_string):
         '''
@@ -805,3 +810,26 @@ class ExtraFunctions(object):
         '''
         self._sequence_value = self._sequence_value + 1
         return self._sequence_value
+    
+    def _get_state_stock_move(self, state):
+        '''
+        Este método devuelve el estado de un stock_move
+        :param state: Estado de un stock_move
+        '''
+        if state == 'done':
+            return 'Realizado'
+        elif state == 'assigned':
+            return 'Reservado'
+        elif state == 'cancel':
+            return 'Realizado'
+        elif state == 'received':
+            return 'Recibido'
+        elif state == 'ready_to_receive':
+            return 'Listo para recibir'
+        elif state == 'draft':
+            return 'Borrador'
+        elif state == 'auto':
+            return 'Esperando otra operación'
+        elif state == 'confirmed':
+            return 'Esperando disponibilidad'
+        return ''
