@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+<!--
+    modifiying view
+-->
+
+		<record id="mrp_production_form_inherit_view" model="ir.ui.view">
+	        <field name="name">mrp.production.form.inherit</field>
+	        <field name="model">mrp.production</field>
+	        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+	        <field name="arch" type="xml">
+	        	<xpath expr="//field[@name='state']" position="before">
+	        		<button name="action_account_reprocess" attrs="{'invisible': [('state','=','done')]}"
+	        		groups="mrp_account_link_enhancement.mrp_accounting_reprocess_actions" type="object" string="Reproccess Journal items"/>
+	        		<button name="action_account_reprocess" attrs="{'invisible': [('state','!=','done')]}" 
+	        		confirm="If you reprocess the production order, you will have to update cost of the product manually by the user."
+	        		groups="mrp_account_link_enhancement.mrp_accounting_reprocess_actions" type="object" string="Reproccess Journal items"/>
+	        	</xpath>
+        	</field>
+       	</record>
+    </data>
+</openerp>
