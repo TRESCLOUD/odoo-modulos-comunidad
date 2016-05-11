@@ -1,0 +1,326 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* purchase_landed_costs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-10 17:21+0000\n"
+"PO-Revision-Date: 2016-05-10 17:21+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_purchase_order_line
+#: field:landed.cost.position,purchase_order_line_id:0
+msgid "Purchase Order Line"
+msgstr "Línea pedido de compra"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,amount_company_currency:0
+msgid "Amount Company Currency"
+msgstr "Costo en la moneda de la empresa"
+
+#. module: purchase_landed_costs
+#: selection:product.template,landed_cost_type:0
+msgid "None"
+msgstr "Ninguno"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Group By..."
+msgstr "Agrupado por..."
+
+#. module: purchase_landed_costs
+#: help:product.template,landed_cost_type:0
+msgid "Used if this product is landed costs: If landed costs are defined for purchase orders or pickings, this indicates how the costs are distributed to the lines"
+msgstr "Utilice este producto si es costo de importación: Si el costo de importación se definen para las órdenes de compra o albaranes de salida, esto indica cómo los costes se distribuyen a las líneas"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_landed_cost_position
+msgid "landed.cost.position"
+msgstr "landed.cost.position"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,account_id:0
+msgid "Fiscal Account"
+msgstr "Cuenta Fiscal"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,partner_id:0
+msgid "The supplier of this cost component."
+msgstr "El proveedor de este componente."
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,amount_total:0
+msgid "This field represent the total amount of this position regarding a whole order. By summing it, you'll have the total landed cost for the order (in his currency)"
+msgstr "Este campo representa la cantidad total de esta posición con respecto a toda la orden. Sumando que, se tiene el coste total de la orden (en su moneda)"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: purchase_landed_costs
+#: field:purchase.order,quantity_total:0
+msgid "Total Quantity"
+msgstr "Cantidad Total"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+#: field:purchase.order,landed_cost_line_ids:0
+#: field:purchase.order.line,landed_costs:0
+msgid "Landed Costs"
+msgstr "Costos de importación"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,amount_company_currency:0
+msgid "Landed cost for stock valuation (expressed in company currency). It will be added to the price of the supplier price."
+msgstr "Costo de importación de valoración de existencias (expresado en moneda de la compañía). Se añadirá al precio del proveedor."
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,amount:0
+msgid "Landed cost expressed in PO currency used to fullfil landed cost."
+msgstr "Costo de importación expresado en la moneda de la OC para cumplir con el costo de importción."
+
+#. module: purchase_landed_costs
+#: selection:landed.cost.distribution.type,apply_on:0
+msgid "Order"
+msgstr "Orden"
+
+#. module: purchase_landed_costs
+#: selection:landed.cost.distribution.type,landed_cost_type:0
+#: selection:product.template,landed_cost_type:0
+msgid "Volume"
+msgstr "Volumen"
+
+#. module: purchase_landed_costs
+#: model:ir.actions.act_window,name:purchase_landed_costs.act_po_2_landed_costs
+msgid "Related Landed Costs"
+msgstr "Costo de importación relacionado"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.distribution.type,apply_on:0
+msgid "Defines if this distribution type Applied on order or line level."
+msgstr "Define si este tipo de distribución aplica sobre la orden o a nivel de línea."
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+#: field:landed.cost.position,date_po:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: purchase_landed_costs
+#: field:purchase.order,landed_cost_base_value:0
+msgid "Landed Costs Base Value"
+msgstr "Valor Base del Costo de Importacion"
+
+#. module: purchase_landed_costs
+#: selection:landed.cost.distribution.type,apply_on:0
+msgid "Line"
+msgstr "línea"
+
+#. module: purchase_landed_costs
+#: field:stock.move,price_unit_net:0
+msgid "Purchase Price"
+msgstr "Precio de Compra"
+
+#. module: purchase_landed_costs
+#: field:purchase.order,landing_cost_lines:0
+msgid "Landing Cost Lines"
+msgstr "Lineas de Importación"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.distribution.type,name:0
+#: view:landed.cost.position:0
+#: field:landed.cost.position,distribution_type_id:0
+#: field:product.template,landed_cost_type:0
+msgid "Distribution Type"
+msgstr "Tipo de Distribución"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_landed_cost_distribution_type
+msgid "landed.cost.distribution.type"
+msgstr "landed.cost.distribution.type"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Total amount"
+msgstr "Monto Total"
+
+#. module: purchase_landed_costs
+#: model:ir.actions.act_window,help:purchase_landed_costs.action_landed_cost_report_all
+msgid "Landed cost Analysis allows you to easily check and analyse your estimated landed costs."
+msgstr "El análisis de costo de importación le permite comprobar y analizar sus costes estimados de importación con facilidad."
+
+#. module: purchase_landed_costs
+#: selection:landed.cost.distribution.type,landed_cost_type:0
+#: selection:product.template,landed_cost_type:0
+msgid "Value"
+msgstr "Valor"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Purchase Line"
+msgstr "Linea de Compra"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.distribution.type,landed_cost_type:0
+msgid "Product Landed Cost Type"
+msgstr "Producto Tipo Costo de Importación"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_purchase_order
+#: field:landed.cost.position,purchase_order_id:0
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: purchase_landed_costs
+#: field:purchase.order.line,landed_cost_line_ids:0
+msgid "Landed Costs Positions"
+msgstr "Posiciones de importación"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,generate_invoice:0
+msgid "Generate Invoice"
+msgstr "Generar Factura"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,amount:0
+msgid "Amount"
+msgstr "Monto"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,amount_total_comp_currency:0
+msgid "Amount Total Company Currency"
+msgstr "Monto total en la moneda de la compañia"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_stock_partial_picking
+msgid "Partial Picking Processing Wizard"
+msgstr "Asistente para el procesamiento parcial de albaranes"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,date_po:0
+msgid "Date of the related PO"
+msgstr "fecha de la OC relacionada"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,generate_invoice:0
+msgid "If ticked, this will generate a draft invoice at the PO confirmation for this landed cost position from the related partner. If not, no invoice will be generated, but the cost will be included for the average price computation."
+msgstr "Si está marcada, esto va a generar una factura en estado borrador en la confirmación de OC para esta posición de importación del cliente/proveedor relacionado. Si no es así, no se generará una factura, pero el costo será incluido para el cálculo del precio promedio."
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,distribution_type_id:0
+msgid "Defines if the amount is to be calculated for each quantity or an absolute value"
+msgstr "Define si el monto se debe calcular para cada cantidad o un valor absoluto"
+
+#. module: purchase_landed_costs
+#: model:ir.actions.act_window,name:purchase_landed_costs.action_landed_cost_report_all
+#: model:ir.ui.menu,name:purchase_landed_costs.menu_action_landed_cost_report_all
+msgid "Landed Costs Analysis"
+msgstr "Analisis de Costos de importación"
+
+#. module: purchase_landed_costs
+#: selection:landed.cost.distribution.type,landed_cost_type:0
+#: selection:product.template,landed_cost_type:0
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+#: field:landed.cost.position,product_id:0
+msgid "Landed Cost Name"
+msgstr "Nombre de la importación"
+
+#. module: purchase_landed_costs
+#: field:purchase.order,landed_cost_base_quantity:0
+msgid "Landed Costs Base Quantity"
+msgstr "Landed Costs Base Quantity"
+
+#. module: purchase_landed_costs
+#: field:purchase.order.line,landing_costs_order:0
+msgid "Landing Costs from Order"
+msgstr "Landing Costs from Order"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: purchase_landed_costs
+#: model:ir.model,name:purchase_landed_costs.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.distribution.type,landed_cost_type:0
+msgid "Refer to the product landed cost type."
+msgstr "Referencia al producto del tipo costo de importacion."
+
+#. module: purchase_landed_costs
+#: help:stock.move,price_unit_net:0
+msgid "This is the net purchase price, without landed cost as the price include landed price has been stored in price_unit field"
+msgstr "Este es el precio de compra neto, sin costo de importación como el precio incluido precio de importación se ha almacenado en el campo price_unit"
+
+#. module: purchase_landed_costs
+#: help:landed.cost.position,amount_total_comp_currency:0
+msgid "This field represent the total amount of this position regarding a whole order. By summing it, you'll have the total landed cost for the order (in company reference currency)."
+msgstr "Este campo representa la cantidad total de esta posición con respecto a toda la orden. Sumandolo, usted tiene el costo de importación total de la orden (en la moneda de referencia de la compañía)."
+
+#. module: purchase_landed_costs
+#: field:landed.cost.distribution.type,apply_on:0
+msgid "Applied on"
+msgstr "Aplicado en"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,partner_id:0
+msgid "Partner"
+msgstr "Cliente/Proveedor"
+
+#. module: purchase_landed_costs
+#: field:purchase.order,landed_cost:0
+msgid "Landed Costs Total Untaxed"
+msgstr "Costo de importación total sin impuestos"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+#: field:purchase.order.line,landing_costs:0
+msgid "Landing Costs"
+msgstr "Costos de importación"
+
+#. module: purchase_landed_costs
+#: field:landed.cost.position,amount_total:0
+msgid "Amount Total"
+msgstr "Monto Total"
+
+#. module: purchase_landed_costs
+#: view:landed.cost.position:0
+msgid "Purchase Orders"
+msgstr "Ordenes de Compra"
+

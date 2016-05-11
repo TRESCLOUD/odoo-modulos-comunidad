@@ -1,0 +1,720 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* purchase_landed_costs_extended
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-11 16:08+0000\n"
+"PO-Revision-Date: 2016-05-11 16:08+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,amount_currency:0
+msgid "Currency Amount"
+msgstr "Monto Moneda"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,location_id:0
+msgid "Destination"
+msgstr "Destino"
+
+#. module: purchase_landed_costs_extended
+#: help:purchase.landed.cost.report,date:0
+msgid "Date on which this document has been created"
+msgstr "Fecha en la cual fue creado este docuemtno"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,validator:0
+msgid "Validated By"
+msgstr "Validado Por"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.ui.menu,name:purchase_landed_costs_extended.landed_costs_shipment
+#: field:landed.cost.position.template,shipment_id:0
+#: view:landed.costs.shipment:0
+#: field:purchase.order,shipment_id:0
+msgid "Shipment"
+msgstr "Embarque"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,partner_id:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.order.line,line_volume:0
+msgid "Product CBM"
+msgstr "Volumen del Producto"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Purchase Orders Statistics"
+msgstr "Estadisticas de las Ordenes de Compra"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "March"
+msgstr "Marzo"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,company_id:0
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,state:0
+msgid "Invoice Exception"
+msgstr "Exepción de Factura"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment.po:0
+msgid "This wizard will link all the selected Purchase orders to the current shipment"
+msgstr "Este asistente enlazará todas las órdenes de compra seleccionados para el envío actual"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment:0
+msgid "Add Purchase Order"
+msgstr "Agregar Orden de Compra"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,state:0
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Order of Day"
+msgstr "Orden del día"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,distribution_type_id:0
+msgid "Distribution Type"
+msgstr "Tipo de Distribución"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_purchase_order
+#: view:landed.costs.shipment.po:0
+#: field:landed.costs.shipment.po,purchase_ids:0
+#: field:purchase.landed.cost.report,purchase_order_id:0
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,template_id:0
+msgid "Landed costs template"
+msgstr "Plantilla de costos de importación"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,amount:0
+msgid "Amount"
+msgstr "Monto"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.template:0
+msgid "Landed cost template"
+msgstr "Plantilla de costos de importación"
+
+#. module: purchase_landed_costs_extended
+#: selection:landed.costs.shipment,state:0
+#: selection:purchase.landed.cost.report,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,pricelist_id:0
+msgid "Pricelist"
+msgstr "Lista de precios"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,state:0
+msgid "Shipping Exception"
+msgstr "Excepción de Envío"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.order,volume_total:0
+msgid "Total Volume"
+msgstr "Volumen Total"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,day:0
+msgid "Day"
+msgstr "Dia"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,product_uom:0
+msgid "Reference Unit of Measure"
+msgstr "Unidad de medida de referencia"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,nbr:0
+msgid "# of Lines"
+msgstr "# de líneas"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.template:0
+msgid "Landing Cost Templates"
+msgstr "Plantilla de costos de envio"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Validated by"
+msgstr "Validado por"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment:0
+msgid "Clear Purchase Orders"
+msgstr "Limpiar Ordenes de Compra"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,partner_id:0
+msgid "Partner"
+msgstr "Cliente/Proveedor"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,user_id:0
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,negociation:0
+msgid "Purchase-Standard Price"
+msgstr "Precio estandar de compra"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea pedido de compra"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,price_average:0
+msgid "Average Price"
+msgstr "Precio promedio"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,arrival_date:0
+msgid "Arrival date"
+msgstr "Fecha de llegada"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.invoice:0
+#: view:landed.costs.shipment.po:0
+msgid "Confirm"
+msgstr "Confirmado"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,port_of_departure:0
+msgid "Port of departure"
+msgstr "Puerto de salida"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_stock_location
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_stock_picking
+msgid "Picking List"
+msgstr "Albarán"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,warehouse_id:0
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,port_of_arrival:0
+msgid "Port of arrival"
+msgstr "Puerto de llegada"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,price_total:0
+msgid "Total Price"
+msgstr "Precio Total"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,expected_date:0
+msgid "Expected Date"
+msgstr "Fecha esperada"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,po_pricelist_id:0
+msgid "PO Pricelist"
+msgstr "Lista de precios de la OC"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,help:purchase_landed_costs_extended.action_purchase_order_landed_cost_landed_cost_report_all
+msgid "Purchase Analysis allows you to easily check and analyse your company purchase history and performance. From this menu you can track your negotiation performance, the delivery performance of your suppliers, etc."
+msgstr "Los análisis de compra le permite comprobar y analizar fácilmente el historial de compras de su compañía y su rendimiento. Desde este menú puede controlar el rendimiento de su negociación, el funcionamiento de las entregas de sus proveedores, etc."
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment:0
+msgid "Landed Cost Templates"
+msgstr "Plantillas de Costos de Importación"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment:0
+msgid "Assign LC to Purchase Orders"
+msgstr "Asignar los costos de importación a la orden de compra"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position,amount_currency:0
+msgid "Landed cost expressed in Landed Cost line currency"
+msgstr "Costo de importación expresado en la moneda de la línea de costo de importación"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,generate_invoice:0
+msgid "Generate Invoice"
+msgstr "Generar Factura"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "July"
+msgstr "Julio"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position:0
+msgid "onchange_partner_id(partner_id)"
+msgstr "onchange_partner_id(partner_id)"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position:0
+#: field:landed.cost.position,invoice_id:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,date:0
+msgid "Order Date"
+msgstr "Fecha de Orden"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,vessel:0
+msgid "Vessel"
+msgstr "Buque"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_cost_distribution_type
+msgid "landed.cost.distribution.type"
+msgstr "landed.cost.distribution.type"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,price_standard:0
+msgid "Products Value"
+msgstr "Valor del producto"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,shipment_id:0
+msgid "Landed Costs Shipment"
+msgstr "Costo de importación del envio"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position.template,generate_invoice:0
+msgid "If ticked, this will generate a draft invoice at the PO confirmation for this landed cost position from the related partner. If not, no invoice will be generated, but the cost will be included for the average price computation."
+msgstr "Si está marcada, esto va a generar una factura en estado borrador en la confirmación de la OC para esta posición de costo de importación del cliente/proveedor relacionado. Si no es así, no se generará una factura, pero el costo será incluido para el cálculo del precio promedio."
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,product_id:0
+msgid "Landed Cost Name"
+msgstr "Nombre del costo de importación"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "September"
+msgstr "Septiembre"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "December"
+msgstr "Diciembre"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.invoice:0
+msgid "Select an Open Landed Cost"
+msgstr "Seleccione un costo de importación abierto"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Total Orders Lines by User per month"
+msgstr "Total lineas de ordenes de compra por mes por ususario"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,month:0
+msgid "Month"
+msgstr "Mes"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,state:0
+msgid "Waiting Supplier Ack"
+msgstr "Esperando la confirmación del proveedor"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,currency_id:0
+#: field:landed.cost.position.template,currency_id:0
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_landed_costs_shipment_po
+#: view:landed.costs.shipment.po:0
+msgid "Assign Puchase Orders"
+msgstr "Asignar las Ordenes de Compra"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position:0
+msgid "Landing Costs"
+msgstr "Costos de importación"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,category_id:0
+msgid "Category"
+msgstr "Categoria"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_product_uom
+msgid "Product Unit of Measure"
+msgstr "Unidad de medida del producto"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_view_landed_cost_position_invoice
+msgid "Create invoices"
+msgstr "Crear facturas"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,departure_date:0
+msgid "Departure date"
+msgstr "Fecha de salida"
+
+#. module: purchase_landed_costs_extended
+#: selection:landed.costs.shipment,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position.template,account_id:0
+msgid "Fiscal Account"
+msgstr "Cuenta Fiscal"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_costs_shipment
+msgid "landed.costs.shipment"
+msgstr "landed.costs.shipment"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,state:0
+#: view:purchase.landed.cost.report:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_cost_position_template
+msgid "landed.cost.position.template"
+msgstr "landed.cost.position.template"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "August"
+msgstr "Agosto"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.po_landed_costs_extended
+#: model:ir.ui.menu,name:purchase_landed_costs_extended.menu_action_landed_cost
+#: field:landed.cost.position.template,lc_ids:0
+msgid "Landed Costs"
+msgstr "Costo de envio"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position.template,amount:0
+msgid "Landed cost expressed in PO currency used to fullfil landed cost."
+msgstr "Costo de envio expresado en la moneda usada en la orden de compra para completar el costo de importación."
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "June"
+msgstr "Junio"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_purchase_landed_cost_report
+msgid "Purchases Orders"
+msgstr "Pedidos de compras"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_purchase_order_landed_cost_landed_cost_report_graph
+#: view:purchase.landed.cost.report:0
+msgid "Total Qty and Amount by month"
+msgstr "Cantidad total e importe por mes"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_costs_shipment_po
+msgid "landed.costs.shipment.po"
+msgstr "landed.costs.shipment.po"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "November"
+msgstr "Noviembre"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Extended Filters..."
+msgstr "Filtros Extendidos..."
+
+#. module: purchase_landed_costs_extended
+#: help:stock.location,is_in_average:0
+msgid "Check this box if you want to take into account the stock of this location the average stock calculation"
+msgstr "Marque esta casilla si quiere tomar en cuenta el stock de este lugar en la acción de cálculo promedio"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "October"
+msgstr "Octubre"
+
+#. module: purchase_landed_costs_extended
+#: field:stock.location,is_in_average:0
+msgid "Accounts for Average Price calculation"
+msgstr "Las cuentas para el cálculo del precio promedio"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "January"
+msgstr "Enero"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.order,landed_cost_base_volume:0
+msgid "Landed Costs Base Volume"
+msgstr "Costo de envio base por volumen"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_cost_position_invoice
+msgid "Landed Cost Position Make Invoice"
+msgstr "Posición Costo de envio para realizar la factura"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Quotations"
+msgstr "Cotización"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,quantity:0
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,state:0
+msgid "Order Status"
+msgstr "Estado de la Orden"
+
+#. module: purchase_landed_costs_extended
+#: field:product.uom,volume_factor:0
+msgid "Volume Factor"
+msgstr "Factor Volumen"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,help:purchase_landed_costs_extended.action_landed_costs_shipment
+msgid "<p class=\"oe_view_nocontent_create\">\n"
+"                Click here to create a new Shipment.\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">\n"
+"                Haga click aqui para crear un nuevo envio.\n"
+"                </p>\n"
+"            "
+
+#. module: purchase_landed_costs_extended
+#: field:landed.cost.position,po_currency_id:0
+#: help:landed.cost.position,po_currency_id:0
+msgid "PO Currency"
+msgstr "Moneda de la OC"
+
+#. module: purchase_landed_costs_extended
+#: selection:landed.costs.shipment,state:0
+#: selection:purchase.landed.cost.report,state:0
+msgid "Done"
+msgstr "Realizado"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_purchase_order_landed_cost_landed_cost_report_all
+#: model:ir.ui.menu,name:purchase_landed_costs_extended.menu_action_purchase_order_landed_cost_landed_cost_report_all
+msgid "Landing Costs Summary"
+msgstr "Resumen de los costos de importación"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.invoice:0
+msgid "Cancel"
+msgstr "Cancelado"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.costs.shipment:0
+#: field:landed.costs.shipment,po_ids:0
+#: view:purchase.landed.cost.report:0
+msgid "Purchase Orders"
+msgstr "Ordenes de Compra"
+
+#. module: purchase_landed_costs_extended
+#: sql_constraint:landed.costs.shipment:0
+msgid "Order Reference must be unique per Company!"
+msgstr "Referencia de la orden debe ser unica por compañia!"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_purchase_order_landed_cost_by_user_all
+msgid "Total Orders by User per month"
+msgstr "Total pedidos por usuario mensual"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,state:0
+msgid "Request for Quotation"
+msgstr "Solicitud de cotización"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Order of Month"
+msgstr "Ordenar por mes"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,date_approve:0
+msgid "Date Approved"
+msgstr "Fecha de aprobación"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,landed_cost_unit:0
+msgid "Landed cost unit"
+msgstr "Costo de importación unitario"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.invoice:0
+msgid "Do you want to generate the Landed Cost invoices?"
+msgstr "¿Desea generar las facturas de los costos de importación?"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position.template,partner_id:0
+msgid "The supplier of this cost component."
+msgstr "El proveedor de este componente."
+
+#. module: purchase_landed_costs_extended
+#: model:ir.actions.act_window,name:purchase_landed_costs_extended.action_landed_costs_shipment
+msgid "Shipments"
+msgstr "Envios"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,product_id:0
+msgid "Product"
+msgstr "Productos"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Order of Year"
+msgstr "Ordenar por Año"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "May"
+msgstr "Mayo"
+
+#. module: purchase_landed_costs_extended
+#: model:ir.model,name:purchase_landed_costs_extended.model_landed_cost_position
+msgid "landed.cost.position"
+msgstr "landed.cost.position"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "February"
+msgstr "Febrero"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,lc_template_ids:0
+msgid "Landed Cost Lines"
+msgstr "Lineas de costo de importación"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position,po_pricelist_id:0
+msgid "PO pricelist"
+msgstr "Lista de precios de la OC"
+
+#. module: purchase_landed_costs_extended
+#: field:landed.costs.shipment,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: purchase_landed_costs_extended
+#: field:purchase.landed.cost.report,landed_cost_total:0
+msgid "Landed cost total"
+msgstr "Costo Total de Importación"
+
+#. module: purchase_landed_costs_extended
+#: selection:purchase.landed.cost.report,month:0
+msgid "April"
+msgstr "Abril"
+
+#. module: purchase_landed_costs_extended
+#: help:landed.cost.position.template,distribution_type_id:0
+msgid "Defines if the amount is to be calculated for each quantity or an absolute value"
+msgstr "Define si la cantidad se debe calcular para cada cantidad o como un valor absoluto"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Order"
+msgstr "Orden"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Reference UOM"
+msgstr "Unidad de medida referencial"
+
+#. module: purchase_landed_costs_extended
+#: view:landed.cost.position.invoice:0
+msgid "or"
+msgstr "o"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+#: field:purchase.landed.cost.report,name:0
+msgid "Year"
+msgstr "Año"
+
+#. module: purchase_landed_costs_extended
+#: view:purchase.landed.cost.report:0
+msgid "Orders"
+msgstr "Ordenes"
+
