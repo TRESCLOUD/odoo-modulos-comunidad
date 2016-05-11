@@ -216,7 +216,8 @@ class purchase_order(orm.Model):
     def _prepare_landed_cost_inv(self, cr, uid, landed_cost, context=None):
         res = super(purchase_order, self)._prepare_landed_cost_inv(
             cr, uid, landed_cost, context=context)
-        res['currency_id'] = landed_cost.currency_id.id
+        if landed_cost.currency_id.id:
+            res['currency_id'] = landed_cost.currency_id.id
         return res
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
