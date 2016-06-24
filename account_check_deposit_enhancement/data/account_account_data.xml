@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+		<record model="account.account" id="customer_invalid_check_account">
+            <field name="name">Invalid Checks</field>
+            <field name="code">101020505</field>
+            <field name="type">receivable</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="reconcile" eval="False"/>
+            <field name="parent_id" ref="__export__.account_account_373"/>
+        </record>
+        
+        <record model="account.account" id="customer_check_account">
+            <field name="name">Customer Checks</field>
+            <field name="code">101020504</field>
+            <field name="type">receivable</field>
+            <field name="user_type" ref="account.data_account_type_receivable"/>
+            <field name="reconcile" eval="False"/>
+            <field name="parent_id" ref="__export__.account_account_373"/>
+        </record>
+	</data>
+</openerp>
