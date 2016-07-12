@@ -7,7 +7,7 @@
             <field name="type">receivable</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="reconcile" eval="False"/>
-            <field name="parent_id" ref="__export__.account_account_373"/>
+            <field name="parent_id" search="[('code','=',u'1010205')]"/>
         </record>
         
         <record model="account.account" id="customer_check_account">
@@ -16,7 +16,7 @@
             <field name="type">receivable</field>
             <field name="user_type" ref="account.data_account_type_receivable"/>
             <field name="reconcile" eval="False"/>
-            <field name="parent_id" ref="__export__.account_account_373"/>
+            <field name="parent_id" search="[('code','=',u'1010205')]"/>
         </record>
 	</data>
 </openerp>

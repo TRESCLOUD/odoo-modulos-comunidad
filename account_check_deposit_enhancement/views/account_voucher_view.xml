@@ -25,5 +25,94 @@
                 </xpath>
             </field>
         </record>
+        
+        <record id="account_voucher_search_till" model="ir.ui.view">
+			<field name="name">account.voucher.search.till</field>
+			<field name="model">account.voucher</field>
+			<field name="arch" type="xml">
+				<search string="Checks from till">
+					<field name="deposit_date"/>
+					<field name="new_deposit_date"/>
+					<field name="number"/>
+					<!-- <field name="account_number"/> -->
+					<group expand="1" string="Group By...">
+						<filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+        
+        <record id="action_received_checks_till" model="ir.actions.act_window">
+            <field name="name">Checks from the till</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_manage','=',True),('state_check_control','=','got_check'),('state','=','posted')]</field>
+			<field name="search_view_id" ref="account_voucher_search_till"/>
+        </record>
+        
+        <record id="action_received_checks" model="ir.actions.act_window">
+            <field name="name">Received Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_manage','=',True),('state_check_control','=','received_check'),('state','=','posted')]</field>
+            <!-- <field name="search_view_id" ref="view_foreign_purchase_filter"/> -->
+        </record>
+        
+        <record id="action_deposited_checks" model="ir.actions.act_window">
+            <field name="name">Deposited Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_manage','=',True),('state_check_control','=','deposited_check'),('state','=','posted')]</field>
+            <!-- <field name="search_view_id" ref="view_foreign_purchase_filter"/> -->
+        </record>
+        
+        <record id="action_delayed_checks" model="ir.actions.act_window">
+            <field name="name">Delayed Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_manage','=',True),('state_check_control','=','delayed_check'),('state','=','posted')]</field>
+            <!-- <field name="search_view_id" ref="view_foreign_purchase_filter"/> -->
+        </record>
+        
+        <record id="action_rejected_checks" model="ir.actions.act_window">
+            <field name="name">Rejected Checks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_manage','=',True),('state_check_control','=','rejected_check'),('state','=','posted')]</field>
+            <!-- <field name="search_view_id" ref="view_foreign_purchase_filter"/> -->
+        </record>
+        
+        <menuitem id="menu_check_control" name="Check Control"
+            parent="account.menu_finance_receivables" sequence="15" 
+            groups="account.group_account_manager"/>
+        
+        <menuitem action="action_received_checks_till"
+                  id="menu_check_received_till"
+                  parent="menu_check_control"
+                  sequence="10"/>
+        <menuitem action="action_received_checks"
+                  id="menu_check_received"
+                  parent="menu_check_control"
+                  sequence="20"/>
+		<menuitem action="action_deposited_checks"
+                  id="menu_check_deposited"
+                  parent="menu_check_control"
+                  sequence="30"/>
+		<menuitem action="action_delayed_checks"
+                  id="menu_check_delayed"
+                  parent="menu_check_control"
+                  sequence="40"/>
+        <menuitem action="action_rejected_checks"
+                  id="menu_check_rejected"
+                  parent="menu_check_control"
+                  sequence="50"/>
+        <menuitem action="account_check_deposit.action_check_deposit_tree"
+                  id="account_check_deposit.menu_check_deposit_tree"
+                  parent="account.menu_finance_receivables" sequence="17"/>
 	</data>
 </openerp>

@@ -28,7 +28,11 @@ import openerp.addons.decimal_precision as dp
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
 
-
+    _STATES_CHECKS=[('got_check','Cheques Receptados Caja'),
+                    ('received_check','Cheques Recibido'),
+                    ('deposited_check','Cheques Depositado'),
+                    ('rejected_check','Cheques Protestado'),
+                    ('delayed_check','Cheques Detenidos')]
     _columns = {
         'check_manage': fields.related('journal_id', 'control_customer_check', string='Check manage',
                                        type='boolean',
@@ -37,9 +41,14 @@ class account_voucher(osv.osv):
                                        help='This field stores the errors generated when processing documents'),
         'check_manage_prueba': fields.boolean('Check manage'),
         'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help=""),
-        'deposit_date': fields.date('Deposit Date', help="")
+        'deposit_date': fields.date('Deposit Date', help=""),
+        'new_deposit_date': fields.date('Deposit Date', help=""),
+        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks'),
+        'rejected_reason': fields.char('Rejected reason', help=""),
     }
-
+    
+    _defaults = {'state_check_control': 'got_check'}
+    
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=None):
         """
         Inherit the on_change from account.voucher, add allow_check_writing and sequence check
