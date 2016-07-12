@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
-        <!-- inheriting views from more than 2 differents inherited models like
-        trial.balance.webkit -> account.common.balance.report -> account.common.account.report
-        is not supported so we have to copy paste the same view for trial balance, balance sheet
-          -->
-
+		<record id="view_account_check_reject_form" model="ir.ui.view">
+            <field name="name">account.check.reject.form</field>
+            <field name="model">account.check.reject</field>
+            <field name="arch" type="xml">
+                <form string="Reject Checks" version="7.0">
+                    <label string="Esta seguro que quiere detener los cheques marcados?"/>
+                    <field name="reject_checks">
+                    	<tree editable="bottom">
+                    		<field name="wizard_id" readonly="1" invisible="1"/>
+					      	<field name="check_number" readonly="1"/>
+					      	<field name="amount" readonly="1" invisible="0"/>
+					     	<field name="partner_id" readonly="1" invisible="0"/>
+					    	<field name="old_deposit_date" readonly="1" invisible="0"/>
+					      	<field name="note" readonly="0" required="1" invisible="0"/>
+					      	<field name="voucher_id" invisible="1" readonly="1"/>
+                    	</tree>
+                    </field>
+                    <footer>
+                        <button string="Reject Checks" name="reject_checks" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+        
+        <act_window id="action_account_check_reject"
+            multi="True"
+            name="Reject Checks"
+            res_model="account.check.reject" src_model="account.voucher"
+            view_mode="form" target="new" view_type="form" /> 
     </data>
 </openerp>
