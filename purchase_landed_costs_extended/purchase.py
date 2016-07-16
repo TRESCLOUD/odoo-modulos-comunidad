@@ -153,7 +153,7 @@ class landed_cost_position(orm.Model):
         account_id = prod_obj._choose_exp_account_from(
             cr, uid, prod, fiscal_position=fiscal_position, context=context)
         # here we add a new distribution type
-        if prod.landed_cost_type in ('per_unit', 'value', 'volume'):
+        if prod.landed_cost_type in ('per_unit', 'value', 'volume', 'weight'):
             landed_cost_type = dist_type_obj.search(
                 cr, uid,
                 [('apply_on', '=', apply_on),
@@ -340,7 +340,8 @@ class landed_cost_distribution_type(orm.Model):
         'landed_cost_type': fields.selection(
             [('value', 'Value'),
              ('per_unit', 'Quantity'),
-             ('volume', 'Volume')],
+             ('volume', 'Volume'),
+             ('weight', 'Weight')],
             'Product Landed Cost Type',
             help="Refer to the product landed cost type."),
     }
@@ -462,6 +463,7 @@ class product_template(orm.Model):
             [('value', 'Value'),
              ('per_unit', 'Quantity'),
              ('volume', 'Volume'),
+             ('weight', 'Weight'),
              ('none', 'None')],
             'Distribution Type',
             help="Used if this product is landed costs: "
