@@ -33,26 +33,35 @@ class account_voucher(osv.osv):
                     ('deposited_check','Cheques Depositado'),
                     ('rejected_check','Cheques Protestado'),
                     ('delayed_check','Cheques Detenidos')]
+    
+    def _get_invoice(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, {'invoice_payed': '', 'check_deposit_id': False})
+        for voucher_id in self.browse(cr, uid, ids, context=context):
+            for line in voucher_id.line_cr_ids:
+                if line.move_line_id:
+                    res[voucher_id.id]['check_deposit_id'] = line.move_line_id.check_deposit_id.id
+                    if line.move_line_id.invoice:
+                        res[voucher_id.id]['invoice_payed'] += line.move_line_id.invoice.internal_number or '' +'\n'
+                        continue
+        return res
+    
     _columns = {
-        'check_manage': fields.related('journal_id', 'control_customer_check', string='Check manage',
-                                       type='boolean',
-                                       readonly=True,
-                                       relation='account.journal',
-                                       help='This field stores the errors generated when processing documents'),
-        'check_manage_prueba': fields.boolean('Check manage'),
+        'check_manage': fields.boolean('Check manage'),
         'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help=""),
+        'check_deposit_id': fields.function(_get_invoice, relation="account.check.deposit", store=True,
+                                            type='many2one', multi='calc', string='Check Deposit', 
+                                            readonly=True),
         'deposit_date': fields.date('Deposit Date', help=""),
         'new_deposit_date': fields.date('Deposit Date', help=""),
-        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks'),
+        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', help=""),
         'rejected_reason': fields.char('Rejected reason', help=""),
+        'invoice_payed': fields.function(_get_invoice, method=True, type='char', 
+                                         multi='calc', string='Payed Invoices'),
     }
     
     _defaults = {'state_check_control': 'got_check'}
     
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=None):
-        """
-        Inherit the on_change from account.voucher, add allow_check_writing and sequence check
-        """
         if not context:
             context = {}            
         default = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=context)

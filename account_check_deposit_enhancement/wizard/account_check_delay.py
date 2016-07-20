@@ -30,7 +30,7 @@ class account_check_delay(osv.osv_memory):
     
     def _partial_voucher_for(self, cr, uid, voucher, context=None):
         partial_move = {
-            'check_number': voucher.number,
+            'check_number': voucher.check_number,
             'amount': voucher.amount or 0,
             'partner_id': voucher.partner_id.id,
             'old_deposit_date': voucher.deposit_date,
