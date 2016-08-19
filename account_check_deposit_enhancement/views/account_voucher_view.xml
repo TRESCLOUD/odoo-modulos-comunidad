@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+    
 		<record model="ir.ui.view" id="view_vendor_receipt_form_ecua">
             <field name="name">view.vendor.receipt.form.ecua</field>
             <field name="model">account.voucher</field>

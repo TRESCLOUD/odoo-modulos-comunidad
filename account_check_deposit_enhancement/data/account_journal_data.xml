@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data noupdate="0">
+	
 		<!-- The user will have to configure manually the default_credit_account_id
 		and default_debit_account_id, we can't do that for him -->
 		<record id="account_check_deposit.check_received_journal" model="account.journal">
@@ -11,5 +12,6 @@
 		    <field name="default_invalid_checks_acc_id" ref="customer_invalid_check_account"/>
 		    <field name="is_client_owner" eval="True"/>
 		</record>
+		
 	</data>
 </openerp>
