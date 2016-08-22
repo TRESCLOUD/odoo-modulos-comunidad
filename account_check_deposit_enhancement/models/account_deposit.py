@@ -28,6 +28,11 @@ class account_check_deposit(orm.Model):
     _inherit = "account.check.deposit"
 
     def validate_deposit(self, cr, uid, ids, context=None):
+        '''
+        Valida el deposito, Cambia de estado el pago a cheques depositados.
+        :param ids: Ids del deposito
+        :param context: Variables de contexto o de ambiente
+        '''
         context = context or {}
         super(account_check_deposit, self).validate_deposit(cr, uid, ids, context=context)
         am_obj = self.pool['account.move']

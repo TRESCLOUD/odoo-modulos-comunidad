@@ -29,7 +29,8 @@ class account_check_from_till(osv.osv_memory):
 
     def till_checks(self, cr, uid, ids, context=None):
         """
-        This function close period
+        Este metodo sirve para recibir los cheques de caja.
+        Cambia de estado el voucher
         @param cr: the current row, from the database cursor,
         @param uid: the current user’s ID for security checks,
         @param ids: account period close’s ID or list of IDs

@@ -1,58 +1,57 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# * account_check_deposit
-# 
-# Translators:
+#	* account_check_deposit
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: account-financial-tools (7.0)\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 09:14+0000\n"
-"PO-Revision-Date: 2015-06-03 16:24+0000\n"
+"POT-Creation-Date: 2016-08-22 16:54+0000\n"
+"PO-Revision-Date: 2016-08-22 16:54+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-account-financial-tools-7-0/language/es/)\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,total_amount:0
 msgid "Total Amount"
-msgstr ""
+msgstr "Monto Total"
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:47
 msgid "Beneficiary"
-msgstr ""
+msgstr "Beneficiario"
 
 #. module: account_check_deposit
 #: constraint:account.check.deposit:0
 msgid "All the checks of the deposit must be in the currency of the deposit"
-msgstr ""
+msgstr "Todos los cheques que se han depositado deben esta en la misma moneda que el deposito."
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 selection:account.check.deposit,state:0
+#: view:account.check.deposit:0
+#: selection:account.check.deposit,state:0
 msgid "Draft"
 msgstr "Borrador"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,line_ids:0
 msgid "Lines"
-msgstr ""
+msgstr "Líneas"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:194
 #: code:addons/account_check_deposit/account_deposit.py:216
 #, python-format
 msgid "Check Deposit %s"
-msgstr ""
+msgstr "Depósito Cheque %s"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,journal_default_account_id:0
 msgid "Default Debit Account of the Journal"
-msgstr ""
+msgstr "Cuenta contable por defecto de debito del diario"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,state:0
@@ -62,17 +61,18 @@ msgstr "Estado"
 #. module: account_check_deposit
 #: field:account.check.deposit,currency_none_same_company_id:0
 msgid "Currency (False if same as company)"
-msgstr ""
+msgstr "Moneda (Falso Si es la misma de la compañía)"
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:83
 msgid "Total:"
-msgstr ""
+msgstr "Total:"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 field:account.move.line,check_deposit_id:0
+#: view:account.check.deposit:0
+#: field:account.move.line,check_deposit_id:0
 msgid "Check Deposit"
-msgstr ""
+msgstr "Depósito de cheque"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,company_id:0
@@ -84,34 +84,35 @@ msgstr "Compañía"
 #: model:ir.actions.act_window,name:account_check_deposit.action_check_deposit_tree
 #: model:ir.ui.menu,name:account_check_deposit.menu_check_deposit_tree
 msgid "Checks Deposits"
-msgstr ""
+msgstr "Depósitos de cheques"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 field:account.check.deposit,deposit_date:0
+#: view:account.check.deposit:0
+#: field:account.check.deposit,deposit_date:0
 #: report:addons/account_check_deposit/report/check_deposit.mako:45
 msgid "Deposit Date"
-msgstr ""
+msgstr "Fecha de depósito"
 
 #. module: account_check_deposit
 #: field:res.company,check_deposit_account_id:0
 msgid "Account for Check Deposits"
-msgstr ""
+msgstr "Cuenta contable para depósito de cheques"
 
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 msgid "Group By"
-msgstr ""
+msgstr "Agrupar por..."
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:253
 #, python-format
 msgid "Missing Account for Check Deposits on the company '%s'."
-msgstr ""
+msgstr "No se ha añadido ninguna cuenta contable para el depósito de cheques en la compañia '%s'."
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:63
 msgid "Payment Date"
-msgstr ""
+msgstr "Fecha de pago"
 
 #. module: account_check_deposit
 #: model:ir.model,name:account_check_deposit.model_account_move_line
@@ -121,31 +122,34 @@ msgstr "Apuntes contables"
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 msgid "Back to Draft"
-msgstr ""
+msgstr "Cambiar a borrador"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:130
 #: code:addons/account_check_deposit/account_deposit.py:141
 #, python-format
-msgid ""
-"The check with amount %s and reference '%s' is in currency %s but the "
-"deposit is in currency %s."
-msgstr ""
+msgid "The check with amount %s and reference '%s' is in currency %s but the deposit is in currency %s."
+msgstr "El cheque con monto %s y referencia '%s' está en la moneda %s pero el depósito es en la moneda %s."
 
 #. module: account_check_deposit
 #: field:account.check.deposit,check_count:0
 msgid "Number of Checks"
-msgstr ""
+msgstr "Número de Cheques"
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:65
 msgid "Debtor"
-msgstr ""
+msgstr "Deudor"
+
+#. module: account_check_deposit
+#: help:res.company,days_of_valid_proforma_for_retail:0
+msgid "This field defines the days of validity of the proforma for retail"
+msgstr "Este campos define los deías de validez de la proforma para retail."
 
 #. module: account_check_deposit
 #: field:account.check.deposit,name:0
@@ -155,24 +159,25 @@ msgstr "Nombre"
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 msgid "Checks Deposit Search"
-msgstr ""
+msgstr "Busqueda de cheques depositados"
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:48
 msgid "Bank Account Number"
-msgstr ""
+msgstr "Número de cuenta bancaria"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:129
 #: code:addons/account_check_deposit/account_deposit.py:140
 #, python-format
 msgid "Error:"
-msgstr ""
+msgstr "Error:"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 field:account.check.deposit,partner_bank_id:0
+#: view:account.check.deposit:0
+#: field:account.check.deposit,partner_bank_id:0
 msgid "Bank Account"
-msgstr ""
+msgstr "Cuenta Bancaria"
 
 #. module: account_check_deposit
 #: model:ir.model,name:account_check_deposit.model_res_company
@@ -182,7 +187,7 @@ msgstr "Compañías"
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:41
 msgid "Deposit Slip of Checks in "
-msgstr ""
+msgstr "Depósito de cheques en "
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:159
@@ -193,31 +198,31 @@ msgstr "Error"
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:66
 msgid "Amount"
-msgstr ""
+msgstr "Monto"
 
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 #: model:ir.actions.report.xml,name:account_check_deposit.check_deposit_webkit
 msgid "Checks Deposit"
-msgstr ""
+msgstr "Depósito de cheques"
 
 #. module: account_check_deposit
 #: view:account.check.deposit:0
 #: field:account.check.deposit,check_payment_ids:0
 #: report:addons/account_check_deposit/report/check_deposit.mako:58
 msgid "Check Payments"
-msgstr ""
+msgstr "Pagos de cheques"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:203
 #, python-format
 msgid "Check Deposit - Ref. Check %s"
-msgstr ""
+msgstr "Depósito de cheque - Ref. Cheque %s"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,is_reconcile:0
 msgid "Reconcile"
-msgstr ""
+msgstr "Reconciliado"
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:64
@@ -227,43 +232,50 @@ msgstr "Referencia"
 #. module: account_check_deposit
 #: model:ir.model,name:account_check_deposit.model_account_check_deposit
 msgid "Account Check Deposit"
-msgstr ""
+msgstr "Cuenta contable de depósito de Cheques"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:160
 #, python-format
-msgid ""
-"The deposit '%s' is in valid state, so you must cancel it before deleting "
-"it."
-msgstr ""
+msgid "The deposit '%s' is in valid state, so you must cancel it before deleting it."
+msgstr "El depósito '%s' está en estado validado, se lo debe cancelar antes de ser eliminado."
 
 #. module: account_check_deposit
 #: report:addons/account_check_deposit/report/check_deposit.mako:46
 msgid "Deposit Ref"
-msgstr ""
+msgstr "Ref Depósito"
 
 #. module: account_check_deposit
 #: code:addons/account_check_deposit/account_deposit.py:252
 #, python-format
 msgid "Configuration Error:"
-msgstr ""
+msgstr "Error de Configuración:"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 field:account.check.deposit,currency_id:0
+#: view:account.check.deposit:0
+#: field:account.check.deposit,currency_id:0
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 selection:account.check.deposit,state:0
+#: view:account.check.deposit:0
+#: selection:account.check.deposit,state:0
 msgid "Done"
-msgstr ""
+msgstr "Realizado"
 
 #. module: account_check_deposit
 #: field:account.check.deposit,move_id:0
 msgid "Journal Entry"
-msgstr ""
+msgstr "Asiento contable"
 
 #. module: account_check_deposit
-#: view:account.check.deposit:0 field:account.check.deposit,journal_id:0
+#: field:res.company,days_of_valid_proforma_for_retail:0
+msgid "Days of validity of the proforma for retail"
+msgstr "Fecha de validez de la proforma para retail."
+
+#. module: account_check_deposit
+#: view:account.check.deposit:0
+#: field:account.check.deposit,journal_id:0
 msgid "Journal"
 msgstr "Diario"
+

@@ -32,10 +32,12 @@
 			<field name="model">account.voucher</field>
 			<field name="arch" type="xml">
 				<search string="Checks from till">
-					<field name="deposit_date"/>
-					<field name="new_deposit_date"/>
-					<field name="number"/>
-					<!-- <field name="account_number"/> -->
+					<field name="deposit_date" />
+					<field name="new_deposit_date" />
+					<field name="number" />
+					<field name="bank_account_partner_id" />
+					<field name="invoice_payed" />
+					<field name="amount" />
 					<group expand="1" string="Group By...">
 						<filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
 					</group>
@@ -49,11 +51,11 @@
             <field name="priority" eval="17"/> 
             <field name="arch" type="xml">
                 <tree string="Voucher Entries">
+                	<field name="state" invisible="1" />
                     <field name="deposit_date"/>
                     <field name="partner_id"/>
                     <field name="number"/>
                     <field name="bank_account_partner_id"/>
-                    <field name="partner_id"/>
                     <field name="invoice_payed"/>
                     <field name="amount" sum="Total Amount"/>
                 </tree>
@@ -75,6 +77,12 @@
             <field name="act_window_id" ref="action_received_checks_till"/>
             <field name="view_id" ref="view_voucher_tree_check_from_till"/>
         </record>
+        <record id="action_received_checks_till_form_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_received_checks_till"/>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+        </record>
         
         <record id="action_received_checks" model="ir.actions.act_window">
             <field name="name">Received Checks</field>
@@ -91,6 +99,12 @@
             <field name="act_window_id" ref="action_received_checks"/>
             <field name="view_id" ref="view_voucher_tree_check_from_till"/>
         </record>
+        <record id="action_received_checks_form_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_received_checks"/>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+        </record>
         
         <record model="ir.ui.view" id="view_voucher_tree_check_deposited">
             <field name="name">account.voucher.tree</field>
@@ -98,12 +112,12 @@
             <field name="priority" eval="17"/> 
             <field name="arch" type="xml">
                 <tree string="Voucher Entries">
+                	<field name="state" invisible="1" />
                 	<field name="check_deposit_id"/>
                     <field name="deposit_date"/>
                     <field name="partner_id"/>
                     <field name="number"/>
                     <field name="bank_account_partner_id"/>
-                    <field name="partner_id"/>
                     <field name="invoice_payed"/>
                     <field name="amount" sum="Total Amount"/>
                 </tree>
@@ -142,6 +156,12 @@
             <field name="act_window_id" ref="action_deposited_checks"/>
             <field name="view_id" ref="view_voucher_tree_check_deposited"/>
         </record>
+        <record id="action_deposited_checks_form_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_deposited_checks"/>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+        </record>
         
         <record model="ir.ui.view" id="view_voucher_tree_check_delayed">
              <field name="name">account.voucher.tree</field>
@@ -149,11 +169,11 @@
             <field name="priority" eval="17"/> 
             <field name="arch" type="xml">
                 <tree string="Voucher Entries">
+                	<field name="state" invisible="1" />
                 	<field name="new_deposit_date"/>
                     <field name="partner_id"/>
                     <field name="number"/>
                     <field name="bank_account_partner_id"/>
-                    <field name="partner_id"/>
                     <field name="invoice_payed"/>
                     <field name="amount" sum="Total Amount"/>
                 </tree>
@@ -175,6 +195,30 @@
             <field name="act_window_id" ref="action_delayed_checks"/>
             <field name="view_id" ref="view_voucher_tree_check_delayed"/>
         </record>
+        <record id="action_delayed_checks_tree_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_delayed_checks"/>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_voucher_tree_rejected_check">
+            <field name="name">account.voucher.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="priority" eval="17"/> 
+            <field name="arch" type="xml">
+                <tree string="Voucher Entries">
+                	<field name="state" invisible="1" />
+                    <field name="deposit_date"/>
+                    <field name="partner_id"/>
+                    <field name="number"/>
+                    <field name="bank_account_partner_id"/>
+                    <field name="rejected_reason"/>
+                    <field name="invoice_payed"/>
+                    <field name="amount" sum="Total Amount"/>
+                </tree>
+            </field>
+        </record>
         
         <record id="action_rejected_checks" model="ir.actions.act_window">
             <field name="name">Rejected Checks</field>
@@ -183,6 +227,19 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[('check_manage','=',True),('state_check_control','=','rejected_check'),('state','=','posted')]</field>
             <!-- <field name="search_view_id" ref="view_foreign_purchase_filter"/> -->
+        </record>
+        
+		<record id="action_rejected_checks_tree_view" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_rejected_checks"/>
+            <field name="view_id" ref="view_voucher_tree_rejected_check"/>
+        </record>
+        <record id="action_rejected_checks_form_view" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_rejected_checks"/>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
         </record>
         
         <menuitem id="menu_check_control" name="Check Control"

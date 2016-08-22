@@ -28,6 +28,11 @@ class account_check_reject(osv.osv_memory):
     _description = "Check reject"
     
     def _partial_voucher_for(self, cr, uid, voucher, context=None):
+        '''
+        Prepara la vista de los cheques que van a ser protestados
+        :param voucher: Cheque que se depositara
+        :param context: Variables de contexto
+        '''
         partial_move = {
             'check_number': voucher.check_number,
             'amount': voucher.amount or 0,
@@ -38,13 +43,22 @@ class account_check_reject(osv.osv_memory):
         return partial_move
     
     def default_get(self, cr, uid, fields, context=None):
+        '''
+        Se carga los campos por defecto en el asistente
+        para ser protestados los cheques
+        :param fields: Campos que seran analizados
+        :param context: Variables de contexto o de ambiente
+        '''
         if context is None: context = {}
-        # no call to super!
         res = {}
         voucher_obj = self.pool.get('account.voucher')
         voucher_ids = context.get('active_ids', False)
+        # Si no estamos en account.voucher entonces no hacemos nada
         if not voucher_ids or not context.get('active_model') == 'account.voucher':
             return res
+        # Si el campo por defecto que requerimos esta en los pendientes
+        # entonces se analiza las lineas seleccionadas y se las carga 
+        # en el asistente
         if 'reject_checks' in fields:
             voucher_ids = voucher_obj.browse(cr, uid, voucher_ids, context=context)
             vouchers = [self._partial_voucher_for(cr, uid, m, context=context) for m in voucher_ids]
@@ -53,10 +67,11 @@ class account_check_reject(osv.osv_memory):
    
     def reject_checks(self, cr, uid, ids, context=None):
         """
-        This function close period
+        Cheques protestados por el usuario
         @param cr: the current row, from the database cursor,
         @param uid: the current user’s ID for security checks,
         @param ids: account period close’s ID or list of IDs
+        @param context: Variables de contexto o de ambiente
          """
         account_voucher_obj = self.pool.get('account.voucher')
         for rejected_check_id in self.browse(cr, uid, ids, context=context):
@@ -64,6 +79,8 @@ class account_check_reject(osv.osv_memory):
                 for line_id in rejected_check_id.reject_checks:
                     note = line_id.note
                     voucher_id = line_id.voucher_id.id
+                    # Se escribe la razon de protestado en el pago
+                    # Ademas se cambia de estado al pago.
                     account_voucher_obj.write(cr, uid, voucher_id, {'rejected_reason': note,
                                                                     'state_check_control': 'rejected_check'}, context=context)
 
