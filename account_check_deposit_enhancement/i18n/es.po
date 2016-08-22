@@ -1,0 +1,331 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_check_deposit_enhancement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-22 16:53+0000\n"
+"PO-Revision-Date: 2016-08-22 16:53+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_check_deposit_enhancement
+#: selection:account.voucher,state_check_control:0
+msgid "Cheques Detenidos"
+msgstr "Cheques Detenidos"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_deposited_checks
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_deposited
+msgid "Deposited Checks"
+msgstr "Cheques Depositados"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,wizard_id:0
+#: field:account.check.reject.line,wizard_id:0
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,bank_account_partner_id:0
+msgid "Number account"
+msgstr "Número de cuenta"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Deposited Check"
+msgstr "Cheque depositado"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_received_checks
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_received
+msgid "Received Checks"
+msgstr "Cheques Recibidos"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: account_check_deposit_enhancement
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_control
+msgid "Check Control"
+msgstr "Control de cheques"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.reject:0
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_reject
+msgid "Reject Checks"
+msgstr "Cheques Protestados"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,new_deposit_date:0
+msgid "New Deposit Date"
+msgstr "Nueva Fecha de deposito "
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject.line,note:0
+msgid "Reject Reason"
+msgstr "Razón protestado"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,state_check_control:0
+msgid "State control checks"
+msgstr "Estado control de cheques"
+
+#. module: account_check_deposit_enhancement
+#: selection:account.voucher,state_check_control:0
+msgid "Cheques Recibido"
+msgstr "Cheques Recibido"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Voucher Entries"
+msgstr "Comprobantes"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Check Information"
+msgstr "Información del Cheque"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_received_checks_till
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_received_till
+msgid "Checks from the till"
+msgstr "Cheques de cajas"
+
+#. module: account_check_deposit_enhancement
+#: selection:account.voucher,state_check_control:0
+msgid "Cheques Receptados Caja"
+msgstr "Cheques Receptados Caja"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,check_deposit_id:0
+msgid "Check Deposit"
+msgstr "Deposito de Cheques"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,rejected_reason:0
+msgid "Rejected reason"
+msgstr "Razón Protestado"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_till
+msgid "Check from till"
+msgstr "Cheque de caja"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,deposit_date:0
+#: field:account.voucher,new_deposit_date:0
+msgid "Deposit Date"
+msgstr "Fecha de Deposito"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.delay:0
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_delay
+msgid "Delay Checks"
+msgstr "Cheque Detenido"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Checks from till"
+msgstr "Cheques de caja"
+
+#. module: account_check_deposit_enhancement
+#: field:account.journal,default_invalid_checks_acc_id:0
+msgid "Invalid checks account"
+msgstr "Cuenta contable de cheques invalida"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.till:0
+msgid "Till Checks"
+msgstr "Cheque de Caja"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,check_manage:0
+msgid "Check manage"
+msgstr "Manejo de cheques manage"
+
+#. module: account_check_deposit_enhancement
+#: help:account.journal,default_invalid_checks_acc_id:0
+msgid "Default account for registring the moves for invalid checks."
+msgstr "Cuenta por defecto para registrar los movimientos de cheques invalidados."
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,check_number:0
+#: field:account.check.reject.line,check_number:0
+msgid "Check number"
+msgstr "Número de cheque"
+
+#. module: account_check_deposit_enhancement
+#: field:account.journal,deposit_management:0
+msgid "Deposit Management"
+msgstr "Gestión de depositos"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_delay
+msgid "Check delay"
+msgstr "Cheque detenido"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay,delay_checks:0
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_delayed_checks
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_delayed
+msgid "Delayed Checks"
+msgstr "Cheques detenidos"
+
+#. module: account_check_deposit_enhancement
+#: constraint:account.journal:0
+msgid "Configuration error!\n"
+"The currency chosen should be shared by the default accounts too."
+msgstr "¡Error de configuración! La moneda escogida debería ser compartida también por las cuentas por defecto."
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_delay_line
+msgid "Check delay line"
+msgstr "Cheque detenido"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.delay:0
+#: view:account.check.reject:0
+#: view:account.check.till:0
+msgid "or"
+msgstr "o"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,amount:0
+#: field:account.check.reject.line,amount:0
+msgid "Amount"
+msgstr "Monto"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.till:0
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_receive
+msgid "Receive Checks"
+msgstr "Cheque Recibido"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.delay:0
+#: view:account.check.reject:0
+msgid "Esta seguro que quiere detener los cheques marcados?"
+msgstr "Está seguro que quiere detener los cheques marcados?"
+
+#. module: account_check_deposit_enhancement
+#: selection:account.voucher,state_check_control:0
+msgid "Cheques Depositado"
+msgstr "Cheques Depositado"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,invoice_payed:0
+msgid "Payed Invoices"
+msgstr "Facturas que paga"
+
+#. module: account_check_deposit_enhancement
+#: view:account.journal:0
+msgid "Check Controls"
+msgstr "Control de cheques"
+
+#. module: account_check_deposit_enhancement
+#: help:account.journal,deposit_management:0
+msgid "This field allows to the system identify if this journal will manage the deposits for checks."
+msgstr "Este campo permite al sistema identificar si el diario gestionará el deposito de cheques."
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_reject
+msgid "Check reject"
+msgstr "Cheque protestado"
+
+#. module: account_check_deposit_enhancement
+#: selection:account.voucher,state_check_control:0
+msgid "Cheques Protestado"
+msgstr "Cheques Protestado"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_reject_line
+msgid "Check reject line"
+msgstr "Línea de asistente de cheques protestados"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_check_deposit
+msgid "Account Check Deposit"
+msgstr "Cuenta contables de deposito de cheques"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.model,name:account_check_deposit_enhancement.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes contables"
+
+#. module: account_check_deposit_enhancement
+#: sql_constraint:account.journal:0
+msgid "The name of the journal must be unique per company !"
+msgstr "¡El nombre del diaro debe ser único por compañía!"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.till:0
+msgid "Esta seguro que quiere recibir los cheques marcados?"
+msgstr "Está seguro que quiere recibir los cheques marcados?"
+
+#. module: account_check_deposit_enhancement
+#: sql_constraint:account.journal:0
+msgid "The code of the journal must be unique per company !"
+msgstr "¡El código del diario debe ser único por compañía!"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,voucher_id:0
+#: field:account.check.reject.line,voucher_id:0
+msgid "Voucher"
+msgstr "Pago"
+
+#. module: account_check_deposit_enhancement
+#: field:account.journal,control_customer_check:0
+msgid "Control customer checks"
+msgstr "Control cheques de clientes"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.delay:0
+#: view:account.check.reject:0
+#: view:account.check.till:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,partner_id:0
+#: field:account.check.reject.line,partner_id:0
+#: view:account.voucher:0
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject,reject_checks:0
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_rejected_checks
+#: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_rejected
+msgid "Rejected Checks"
+msgstr "Cheques Protestados"
+
+#. module: account_check_deposit_enhancement
+#: help:account.journal,control_customer_check:0
+msgid "This field allows to control and manage the checks that your customers write for paying their debts."
+msgstr "Este campo permite controlar y manejar los cheques que sus clientes han girado para pagar sus deudas."
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Total Amount"
+msgstr "Importe total"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.delay.line,old_deposit_date:0
+#: field:account.check.reject.line,old_deposit_date:0
+msgid "Old Deposit Date"
+msgstr "Fecha anterior de Deposito"
+

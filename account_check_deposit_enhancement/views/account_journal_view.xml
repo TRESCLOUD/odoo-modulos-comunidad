@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    	<record id="view_account_journal_imbalance_form" model="ir.ui.view">
+            <field name="name">account.journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+           		<xpath expr="//field[@name='group_invoice_lines']" position="after">
+                	<field name="control_customer_check" attrs="{'invisible': [('type','=','bank'), ('is_client_owner','=',False)]}" groups="base.group_system"/>
+                	<field name="deposit_management" attrs="{'invisible': [('type','=','bank'), ('is_client_owner','=',False)]}" groups="base.group_system"/>
+                </xpath> 
+                <xpath expr="//page[@string='Entry Controls']" position="after">
+                    <page string="Check Controls" attrs="{'invisible': [('control_customer_check', '=', False)]}" groups="base.group_system">
+                        <group>
+	                        <field name="default_invalid_checks_acc_id" 
+	                        attrs="{'required': [('control_customer_check', '=', True)]}"
+	                        domain="[('type', '=', 'receivable')]"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+	</data>
+</openerp>
