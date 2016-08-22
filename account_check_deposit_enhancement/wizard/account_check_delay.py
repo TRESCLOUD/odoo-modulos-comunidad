@@ -100,11 +100,11 @@ class account_check_delay_line(osv.osv_memory):
     
     _columns = {
         'wizard_id': fields.many2one('account.check.delay', string="Wizard"),
-        'check_number': fields.char('Check number', help=""),
-        'amount': fields.float('Amount', help=""),
-        'partner_id': fields.many2one('res.partner', string='Partner',help=""),
-        'old_deposit_date': fields.date('Old Deposit Date', help=""),
-        'new_deposit_date': fields.date('New Deposit Date', help=""),
+        'check_number': fields.char('Check number', help="Check Number from the customer"),
+        'amount': fields.float('Amount', help="Amount of the check"),
+        'partner_id': fields.many2one('res.partner', string='Partner',help="Customer of the check"),
+        'old_deposit_date': fields.date('Old Deposit Date', help="Previous Date of the deposit"),
+        'new_deposit_date': fields.date('New Deposit Date', help="New date of the deposit"),
         'voucher_id': fields.many2one('account.voucher', string='Voucher', help=""),
     }
 

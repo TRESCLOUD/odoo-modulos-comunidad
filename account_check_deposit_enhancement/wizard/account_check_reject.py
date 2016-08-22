@@ -99,11 +99,11 @@ class account_check_reject_line(osv.osv_memory):
     
     _columns = {
         'wizard_id': fields.many2one('account.check.reject', string="Wizard"),
-        'check_number': fields.char('Check number', help=""),
-        'amount': fields.float('Amount', help=""),
-        'partner_id': fields.many2one('res.partner', string='Partner',help=""),
-        'old_deposit_date': fields.date('Old Deposit Date', help=""),
-        'note': fields.text('Reject Reason', help=""),
+        'check_number': fields.char('Check number', help="Check Number from the customer"),
+        'amount': fields.float('Amount', help="Amount of the check"),
+        'partner_id': fields.many2one('res.partner', string='Partner',help="Customer of the check"),
+        'old_deposit_date': fields.date('Old Deposit Date', help="Previous Date of the deposit"),
+        'note': fields.text('Reject Reason', help="Reason for what the check is rejected"),
         'voucher_id': fields.many2one('account.voucher', string='Voucher', help=""),
     }
 

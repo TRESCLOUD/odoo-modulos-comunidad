@@ -16,6 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_check_deposit_enhancement
+#: help:account.check.reject.line,note:0
+msgid "Reason for what the check is rejected"
+msgstr "Razón por la cual se protesta el cheque"
+
+#. module: account_check_deposit_enhancement
 #: selection:account.voucher,state_check_control:0
 msgid "Cheques Detenidos"
 msgstr "Cheques Detenidos"
@@ -49,9 +54,15 @@ msgid "Received Checks"
 msgstr "Cheques Recibidos"
 
 #. module: account_check_deposit_enhancement
-#: view:account.voucher:0
-msgid "Group By..."
-msgstr "Agrupar por..."
+#: sql_constraint:account.journal:0
+msgid "The code of the journal must be unique per company !"
+msgstr "¡El código del diario debe ser único por compañía!"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.delay:0
+#: view:account.check.reject:0
+msgid "Esta seguro que quiere detener los cheques marcados?"
+msgstr "Está seguro que quiere detener los cheques marcados?"
 
 #. module: account_check_deposit_enhancement
 #: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_control
@@ -70,14 +81,25 @@ msgid "New Deposit Date"
 msgstr "Nueva Fecha de deposito "
 
 #. module: account_check_deposit_enhancement
-#: field:account.check.reject.line,note:0
-msgid "Reject Reason"
-msgstr "Razón protestado"
+#: help:account.check.delay.line,amount:0
+#: help:account.check.reject.line,amount:0
+msgid "Amount of the check"
+msgstr "Monto del cheque"
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,new_deposit_date:0
+msgid "New deposit date of the check, used when the deposit is delayed"
+msgstr "Nueva fecha de depósito del cheque, usado cuando el depósito es detenido"
 
 #. module: account_check_deposit_enhancement
 #: field:account.voucher,state_check_control:0
 msgid "State control checks"
 msgstr "Estado control de cheques"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject.line,note:0
+msgid "Reject Reason"
+msgstr "Razón protestado"
 
 #. module: account_check_deposit_enhancement
 #: selection:account.voucher,state_check_control:0
@@ -90,9 +112,19 @@ msgid "Voucher Entries"
 msgstr "Comprobantes"
 
 #. module: account_check_deposit_enhancement
+#: help:account.voucher,bank_account_partner_id:0
+msgid "Bank Account Number of the customer."
+msgstr "Número de Cuenta bancaria del cliente."
+
+#. module: account_check_deposit_enhancement
 #: view:account.voucher:0
 msgid "Check Information"
 msgstr "Información del Cheque"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Group By..."
+msgstr "Agrupar por..."
 
 #. module: account_check_deposit_enhancement
 #: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_received_checks_till
@@ -174,6 +206,11 @@ msgid "Deposit Management"
 msgstr "Gestión de depositos"
 
 #. module: account_check_deposit_enhancement
+#: help:account.voucher,check_manage:0
+msgid "Payment with check management"
+msgstr "Pago con manejo de cheques"
+
+#. module: account_check_deposit_enhancement
 #: model:ir.model,name:account_check_deposit_enhancement.model_account_check_delay
 msgid "Check delay"
 msgstr "Cheque detenido"
@@ -190,6 +227,11 @@ msgstr "Cheques detenidos"
 msgid "Configuration error!\n"
 "The currency chosen should be shared by the default accounts too."
 msgstr "¡Error de configuración! La moneda escogida debería ser compartida también por las cuentas por defecto."
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,invoice_payed:0
+msgid "This field is to make a list of invoices that are paid by this method"
+msgstr "Este campo sirve para listar las facturas que fueron pagadas con el cheque."
 
 #. module: account_check_deposit_enhancement
 #: model:ir.model,name:account_check_deposit_enhancement.model_account_check_delay_line
@@ -214,6 +256,21 @@ msgstr "Monto"
 #: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_receive
 msgid "Receive Checks"
 msgstr "Cheque Recibido"
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,state_check_control:0
+msgid "It used to show what state of the process is the check"
+msgstr "Es usado para mostrar en que estado del proceso se encuentra el cheque"
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,check_deposit_id:0
+msgid "Deposit Check that belongs the voucher"
+msgstr "Deposito de cheque a la que pertenece el pago"
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,deposit_date:0
+msgid "Deposit date of the check"
+msgstr "Fecha de depósito del cheque"
 
 #. module: account_check_deposit_enhancement
 #: view:account.check.delay:0
@@ -277,6 +334,17 @@ msgid "Esta seguro que quiere recibir los cheques marcados?"
 msgstr "Está seguro que quiere recibir los cheques marcados?"
 
 #. module: account_check_deposit_enhancement
+#: help:account.check.delay.line,old_deposit_date:0
+#: help:account.check.reject.line,old_deposit_date:0
+msgid "Previous Date of the deposit"
+msgstr "Fecha de depósito anterior"
+
+#. module: account_check_deposit_enhancement
+#: help:account.check.delay.line,new_deposit_date:0
+msgid "New date of the deposit"
+msgstr "Nueva fecha de depósito"
+
+#. module: account_check_deposit_enhancement
 #: sql_constraint:account.journal:0
 msgid "The code of the journal must be unique per company !"
 msgstr "¡El código del diario debe ser único por compañía!"
@@ -314,6 +382,12 @@ msgid "Rejected Checks"
 msgstr "Cheques Protestados"
 
 #. module: account_check_deposit_enhancement
+#: help:account.check.delay.line,partner_id:0
+#: help:account.check.reject.line,partner_id:0
+msgid "Customer of the check"
+msgstr "Cheque del cliente"
+
+#. module: account_check_deposit_enhancement
 #: help:account.journal,control_customer_check:0
 msgid "This field allows to control and manage the checks that your customers write for paying their debts."
 msgstr "Este campo permite controlar y manejar los cheques que sus clientes han girado para pagar sus deudas."
@@ -327,5 +401,5 @@ msgstr "Importe total"
 #: field:account.check.delay.line,old_deposit_date:0
 #: field:account.check.reject.line,old_deposit_date:0
 msgid "Old Deposit Date"
-msgstr "Fecha anterior de Deposito"
+msgstr "Fecha anterior de Depósito"
 
