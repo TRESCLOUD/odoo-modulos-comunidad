@@ -123,7 +123,7 @@ msgstr "Plantilla de costos de importación"
 #. module: purchase_landed_costs_extended
 #: field:landed.cost.position.template,amount:0
 msgid "Amount"
-msgstr "Monto"
+msgstr "Monto USD"
 
 #. module: purchase_landed_costs_extended
 #: view:landed.cost.position.template:0
