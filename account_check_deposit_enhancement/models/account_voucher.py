@@ -63,20 +63,30 @@ class account_voucher(osv.osv):
     
     _columns = {
         'check_manage': fields.boolean('Check manage', help="Payment with check management"),
-        'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help="Bank Account Number of the customer."),
+        'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help="Bank Account Number of the customer.",
+                                                   track_visibility='always'),
         'check_deposit_id': fields.function(_get_invoice, relation="account.check.deposit", store=True,
                                             type='many2one', multi='calc', string='Check Deposit', 
                                             readonly=True, help="Deposit Check that belongs the voucher"),
-        'deposit_date': fields.date('Deposit Date', help="Deposit date of the check"),
-        'new_deposit_date': fields.date('Deposit Date', help="New deposit date of the check, used when the deposit is delayed"),
-        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', help="It used to show what state of the process is the check"),
+        'deposit_date': fields.date('Deposit Date', 
+                                    track_visibility='always',
+                                    help="Date on which the check will be deposited according to the negotiation with the customer."),
+        'new_deposit_date': fields.date('Deposit Date', 
+                                        help="New deposit date of the check, used when the deposit is delayed",
+                                        track_visibility='always'),
+        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', 
+                                                help="It used to show what state of the process is the check",
+                                                track_visibility='always',),
         'rejected_reason': fields.char('Rejected reason', help="Reason for what the check was rejected"),
         'invoice_payed': fields.function(_get_invoice, method=True, type='char', 
                                          multi='calc', string='Payed Invoices',
                                          help="This field is to make a list of invoices that are paid by this method"),
     }
     
-    _defaults = {'state_check_control': 'got_check'}
+    _defaults = {
+                 'state_check_control': 'got_check',
+                 'deposit_date': fields.date.context_today,
+                 }
     
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids,
                          tax_id, partner_id, date, amount, ttype,
@@ -100,14 +110,16 @@ class account_voucher(osv.osv):
         if default and default.get('value',False):
             journal_obj = self.pool.get('account.journal')
             journal = None
-            allow = False
+            allow_control_check = False
             if journal_id:
                 # Si existe un diario en el pago entonces se verifica si tiene control de cheques
                 journal = journal_obj.browse(cr, uid, journal_id, context=context)
-                allow = journal.control_customer_check
+                allow_control_check = journal.control_customer_check
+                if allow_control_check and default['value'].get('check_number'):
+                    res['value'].pop('check_number')
             if ttype == 'receipt':
                 # Se aplica solo a pagos desde clientes
-                default['value'].update({'check_manage': allow})
+                default['value'].update({'check_manage': allow_control_check})
         return default
 
 account_voucher()

@@ -30,6 +30,7 @@
         <act_window id="action_account_check_delay"
             multi="True"
             name="Delay Checks"
+            groups="group_check_manage"
             res_model="account.check.delay" src_model="account.voucher"
             view_mode="form" target="new" view_type="form" /> 
     </data>

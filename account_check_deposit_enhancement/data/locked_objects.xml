@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+    
+    	<record id="base.model_res_partner" model="ir.model">
+	   		<field name="m2x_creation_lock_type">no-edit</field>
+       	</record>    	
+       	
+       	<record id="account_analytic_plans.model_account_analytic_plan_instance" model="ir.model">
+	   		<field name="m2x_creation_lock_type">no-edit</field>
+       	</record>
+
+    </data>
+</openerp>

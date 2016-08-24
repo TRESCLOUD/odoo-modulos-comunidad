@@ -14,14 +14,16 @@
             	<xpath expr="//page[@string='Payment Information']" position="after">
 	                <page string="Check Information" attrs="{'invisible':[('check_manage','&lt;&gt;',True)]}">
 	                    <group>
-                            <field name="bank_account_partner_id" domain="[('partner_id', '=', partner_id)]" 
-                            attrs="{'required':[('check_manage', '=', True)]}"/>
-		                    <field name="check_number" attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],
-		                                                       'readonly':[('state', '=', 'posted')]}"
-                                   />
-		                    <field name="deposit_date" attrs="{'required':[('check_manage', '=', True)]}"/>
+		                    <group>
+	                            <field name="bank_account_partner_id" domain="[('partner_id', '=', partner_id)]" 
+	                            attrs="{'required':[('check_manage', '=', True)]}"/>
+			                    <field name="check_number" attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],
+			                                                       'readonly':[('state', '=', 'posted')]}"
+	                                   />
+			                    <field name="deposit_date" attrs="{'required':[('check_manage', '=', True)]}"/>
+		                    </group>
+		                    <group></group>
 	                    </group>
-	                    <group></group>
 					</page>
                 </xpath>
             </field>
@@ -40,6 +42,7 @@
 					<field name="amount" />
 					<group expand="1" string="Group By...">
 						<filter string="Partner" name="partner" context="{'group_by':'partner_id'}"/>
+						<filter string="Journal" name="journal_id" context="{'group_by':'journal_id'}"/>
 					</group>
 				</search>
 			</field>
@@ -52,9 +55,10 @@
             <field name="arch" type="xml">
                 <tree string="Voucher Entries">
                 	<field name="state" invisible="1" />
+                	<field name="date" />
                     <field name="deposit_date"/>
                     <field name="partner_id"/>
-                    <field name="number"/>
+                    <field name="check_number"/>
                     <field name="bank_account_partner_id"/>
                     <field name="invoice_payed"/>
                     <field name="amount" sum="Total Amount"/>
@@ -116,7 +120,7 @@
                 	<field name="check_deposit_id"/>
                     <field name="deposit_date"/>
                     <field name="partner_id"/>
-                    <field name="number"/>
+                    <field name="check_number"/>
                     <field name="bank_account_partner_id"/>
                     <field name="invoice_payed"/>
                     <field name="amount" sum="Total Amount"/>
@@ -195,7 +199,7 @@
             <field name="act_window_id" ref="action_delayed_checks"/>
             <field name="view_id" ref="view_voucher_tree_check_delayed"/>
         </record>
-        <record id="action_delayed_checks_tree_view" model="ir.actions.act_window.view">
+        <record id="action_delayed_checks_form_view" model="ir.actions.act_window.view">
             <field eval="1" name="sequence"/>
             <field name="view_mode">form</field>
             <field name="act_window_id" ref="action_delayed_checks"/>

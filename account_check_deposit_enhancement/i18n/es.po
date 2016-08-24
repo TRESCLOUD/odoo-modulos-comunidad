@@ -187,7 +187,7 @@ msgstr "Cheque de Caja"
 #. module: account_check_deposit_enhancement
 #: field:account.voucher,check_manage:0
 msgid "Check manage"
-msgstr "Manejo de cheques manage"
+msgstr "Manejo de cheques"
 
 #. module: account_check_deposit_enhancement
 #: help:account.journal,default_invalid_checks_acc_id:0
@@ -220,7 +220,7 @@ msgstr "Cheque detenido"
 #: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_delayed_checks
 #: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_delayed
 msgid "Delayed Checks"
-msgstr "Cheques detenidos"
+msgstr "Cheques Detenidos"
 
 #. module: account_check_deposit_enhancement
 #: constraint:account.journal:0
@@ -269,8 +269,8 @@ msgstr "Deposito de cheque a la que pertenece el pago"
 
 #. module: account_check_deposit_enhancement
 #: help:account.voucher,deposit_date:0
-msgid "Deposit date of the check"
-msgstr "Fecha de depósito del cheque"
+msgid "Date on which the check will be deposited according to the negotiation with the customer."
+msgstr "Fecha en la que se prevee depositar el cheque, en base a la negociación realizada con el cliente."
 
 #. module: account_check_deposit_enhancement
 #: view:account.check.delay:0
