@@ -48,8 +48,10 @@ check deposits.
     'data': [
              'data/account_account_data.xml',
              'data/account_journal_data.xml',
+             'data/locked_objects.xml',
              'views/account_voucher_view.xml',
              'views/account_journal_view.xml',
+             'views/account_deposit_view.xml',
              'wizard/account_check_receive_view.xml',
              'wizard/account_check_reject_view.xml',
              'wizard/account_check_delay_view.xml',
