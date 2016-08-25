@@ -46,6 +46,7 @@ check deposits.
                 'ecua_check',
     ],
     'data': [
+             'security/security_groups.xml',
              'data/account_account_data.xml',
              'data/account_journal_data.xml',
              'data/locked_objects.xml',
