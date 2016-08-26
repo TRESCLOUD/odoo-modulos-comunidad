@@ -15,11 +15,12 @@
 	                <page string="Check Information" attrs="{'invisible':[('check_manage','&lt;&gt;',True)]}">
 	                    <group>
 		                    <group>
-	                            <field name="bank_account_partner_id" domain="[('partner_id', '=', partner_id)]" 
-	                            attrs="{'required':[('check_manage', '=', True)]}"/>
+	                            <field name="bank_account_partner_id" 
+	                            	domain="[('partner_id', '=', partner_id)]" 
+	                            	context="{'default_partner_id': partner_id}"
+	                            	attrs="{'required':[('check_manage', '=', True)]}"/>
 			                    <field name="check_number" attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],
-			                                                       'readonly':[('state', '=', 'posted')]}"
-	                                   />
+			                                                       'readonly':[('state', '=', 'posted')]}"/>
 			                    <field name="deposit_date" attrs="{'required':[('check_manage', '=', True)]}"/>
 		                    </group>
 		                    <group></group>
