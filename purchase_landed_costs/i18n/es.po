@@ -266,7 +266,7 @@ msgstr "Landed Costs Base Quantity"
 #. module: purchase_landed_costs
 #: field:purchase.order.line,landing_costs_order:0
 msgid "Landing Costs from Order"
-msgstr "Landing Costs from Order"
+msgstr "Costos Adicionales USD"
 
 #. module: purchase_landed_costs
 #: model:ir.model,name:purchase_landed_costs.model_stock_move
@@ -312,7 +312,7 @@ msgstr "Costo de importación total sin impuestos"
 #: view:landed.cost.position:0
 #: field:purchase.order.line,landing_costs:0
 msgid "Landing Costs"
-msgstr "Costos de importación"
+msgstr "Costos de importación USD"
 
 #. module: purchase_landed_costs
 #: field:landed.cost.position,amount_total:0
