@@ -40,13 +40,14 @@ class landed_cost_position(orm.Model):
                                  amount_currency, currency_id,
                                  date_po, context=None):
         assert len(ids) < 2
-        parent_currency_id = None
-        if ids:
-            landed_cost = self.browse(cr, uid, ids[0], context=context)
-            parent_currency_id = landed_cost.po_currency_id.id
-        else:
-            parent_currency_id = self._default_currency(
-                cr, uid, context=context)
+        #parent_currency_id = None
+        parent_currency_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.currency_id.id
+        #if ids:
+        #    landed_cost = self.browse(cr, uid, ids[0], context=context)
+        #    parent_currency_id = landed_cost.po_currency_id.id
+        #else:
+        #    parent_currency_id = self._default_currency(
+        #        cr, uid, context=context)
         if not parent_currency_id or not amount_currency or not currency_id:
             return {}
         cur_obj = self.pool.get('res.currency')
