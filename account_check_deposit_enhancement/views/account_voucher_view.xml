@@ -17,7 +17,7 @@
 		                    <group>
 	                            <field name="bank_account_partner_id" 
 	                            	domain="[('partner_id', '=', partner_id)]" 
-	                            	context="{'default_partner_id': partner_id}"
+	                            	context="{'default_partner_id': partner_id, 'default_type': 'current'}"
 	                            	attrs="{'required':[('check_manage', '=', True)]}"/>
 			                    <field name="check_number" 
 			                    	attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],'readonly':[('state', '=', 'posted')]}"
