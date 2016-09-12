@@ -177,7 +177,7 @@ msgstr "Cheques de caja"
 #. module: account_check_deposit_enhancement
 #: field:account.journal,default_invalid_checks_acc_id:0
 msgid "Invalid checks account"
-msgstr "Cuenta contable de cheques invalida"
+msgstr "Cuenta contable de cheques invalidados"
 
 #. module: account_check_deposit_enhancement
 #: view:account.check.till:0
@@ -191,8 +191,8 @@ msgstr "Manejo de cheques"
 
 #. module: account_check_deposit_enhancement
 #: help:account.journal,default_invalid_checks_acc_id:0
-msgid "Default account for registring the moves for invalid checks."
-msgstr "Cuenta por defecto para registrar los movimientos de cheques invalidados."
+msgid "Default account for registring the moves for invalid checks. That is when the customer payment is canceled."
+msgstr "Cuenta por defecto para registrar los movimientos de cheques invalidados. Es decir, pagos de clientes que han sido anulados."
 
 #. module: account_check_deposit_enhancement
 #: field:account.check.delay.line,check_number:0
