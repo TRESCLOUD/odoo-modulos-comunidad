@@ -23,8 +23,8 @@
 #
 ##############################################################################
 
-from tools.translate import _
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
 class mrp_production(osv.Model):
@@ -66,11 +66,10 @@ class mrp_production(osv.Model):
                         body=message,
                         subtype='mail.mt_comment',
                         context=context)
-            
         return True
-    
 
 mrp_production()
+
 
 class stock_move(osv.osv):
     
@@ -128,6 +127,36 @@ class stock_move(osv.osv):
                          'period_id': period_id and period_id[0] or False,
                          'company_id': move.company_id.id,
                          'ref': move.picking_id and move.picking_id.name}, context=company_ctx)
-
-
+                
+    def action_return_product_to_consume(self, cr, uid, ids, context=None):
+        '''
+        Este método devuelve el producto seleccionado de consumido a por consumir y elimina los apuntes contables asociados
+        :param cr: Cursor de la base de datos
+        :param uid: ID del usuario actual
+        :param ids: IDs del movimiento
+        :param context: Diccionario de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        changes = []
+        for move in  self.browse(cr, uid, ids, context=context):
+            oldvalue = 'Productos consumidos'
+            newvalue = 'Productos a consumir'
+            changes.append(_("Producto: %s: from %s to %s") %(move.product_id.name, oldvalue, newvalue))
+            if len(changes) > 0:
+                self.pool.get('mrp.production').message_post(cr, uid, [move.move_dest_id.production_id.id], body=", ".join(changes), context=context)
+        #Regresamos el producto consumido a producto por consumir
+        cr.execute('''
+            update stock_move
+            set state='waiting'
+            where id in %s
+        ''', (tuple(ids),))
+        #Eliminamos los asientos contables generados
+        cr.execute('''
+            delete 
+            from account_move_line 
+            where stock_move_id in %s
+        ''', (tuple(ids),))
+        return True
+    
 stock_move()

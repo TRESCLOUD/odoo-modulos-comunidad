@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
+
         <!--Category-->
         <record id="mrp_accounting_reprocess_actions" model="res.groups">
 	        <field name="name">Reprocess journal entries for production orders</field>
 	    </record>
+	    
+	     <record id="mrp_return_product_to_consume" model="res.groups">
+	        <field name="name">Return Product to Consume</field>
+	    </record>
+	    
     </data>
 </openerp>

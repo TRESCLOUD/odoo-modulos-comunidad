@@ -45,3 +45,9 @@ msgstr "La orden de producción número %s ha sido reprocesada por %s.\n"
 msgid "Manufacturing Order"
 msgstr "Órden de producción"
 
+#. module: mrp_account_link_enhancement
+#: view:mrp.production:0
+#: model:res.groups,name:mrp_account_link_enhancement.mrp_return_product_to_consume
+msgid "Return Product to Consume"
+msgstr "Devolver a productos por consumir"
+
