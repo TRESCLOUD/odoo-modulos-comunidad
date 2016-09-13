@@ -31,7 +31,7 @@ class account_journal(osv.osv):
                 'default_invalid_checks_acc_id': fields.many2one('account.account', 
                                                                  'Invalid checks account',
                                                                  track_visibility='onchange',
-                                                                 help="Default account for registring the moves for invalid checks."
+                                                                 help="Default account for registring the moves for invalid checks. That is when the customer payment is canceled."
                                                                  ),
                 'control_customer_check': fields.boolean('Control customer checks',
                                                          track_visibility='onchange',

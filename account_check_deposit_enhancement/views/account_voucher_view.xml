@@ -17,11 +17,13 @@
 		                    <group>
 	                            <field name="bank_account_partner_id" 
 	                            	domain="[('partner_id', '=', partner_id)]" 
-	                            	context="{'default_partner_id': partner_id}"
-	                            	attrs="{'required':[('check_manage', '=', True)], 'readonly': [('state','!=','draft')]}"/>
-			                    <field name="check_number" attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],
-			                                                       'readonly':[('state', '=', 'posted')]}"/>
-			                    <field name="deposit_date" attrs="{'required':[('check_manage', '=', True)], 'readonly': [('state','!=','draft')]}"/>
+	                            	context="{'default_partner_id': partner_id, 'default_type': 'current'}"
+	                            	attrs="{'required':[('check_manage', '=', True)]}, 'readonly': [('state','!=','draft')]}"/>
+			                    <field name="check_number" 
+			                    	attrs="{'required':[('check_manage', '=', True), ('state', '!=', 'posted')],'readonly':[('state', '=', 'posted')]}"
+			                    	on_change="onchange_check_number(journal_id, check_number)"/>
+			                    <field name="deposit_date" 
+			                    	attrs="{'required':[('check_manage', '=', True)], 'readonly': [('state','!=','draft')]}"/>
 		                    </group>
 		                    <group></group>
 	                    </group>
