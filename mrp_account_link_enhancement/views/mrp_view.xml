@@ -17,6 +17,12 @@
 	        		confirm="If you reprocess the production order, you will have to update cost of the product manually by the user."
 	        		groups="mrp_account_link_enhancement.mrp_accounting_reprocess_actions" type="object" string="Reproccess Journal items"/>
 	        	</xpath>
+	        	<xpath expr="//field[@name='scrapped']" position="after">
+	        		<button name="action_return_product_to_consume" 
+	        			string="Return Product to Consume" 
+	        			type="object" icon="terp-gtk-jump-to-rtl"
+	        			groups="mrp_account_link_enhancement.mrp_return_product_to_consume"/>
+	        	</xpath>
         	</field>
        	</record>
     </data>
