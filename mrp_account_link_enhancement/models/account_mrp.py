@@ -144,7 +144,18 @@ class stock_move(osv.osv):
             newvalue = 'Productos a consumir'
             changes.append(_("Producto: %s: from %s to %s") %(move.product_id.name, oldvalue, newvalue))
             if len(changes) > 0:
-                self.pool.get('mrp.production').message_post(cr, uid, [move.move_dest_id.production_id.id], body=", ".join(changes), context=context)
+                try:
+                    self.pool.get('mrp.production').message_post(cr, uid, [move.move_dest_id.production_id.id], body=", ".join(changes), context=context)
+                except:
+                    #Cuando el producto es agregado manualmente al listado de productos a consumir
+                    cr.execute('''
+                        select production_id 
+                        from mrp_production_move_ids 
+                        where move_id in %s
+                    ''', (tuple(ids),))
+                    res = cr.fetchall()
+                    if res:
+                        self.pool.get('mrp.production').message_post(cr, uid, [res[0][0]], body=", ".join(changes), context=context)
         #Regresamos el producto consumido a producto por consumir
         cr.execute('''
             update stock_move
