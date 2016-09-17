@@ -133,7 +133,7 @@ msgstr "Valor Base del Costo de Importacion"
 #. module: purchase_landed_costs
 #: selection:landed.cost.distribution.type,apply_on:0
 msgid "Line"
-msgstr "línea"
+msgstr "Línea"
 
 #. module: purchase_landed_costs
 #: field:stock.move,price_unit_net:0
@@ -256,12 +256,12 @@ msgstr "Cantidad"
 #: view:landed.cost.position:0
 #: field:landed.cost.position,product_id:0
 msgid "Landed Cost Name"
-msgstr "Nombre de la importación"
+msgstr "Descripción de Gastos"
 
 #. module: purchase_landed_costs
 #: field:purchase.order,landed_cost_base_quantity:0
 msgid "Landed Costs Base Quantity"
-msgstr "Landed Costs Base Quantity"
+msgstr "Costos Basado en Cantidad"
 
 #. module: purchase_landed_costs
 #: field:purchase.order.line,landing_costs_order:0
@@ -323,4 +323,3 @@ msgstr "Monto Total"
 #: view:landed.cost.position:0
 msgid "Purchase Orders"
 msgstr "Ordenes de Compra"
-

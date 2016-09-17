@@ -10,7 +10,7 @@
 		    <field name="default_debit_account_id" ref="customer_check_account"/>
 		    <field name="default_credit_account_id" ref="customer_check_account"/>
 		    <field name="default_invalid_checks_acc_id" ref="customer_invalid_check_account"/>
-		    <field name="customer_owner" eval="True"/>
+		    <field name="customer_owner" >customer_and_supplier</field>
 		</record>
 		
 	</data>
