@@ -62,9 +62,6 @@ class account_voucher(osv.osv):
         return res
     
     _columns = {
-        'check_manage': fields.boolean('Check manage', help="Payment with check management"),
-        'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help="Bank Account Number of the customer.",
-                                                   track_visibility='always'),
         'check_deposit_id': fields.function(_get_invoice, relation="account.check.deposit", store=True,
                                             type='many2one', multi='calc', string='Check Deposit', 
                                             readonly=True, help="Deposit Check that belongs the voucher"),

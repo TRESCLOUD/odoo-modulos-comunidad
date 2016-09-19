@@ -8,9 +8,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
-					<field name="check_manage" invisible="0"/>
-            	</xpath>
+            	<xpath expr="//field[@name='bank_account_partner_id']" position="replace" />
             	<xpath expr="//page[@string='Payment Information']" position="after">
 	                <page string="Check Information" attrs="{'invisible':[('check_manage','&lt;&gt;',True)]}">
 	                    <group>
