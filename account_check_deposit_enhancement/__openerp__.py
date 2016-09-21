@@ -44,6 +44,7 @@ check deposits.
                 'account',
                 'account_check_deposit',
                 'ecua_check',
+                #'ecua_payment',
     ],
     'data': [
              'security/security_groups.xml',

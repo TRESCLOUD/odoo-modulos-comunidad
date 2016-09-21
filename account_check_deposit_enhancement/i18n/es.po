@@ -38,11 +38,6 @@ msgid "Wizard"
 msgstr "Asistente"
 
 #. module: account_check_deposit_enhancement
-#: field:account.voucher,bank_account_partner_id:0
-msgid "Number account"
-msgstr "Número de cuenta"
-
-#. module: account_check_deposit_enhancement
 #: view:account.voucher:0
 msgid "Deposited Check"
 msgstr "Cheque depositado"
@@ -183,11 +178,6 @@ msgstr "Cuenta contable de cheques invalida"
 #: view:account.check.till:0
 msgid "Till Checks"
 msgstr "Cheque de Caja"
-
-#. module: account_check_deposit_enhancement
-#: field:account.voucher,check_manage:0
-msgid "Check manage"
-msgstr "Manejo de cheques"
 
 #. module: account_check_deposit_enhancement
 #: help:account.journal,default_invalid_checks_acc_id:0
