@@ -41,6 +41,8 @@ class account_journal(osv.osv):
                                                      track_visibility='onchange',
                                                      help="This field allows to the system identify if this journal will manage the deposits for checks."
                                                      ),
+                'partner_bank_ids': fields.one2many('res.partner.bank', 
+                                                    'journal_id', 'Bank Accounts',),
                 }
     
     

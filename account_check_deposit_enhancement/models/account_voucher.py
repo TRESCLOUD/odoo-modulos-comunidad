@@ -62,9 +62,8 @@ class account_voucher(osv.osv):
         return res
     
     _columns = {
-        'check_deposit_id': fields.function(_get_invoice, relation="account.check.deposit", store=True,
-                                            type='many2one', multi='calc', string='Check Deposit', 
-                                            readonly=True, help="Deposit Check that belongs the voucher"),
+        'check_deposit_id': fields.many2one('account.check.deposit',
+                                            'Check Deposit'),
         'deposit_date': fields.date('Deposit Date', 
                                     track_visibility='onchange',
                                     help="Date on which the check will be deposited according to the negotiation with the customer."),
