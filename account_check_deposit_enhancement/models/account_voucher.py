@@ -19,10 +19,8 @@
 #
 ##############################################################################
 
-import time
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
 
 
 class account_voucher(osv.osv):
@@ -67,12 +65,10 @@ class account_voucher(osv.osv):
         'deposit_date': fields.date('Deposit Date', 
                                     track_visibility='onchange',
                                     help="Date on which the check will be deposited according to the negotiation with the customer."),
-        'new_deposit_date': fields.date('Deposit Date', 
-                                        help="New deposit date of the check, used when the deposit is delayed",
-                                        track_visibility='onchange'),
-        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', 
-                                                help="It used to show what state of the process is the check",
-                                                track_visibility='onchange',),
+        'new_deposit_date': fields.date('Deposit Date', track_visibility='onchange',
+                                        help="New deposit date of the check, used when the deposit is delayed"),
+        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', track_visibility='onchange',
+                                                help="It used to show what state of the process is the check"),
         'rejected_reason': fields.char('Rejected reason', help="Reason for what the check was rejected"),
         'invoice_payed': fields.function(_get_invoice, method=True, type='char', 
                                          multi='calc', string='Payed Invoices',
@@ -80,9 +76,9 @@ class account_voucher(osv.osv):
     }
     
     _defaults = {
-                 'state_check_control': 'got_check',
-                 'deposit_date': fields.date.context_today,
-                 }
+        'state_check_control': 'got_check',
+        'deposit_date': fields.date.context_today,
+    }
     
     def onchange_journal(self, cr, uid, ids, journal_id, line_ids,
                          tax_id, partner_id, date, amount, ttype,
@@ -117,5 +113,6 @@ class account_voucher(osv.osv):
                 # Se aplica solo a pagos desde clientes
                 default['value'].update({'check_manage': allow_control_check})
         return default
+
 
 account_voucher()

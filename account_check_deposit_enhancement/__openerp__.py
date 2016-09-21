@@ -26,37 +26,36 @@
     'license': 'AGPL-3',
     'summary': 'Manage deposit of checks to the bank',
     'description': """
-Account Check Deposit
-=====================
-This module allows you to easily manage check deposits : you can select all
-the checks you received as payments and create a global deposit for the
-selected checks.
-
-A journal for received checks is automatically created.
-You must configure on this journal the default debit account and the default
-credit account. You must also configure on the company the account for
-check deposits.
-""",
+        Account Check Deposit
+        =====================
+        This module allows you to easily manage check deposits : you can select all
+        the checks you received as payments and create a global deposit for the
+        selected checks.
+        
+        A journal for received checks is automatically created.
+        You must configure on this journal the default debit account and the default
+        credit account. You must also configure on the company the account for
+        check deposits.
+    """,
     'author': "TRESCloud",
     'website': 'http://www.trescloud.com/',
     'depends': [
-                'base',
-                'account',
-                'account_check_deposit',
-                'ecua_check',
-                #'ecua_payment',
+        'base',
+        'account',
+        'account_check_deposit',
+        'ecua_check',
     ],
     'data': [
-             'security/security_groups.xml',
-             'data/account_account_data.xml',
-             'data/account_journal_data.xml',
-             'data/locked_objects.xml',
-             'views/account_voucher_view.xml',
-             'views/account_journal_view.xml',
-             'views/account_deposit_view.xml',
-             'wizard/account_check_receive_view.xml',
-             'wizard/account_check_reject_view.xml',
-             'wizard/account_check_delay_view.xml',
+        'security/security_groups.xml',
+        'data/account_account_data.xml',
+        'data/account_journal_data.xml',
+        'data/locked_objects.xml',
+        'views/account_voucher_view.xml',
+        'views/account_journal_view.xml',
+        'views/account_deposit_view.xml',
+        'wizard/account_check_receive_view.xml',
+        'wizard/account_check_reject_view.xml',
+        'wizard/account_check_delay_view.xml',
     ],
     'installable': True,
     'application': True,

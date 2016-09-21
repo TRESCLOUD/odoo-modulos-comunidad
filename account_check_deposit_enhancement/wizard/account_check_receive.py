@@ -22,8 +22,8 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
-class account_check_from_till(osv.osv_memory):
 
+class account_check_from_till(osv.osv_memory):
     _name = "account.check.till"
     _description = "Check from till"
 
@@ -40,7 +40,6 @@ class account_check_from_till(osv.osv_memory):
         for from_till_check_id in self.read(cr, uid, ids, context=context):
             for id in context['active_ids']:
                 account_voucher_ids = account_voucher_obj.write(cr, uid, id, {'state_check_control': 'received_check'}, context=context)
-
         return {'type': 'ir.actions.act_window_close'}
 
 account_check_from_till()

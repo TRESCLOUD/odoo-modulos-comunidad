@@ -23,6 +23,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import time
 
+
 class account_check_delay(osv.osv_memory):
     _name = "account.check.delay"
     _description = "Check delay"
@@ -84,7 +85,6 @@ class account_check_delay(osv.osv_memory):
                     # Ademas se cambia de estado al pago.
                     account_voucher_obj.write(cr, uid, voucher_id, {'new_deposit_date': new_deposit_date,
                                                                     'state_check_control': 'delayed_check'}, context=context)
-
         return {'type': 'ir.actions.act_window_close'}
 
     _columns = {
@@ -107,7 +107,6 @@ class account_check_delay_line(osv.osv_memory):
         'new_deposit_date': fields.date('New Deposit Date', help="New date of the deposit"),
         'voucher_id': fields.many2one('account.voucher', string='Voucher', help=""),
     }
-
 
 account_check_delay_line()
 

@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from osv import fields,osv
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class account_journal(osv.osv):
@@ -44,6 +44,6 @@ class account_journal(osv.osv):
                 'partner_bank_ids': fields.one2many('res.partner.bank', 
                                                     'journal_id', 'Bank Accounts',),
                 }
-    
+
     
 account_journal()
