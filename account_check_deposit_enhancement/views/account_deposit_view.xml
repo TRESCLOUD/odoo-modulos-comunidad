@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <!-- <record id="account_check_deposit_view_form_domain_journal" model="ir.ui.view">
-            <field name="name">account.check.deposit.form.domain.journal</field>
-            <field name="model">account.check.deposit</field>
-            <field name="inherit_id" ref=""></field>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='journal_id']" position="" >
-                                <field name="journal_default_account_id"
-                                    invisible="1"/>
-				</xpath>
-                        <group string="Check Payments" name="check_payments">
-                            <field name="check_payment_ids" nolabel="1"
-                                   widget="many2many"
-                                   domain="[('reconcile_id', '=', False),
-                                            ('debit', '>', 0),
-                                            ('check_deposit_id', '=', False),
-                                            ('currency_id', '=', currency_none_same_company_id),
-                                            ('account_id', '=', journal_default_account_id)]"
-                                    context="{'currency': currency_id,
-                                        'journal_id': journal_id}" />
-                        </group>
-                    </sheet>
-            </field>
-        </record> -->
 
         <record id="view_check_deposit_search" model="ir.ui.view">
             <field name="name">account.check.deposit.search</field>

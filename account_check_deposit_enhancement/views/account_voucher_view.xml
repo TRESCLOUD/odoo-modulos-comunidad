@@ -272,5 +272,6 @@
         <menuitem action="account_check_deposit.action_check_deposit_tree"
                   id="account_check_deposit.menu_check_deposit_tree"
                   parent="account.menu_finance_receivables" sequence="17"/>
+                  
 	</data>
 </openerp>

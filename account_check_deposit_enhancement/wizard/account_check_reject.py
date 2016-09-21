@@ -21,7 +21,7 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-import time
+
 
 class account_check_reject(osv.osv_memory):
     _name = "account.check.reject"
@@ -83,7 +83,6 @@ class account_check_reject(osv.osv_memory):
                     # Ademas se cambia de estado al pago.
                     account_voucher_obj.write(cr, uid, voucher_id, {'rejected_reason': note,
                                                                     'state_check_control': 'rejected_check'}, context=context)
-
         return {'type': 'ir.actions.act_window_close'}
 
     _columns = {
@@ -106,7 +105,6 @@ class account_check_reject_line(osv.osv_memory):
         'note': fields.text('Reject Reason', help="Reason for what the check is rejected"),
         'voucher_id': fields.many2one('account.voucher', string='Voucher', help=""),
     }
-
 
 account_check_reject_line()
 

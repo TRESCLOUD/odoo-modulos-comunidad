@@ -21,7 +21,6 @@
 
 from openerp.osv import fields, orm
 from openerp.tools.translate import _
-import openerp.addons.decimal_precision as dp
 
 
 class account_check_deposit(orm.Model):
@@ -45,6 +44,5 @@ class account_check_deposit(orm.Model):
             if account_voucher_searched:
                 av_obj.write(cr, uid, account_voucher_searched, {'state_check_control': 'deposited_check'})
         return True
-
 
 account_check_deposit()

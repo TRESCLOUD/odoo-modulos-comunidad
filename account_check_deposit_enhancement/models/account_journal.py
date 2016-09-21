@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from osv import fields,osv
-from tools.translate import _
+from openero.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class account_journal(osv.osv):
@@ -28,20 +28,12 @@ class account_journal(osv.osv):
     _inherit = ['account.journal','mail.thread']   
     
     _columns = {
-                'default_invalid_checks_acc_id': fields.many2one('account.account', 
-                                                                 'Invalid checks account',
-                                                                 track_visibility='onchange',
-                                                                 help="Default account for registring the moves for invalid checks."
-                                                                 ),
-                'control_customer_check': fields.boolean('Control customer checks',
-                                                         track_visibility='onchange',
-                                                         help="This field allows to control and manage the checks that your customers write for paying their debts."
-                                                         ),
-                'deposit_management': fields.boolean('Deposit Management',
-                                                     track_visibility='onchange',
-                                                     help="This field allows to the system identify if this journal will manage the deposits for checks."
-                                                     ),
-                }
-    
+        'default_invalid_checks_acc_id': fields.many2one('account.account', 'Invalid checks account', track_visibility='onchange',
+                                                         help="Default account for registring the moves for invalid checks."),
+        'control_customer_check': fields.boolean('Control customer checks', track_visibility='onchange',
+                                                 help="This field allows to control and manage the checks that your customers write for paying their debts."),
+        'deposit_management': fields.boolean('Deposit Management', track_visibility='onchange',
+                                             help="This field allows to the system identify if this journal will manage the deposits for checks."),
+    }    
     
 account_journal()
