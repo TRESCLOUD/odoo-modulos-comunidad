@@ -67,6 +67,11 @@ class mrp_production(osv.Model):
                         subtype='mail.mt_comment',
                         context=context)
         return True
+    
+    _columns = {
+        'landing_cost_id': fields.many2one('stock.picking.in', 'Landing Cost', 
+                                           help='If you select an import cost accounting entries are generated based on the cost CIF')
+    }
 
 mrp_production()
 
@@ -97,6 +102,13 @@ class stock_move(osv.osv):
                      or move.location_id.company_id != move.location_dest_id.company_id):
                 journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, src_company_ctx)
                 reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
+                #En caso que exista costo de importacion los asientos contables se generan en base al costo CIF
+                if move.move_dest_id.production_id.landing_cost_id:
+                    for line in move.move_dest_id.production_id.landing_cost_id.move_lines:
+                        if line.product_id.id == move.product_id.id:
+                            #En caso que exista conversion de unidades de medida
+                            qty = self.pool.get('product.uom')._compute_qty(cr, uid, move.product_uom.id, move.product_qty, move.product_uom.id)
+                            reference_amount = qty * line.price_unit
                 #returning goods to supplier
                 if move.location_dest_id.usage == 'supplier':
                     account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_src, reference_amount, reference_currency_id, context))]

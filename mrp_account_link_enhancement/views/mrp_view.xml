@@ -23,6 +23,11 @@
 	        			type="object" icon="terp-gtk-jump-to-rtl"
 	        			groups="mrp_account_link_enhancement.mrp_return_product_to_consume"/>
 	        	</xpath>
+	        	<xpath expr="//field[@name='origin']" position="after">
+	        		<field name="landing_cost_id" 
+	        			domain="[('type','=','in'), ('state','=','done'), ('allow_landing_costs','=',True)]"
+	        			attrs="{'readonly': [('state','!=','draft')]}"/>
+	        	</xpath>
         	</field>
        	</record>
     </data>
