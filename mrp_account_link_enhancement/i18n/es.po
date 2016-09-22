@@ -51,3 +51,12 @@ msgstr "Órden de producción"
 msgid "Return Product to Consume"
 msgstr "Devolver a productos por consumir"
 
+#. module: mrp_account_link_enhancement
+#: field:mrp.production,landing_cost_id:0
+msgid "Landing Cost"
+msgstr "Costo de importación"
+
+#. module: mrp_account_link_enhancement
+#: help:mrp.production,landing_cost_id:0
+msgid "If you select an import cost accounting entries are generated based on the cost CIF"
+msgstr "Si selecciona un costo de importación los apuntes contables se generan en base al costo CIF"
