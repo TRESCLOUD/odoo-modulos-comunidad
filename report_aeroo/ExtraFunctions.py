@@ -208,7 +208,7 @@ class ExtraFunctions(object):
             
         utc_dt = utc.localize(naive, is_dst=None)
         auth_date_in_local = utc_dt.astimezone (local)
-        return auth_date_in_local
+        return auth_date_in_local.strftime ("%Y-%m-%d %H:%M:%S")
 
     def __filter(self, val):
         if isinstance(val, osv.orm.browse_null):
