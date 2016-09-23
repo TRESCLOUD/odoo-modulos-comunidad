@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="view_rejected_check_form" model="ir.ui.view">
+            <field name="name">Rejected Check</field>
+            <field name="model">wizard.rejected.check</field>
+            <field name="arch" type="xml">
+                <form string="Print consumed products" version="7.0">
+					<group>
+						<field name="entry_date_rejected" required="1" on_change="onchange_entry_date_rejected(entry_date_rejected)"/>
+						<field name="date_rejected" required="1"/>
+						<field name="note" required="1"/>
+					 </group>                 
+                    <footer>
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+               
+    </data>
+</openerp>

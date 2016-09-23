@@ -29,9 +29,12 @@ class account_journal(osv.osv):
     
     _columns = {
                 'default_invalid_checks_acc_id': fields.many2one('account.account', 
-                                                                 'Invalid checks account',
+                                                                 'Account for check rejected or returned',
                                                                  track_visibility='onchange',
-                                                                 help="Default account for registring the moves for invalid checks."
+                                                                 help='If you do not specify the Account Payable Accounting tab of the tab provider is used. '
+                                                                      'For checks received from customers, when a check is protested a new obligation (Accounts Receivable) '
+                                                                      'in this account will be generated, if you do not specify the customer account receivable is used. '
+                                                                      'For checks issued to suppliers, when a check is protested a new obligation (Account Payable) will be generated in this account'
                                                                  ),
                 'control_customer_check': fields.boolean('Control customer checks',
                                                          track_visibility='onchange',

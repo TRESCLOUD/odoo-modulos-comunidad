@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="ecua_payment.view_vendor_receipt_form_ecua"/>
             <field name="arch" type="xml">
-            	<xpath expr="//field[@name='bank_account_partner_id']" position="replace" />
+            	<xpath expr="//field[@name='bank_account_partner_id']" position="replace"/>
             	<xpath expr="//page[@string='Payment Information']" position="after">
 	                <page string="Check Information" attrs="{'invisible':[('check_manage','&lt;&gt;',True)]}">
 	                    <group>
@@ -25,6 +25,26 @@
 	                    </group>
 					</page>
                 </xpath>
+                <xpath expr="//button[@name='cancel_voucher']" position="after">
+                	<button name="action_protesting_check" string="Reject Check" type="object" attrs="{'invisible': ['|', ('state','!=','posted'), ('rejected_move_id','!=',False)]}" class="oe_highlight" groups="account_check_deposit_enhancement.group_check_manage"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                	<field name="state_check_control" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@string='Journal Items']" position="after">
+                	<page string="Accounting Entries Reject" attrs="{'invisible': [('state_check_control','!=','rejected_check')]}">
+	                    <group>
+		              		<field name="entry_date_rejected" readonly="1"/>
+							<field name="date_rejected" readonly="1"/>
+							<field name="rejected_move_id" readonly="1"/>							
+	                    </group>
+					</page>
+                </xpath>
+                <xpath expr="//field[@name='number']" position="before">
+                	<div class="oe_right oe_button_box" name="buttons">
+                		<button name="show_accounting_entries" string="Show Accounting Entries" type="object" attrs="{'invisible': [('state','=','draft')]}" class="oe_highlight"/> 
+                	</div>
+                </xpath>  
             </field>
         </record>
         

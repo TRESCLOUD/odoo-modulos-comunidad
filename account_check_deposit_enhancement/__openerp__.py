@@ -56,6 +56,7 @@ check deposits.
         'wizard/account_check_receive_view.xml',
         'wizard/account_check_reject_view.xml',
         'wizard/account_check_delay_view.xml',
+        'wizard/wizard_rejected_check_view.xml'
     ],
     'installable': True,
     'application': True,

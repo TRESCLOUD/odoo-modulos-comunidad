@@ -32,6 +32,22 @@ class account_voucher(osv.osv):
                     ('rejected_check','Cheques Protestado'),
                     ('delayed_check','Cheques Detenidos')]
     
+    def copy(self, cr, uid, voucher_id, default=None, context=None):
+        '''
+        Invocamos el metodo copy para setear a false algunos campos
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param voucher_id: ID del pago
+        :param default: Diccionario con valores por defecto
+        :param context: Diccionario de contexto adicional
+        '''
+        if default is None:
+            default = {}
+        if context is None:
+            context = {}
+        default.update({'entry_date_rejected': False, 'date_rejected': False, 'rejected_move_id': False})
+        return super(account_voucher, self).copy(cr, uid, voucher_id, default=default, context=context)
+    
     def _get_invoice(self, cr, uid, ids, name, args, context=None):
         '''
         Metodo que devuelve las facturas del voucher y al deposito
@@ -59,6 +75,57 @@ class account_voucher(osv.osv):
                         continue
         return res
     
+    def action_protesting_check(self, cr, uid, ids, context=None):
+        '''
+        Este método levanta un wizard para protestar los cheques
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs del voucher
+        :param context: Diccionario de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        obj, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_check_deposit_enhancement', 'view_rejected_check_form')
+        return {
+            'name': 'Protestar Cheque',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': view_id or False,
+            'res_model': 'wizard.rejected.check',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'new'
+        }
+        
+    def show_accounting_entries(self, cr, uid, ids, context=None):
+        '''
+        Muestra los apuntes contables relacionados con el pago
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs del voucher
+        :param context: Diccionario de datos de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        accounting_entries_ids = []
+        model_data_obj = self.pool.get('ir.model.data')        
+        result = model_data_obj.get_object_reference(cr, uid, 'account', 'action_move_journal_line')
+        id = result and result[1] or False
+        result = self.pool.get('ir.actions.act_window').read(cr, uid, [id], context=context)[0]
+        voucher = self.browse(cr, uid, ids[0], context=context)
+        for move in voucher.move_ids:
+            if move.move_id.id not in accounting_entries_ids:
+                accounting_entries_ids.append(move.move_id.id)
+        if voucher.rejected_move_id:
+            accounting_entries_ids.append(voucher.rejected_move_id.id)
+        if len(accounting_entries_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(map(str, accounting_entries_ids))+"])]"
+        else:
+            res = model_data_obj.get_object_reference(cr, uid, 'account', 'view_move_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = accounting_entries_ids and accounting_entries_ids[0] or False
+        return result
+    
     _columns = {
         'check_deposit_id': fields.many2one('account.check.deposit',
                                             'Check Deposit'),
@@ -73,6 +140,12 @@ class account_voucher(osv.osv):
         'invoice_payed': fields.function(_get_invoice, method=True, type='char', 
                                          multi='calc', string='Payed Invoices',
                                          help="This field is to make a list of invoices that are paid by this method"),
+        'entry_date_rejected': fields.date('Document Date', 
+                                           help='The date of the document support if any (eg complaint to deregister a stolen good)'),
+        'date_rejected': fields.date('Accounting Date', 
+                                     help='The date of involvement based accounting which affects the balance of the company'),
+        'rejected_move_id': fields.many2one('account.move', 'Accounting Entries Rejected Check', 
+                                            help='This field defines the accounting entry related to the check protested'),
     }
     
     _defaults = {
@@ -113,6 +186,5 @@ class account_voucher(osv.osv):
                 # Se aplica solo a pagos desde clientes
                 default['value'].update({'check_manage': allow_control_check})
         return default
-
 
 account_voucher()

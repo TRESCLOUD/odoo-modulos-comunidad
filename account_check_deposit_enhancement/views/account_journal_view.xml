@@ -15,8 +15,7 @@
                     <page string="Check Controls" attrs="{'invisible': [('control_customer_check', '=', False)]}" groups="base.group_system">
                         <group>
 	                        <field name="default_invalid_checks_acc_id" 
-	                        attrs="{'required': [('control_customer_check', '=', True)]}"
-	                        domain="[('type', '=', 'receivable')]"/>
+	                        	domain="[('type', '=', 'receivable')]"/>
                         </group>
                     </page>
                 </xpath>

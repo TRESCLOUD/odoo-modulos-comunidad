@@ -65,12 +65,6 @@ msgid "Check Control"
 msgstr "Control de cheques"
 
 #. module: account_check_deposit_enhancement
-#: view:account.check.reject:0
-#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_reject
-msgid "Reject Checks"
-msgstr "Cheques Protestados"
-
-#. module: account_check_deposit_enhancement
 #: field:account.check.delay.line,new_deposit_date:0
 msgid "New Deposit Date"
 msgstr "Nueva Fecha de deposito "
@@ -160,9 +154,13 @@ msgstr "Fecha de Deposito"
 
 #. module: account_check_deposit_enhancement
 #: view:account.check.delay:0
+msgid "Delay Checks"
+msgstr "Detener Cheque"
+
+#. module: account_check_deposit_enhancement
 #: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_delay
 msgid "Delay Checks"
-msgstr "Cheque Detenido"
+msgstr "Detener Cheques..."
 
 #. module: account_check_deposit_enhancement
 #: view:account.voucher:0
@@ -170,19 +168,9 @@ msgid "Checks from till"
 msgstr "Cheques de caja"
 
 #. module: account_check_deposit_enhancement
-#: field:account.journal,default_invalid_checks_acc_id:0
-msgid "Invalid checks account"
-msgstr "Cuenta contable de cheques invalida"
-
-#. module: account_check_deposit_enhancement
 #: view:account.check.till:0
 msgid "Till Checks"
 msgstr "Cheque de Caja"
-
-#. module: account_check_deposit_enhancement
-#: help:account.journal,default_invalid_checks_acc_id:0
-msgid "Default account for registring the moves for invalid checks."
-msgstr "Cuenta por defecto para registrar los movimientos de cheques invalidados."
 
 #. module: account_check_deposit_enhancement
 #: field:account.check.delay.line,check_number:0
@@ -243,9 +231,13 @@ msgstr "Monto"
 
 #. module: account_check_deposit_enhancement
 #: view:account.check.till:0
+msgid "Receive Checks"
+msgstr "Recibir Cheque"
+
+#. module: account_check_deposit_enhancement
 #: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_receive
 msgid "Receive Checks"
-msgstr "Cheque Recibido"
+msgstr "Recibir Cheques..."
 
 #. module: account_check_deposit_enhancement
 #: help:account.voucher,state_check_control:0
@@ -366,10 +358,20 @@ msgstr "Empresa"
 
 #. module: account_check_deposit_enhancement
 #: field:account.check.reject,reject_checks:0
-#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_rejected_checks
 #: model:ir.ui.menu,name:account_check_deposit_enhancement.menu_check_rejected
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_rejected_checks
 msgid "Rejected Checks"
 msgstr "Cheques Protestados"
+
+#. module: account_check_deposit_enhancement
+#: model:ir.actions.act_window,name:account_check_deposit_enhancement.action_account_check_reject
+msgid "Reject Checks"
+msgstr "Protestar Cheques..."
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.reject:0
+msgid "Reject Checks"
+msgstr "Protestar Cheque"
 
 #. module: account_check_deposit_enhancement
 #: help:account.check.delay.line,partner_id:0
@@ -393,3 +395,81 @@ msgstr "Importe total"
 msgid "Old Deposit Date"
 msgstr "Fecha anterior de Depósito"
 
+#. module: account_check_deposit_enhancement
+#: help:account.journal,default_invalid_checks_acc_id:0
+msgid "If you do not specify the Account Payable Accounting tab of the tab provider is used. For checks received from customers, when a check is protested a new obligation (Accounts Receivable) in this account will be generated, if you do not specify the customer account receivable is used. For checks issued to suppliers, when a check is protested a new obligation (Account Payable) will be generated in this account"
+msgstr "Si no se especifica se utilizará la Cuenta a Pagar de la pestaña contabilidad de la ficha del proveedor. Para cheques recibidos de clientes, cuando un cheque es protestado se generará una nueva obligación (Cuenta por Cobrar) en esta cuenta, si no se especifica se utilizará la Cuenta a Cobrar del cliente. Para cheques emitidos a proveedores, cuando un cheque es protestado se generará una nueva obligación (Cuenta por Pagar) en esta cuenta"
+
+#. module: account_check_deposit_enhancement
+#: field:account.journal,default_invalid_checks_acc_id:0
+msgid "Account for check rejected or returned"
+msgstr "Cuenta para cheques protestados o devueltos"
+
+#. module: account_check_deposit_enhancement
+#: model:res.groups,name:account_check_deposit_enhancement.group_check_manage
+msgid "Manage customer checks received"
+msgstr "Administrar cheques recibidos de cliente"
+
+#. module: account_check_deposit_enhancement
+#: view:account.check.till:0
+msgid "Till Checks"
+msgstr "Recibir Cheque"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Show Accounting Entries"
+msgstr "Mostrar asientos contables"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject.line,entry_date_rejected:0
+#: field:account.voucher,entry_date_rejected:0
+#: field:wizard.rejected.check,entry_date_rejected:0
+msgid "Document Date"
+msgstr "Fecha del documento"
+
+#. module: account_check_deposit_enhancement
+#: help:account.check.reject.line,entry_date_rejected:0
+#: help:account.voucher,entry_date_rejected:0
+#: help:wizard.rejected.check,entry_date_rejected:0
+msgid "The date of the document support if any (eg complaint to deregister a stolen good)"
+msgstr " La fecha del documento de sustento en caso de existir (por ejemplo la denuncia para dar de baja un bien robado)"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject.line,date_rejected:0
+#: field:account.voucher,date_rejected:0
+#: field:wizard.rejected.check,date_rejected:0
+msgid "Accounting Date"
+msgstr "Fecha de contabilización"
+
+#. module: account_check_deposit_enhancement
+#: help:account.check.reject.line,date_rejected:0
+#: help:account.voucher,date_rejected:0
+#: help:wizard.rejected.check,date_rejected:0
+msgid "The date of involvement based accounting which affects the balance of the company"
+msgstr "La fecha de afectación contable en base a la cual se afecta al balance de la compañía"
+
+#. module: account_check_deposit_enhancement
+#: field:account.check.reject.line,note:0
+#: field:wizard.rejected.check,note:0
+msgid "Reject Reason"
+msgstr "Razón protestado"
+
+#. module: account_check_deposit_enhancement
+#: help:wizard.rejected.check,note:0
+msgid "Write the reason which the check reject"
+msgstr "Escriba aquí la razon por la cual el cheque fue protestado"
+
+#. module: account_check_deposit_enhancement
+#: field:account.voucher,rejected_move_id:0
+msgid "Accounting Entries Rejected Check"
+msgstr "Asiento contable de protesto de cheque"
+
+#. module: account_check_deposit_enhancement
+#: help:account.voucher,rejected_move_id:0
+msgid "This field defines the accounting entry related to the check protested"
+msgstr "Este campo define los apuntes contables relacionados con el protesto del cheque"
+
+#. module: account_check_deposit_enhancement
+#: view:account.voucher:0
+msgid "Reject Check"
+msgstr "Protestar cheque"
