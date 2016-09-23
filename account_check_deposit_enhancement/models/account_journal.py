@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from osv import fields,osv
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class account_journal(osv.osv):
@@ -29,9 +29,12 @@ class account_journal(osv.osv):
     
     _columns = {
                 'default_invalid_checks_acc_id': fields.many2one('account.account', 
-                                                                 'Invalid checks account',
+                                                                 'Account for check rejected or returned',
                                                                  track_visibility='onchange',
-                                                                 help="Default account for registring the moves for invalid checks. That is when the customer payment is canceled."
+                                                                 help='If you do not specify the Account Payable Accounting tab of the tab provider is used. '
+                                                                      'For checks received from customers, when a check is protested a new obligation (Accounts Receivable) '
+                                                                      'in this account will be generated, if you do not specify the customer account receivable is used. '
+                                                                      'For checks issued to suppliers, when a check is protested a new obligation (Account Payable) will be generated in this account'
                                                                  ),
                 'control_customer_check': fields.boolean('Control customer checks',
                                                          track_visibility='onchange',
@@ -41,7 +44,9 @@ class account_journal(osv.osv):
                                                      track_visibility='onchange',
                                                      help="This field allows to the system identify if this journal will manage the deposits for checks."
                                                      ),
+                'partner_bank_ids': fields.one2many('res.partner.bank', 
+                                                    'journal_id', 'Bank Accounts',),
                 }
-    
+
     
 account_journal()

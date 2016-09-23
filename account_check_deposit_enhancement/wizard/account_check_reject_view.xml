@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+    
 		<record id="view_account_check_reject_form" model="ir.ui.view">
             <field name="name">account.check.reject.form</field>
             <field name="model">account.check.reject</field>
             <field name="arch" type="xml">
                 <form string="Reject Checks" version="7.0">
-                    <label string="Esta seguro que quiere detener los cheques marcados?"/>
+                    <label string="Esta seguro que quiere protestar los cheques marcados?"/>
                     <field name="reject_checks">
                     	<tree editable="bottom">
                     		<field name="wizard_id" readonly="1" invisible="1"/>
@@ -14,6 +15,8 @@
 					      	<field name="amount" readonly="1" invisible="0"/>
 					     	<field name="partner_id" readonly="1" invisible="0"/>
 					    	<field name="old_deposit_date" readonly="1" invisible="0"/>
+					    	<field name="entry_date_rejected" required="1" on_change="onchange_entry_date_rejected(entry_date_rejected)"/>
+							<field name="date_rejected" required="1"/>
 					      	<field name="note" readonly="0" required="1" invisible="0"/>
 					      	<field name="voucher_id" invisible="1" readonly="1"/>
                     	</tree>
@@ -32,6 +35,7 @@
             name="Reject Checks"
             groups="group_check_manage"
             res_model="account.check.reject" src_model="account.voucher"
-            view_mode="form" target="new" view_type="form" /> 
+            view_mode="form" target="new" view_type="form"/>
+            
     </data>
 </openerp>

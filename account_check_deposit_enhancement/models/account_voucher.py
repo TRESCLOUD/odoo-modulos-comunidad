@@ -34,67 +34,21 @@ class account_voucher(osv.osv):
         ('delayed_check','Cheques Detenidos')
     ]
     
-        
-    def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=None):
+    def copy(self, cr, uid, voucher_id, default=None, context=None):
         '''
-        Invocamos el método onchange_partner_id para resetear los campos de cheque en caso que cambie el partner
-        :param cr: Cursor estándar de base de datos PostgreSQL
+        Invocamos el metodo copy para setear a false algunos campos
+        :param cr: Cursor estándar de base de datos de PostgreSQL
         :param uid: ID del usuario actual
-        :param ids: IDs del pago
-        :param partner_id: Partner
-        :param journal_id: Diario
-        :param amount: Importe
-        :param currency_id: Moneda
-        :param ttype: Tipo de pago
-        :param date: Fecha
+        :param voucher_id: ID del pago
+        :param default: Diccionario con valores por defecto
         :param context: Diccionario de contexto adicional
         '''
+        if default is None:
+            default = {}
         if context is None:
-            context = {}         
-        vals = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context=context)
-        if ttype == 'receipt':
-            vals['value'].update({
-                'bank_account_partner_id': False,
-                'check_number': '',
-                'deposit_date': False
-            })
-        return vals
-    
-    def onchange_journal(self, cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=None):
-        '''
-        Al Cambio diario nos indicara si la forma de pago es por manejo, de cheques o es un pago con otros diarios
-        :param journal_id: Diario de pago
-        :param line_ids: Lineas de deudas de facturas
-        :param tax_id: Impuestos
-        :param partner_id: Empresa del pago
-        :param date: Fecha del pago
-        :param amount: Monto del pago
-        :param ttype: Tipo de pago,(cliente o proveedor)
-        :param company_id: Compania del pago
-        :param context: Variables de contexto o de ambientes
-        '''
-        if not context:
-            context = {}            
-        vals = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=context)
-        if vals and vals.get('value',False):
-            journal_obj = self.pool.get('account.journal')
-            journal = None
-            allow_control_check = False
-            if journal_id:
-                # Si existe un diario en el pago entonces se verifica si tiene control de cheques
-                journal = journal_obj.browse(cr, uid, journal_id, context=context)
-                allow_control_check = journal.control_customer_check
-                if allow_control_check and vals['value'].get('check_number'):
-                    res['value'].pop('check_number')
-            if ttype == 'receipt':
-                # Se aplica solo a pagos desde clientes
-                vals['value'].update({
-                    'bank_account_partner_id': False,
-                    'check_number': '',
-                    'deposit_date': False,
-                    'check_manage': allow_control_check
-                })
-        return vals
+            context = {}
+        default.update({'entry_date_rejected': False, 'date_rejected': False, 'rejected_move_id': False})
+        return super(account_voucher, self).copy(cr, uid, voucher_id, default=default, context=context)
     
     def _get_invoice(self, cr, uid, ids, name, args, context=None):
         '''
@@ -124,31 +78,116 @@ class account_voucher(osv.osv):
                         continue
         return res
     
+    def action_protesting_check(self, cr, uid, ids, context=None):
+        '''
+        Este método levanta un wizard para protestar los cheques
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs del voucher
+        :param context: Diccionario de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        obj, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'account_check_deposit_enhancement', 'view_rejected_check_form')
+        return {
+            'name': 'Protestar Cheque',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': view_id or False,
+            'res_model': 'wizard.rejected.check',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'new'
+        }
+        
+    def show_accounting_entries(self, cr, uid, ids, context=None):
+        '''
+        Muestra los apuntes contables relacionados con el pago
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs del voucher
+        :param context: Diccionario de datos de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        accounting_entries_ids = []
+        model_data_obj = self.pool.get('ir.model.data')        
+        result = model_data_obj.get_object_reference(cr, uid, 'account', 'action_move_journal_line')
+        id = result and result[1] or False
+        result = self.pool.get('ir.actions.act_window').read(cr, uid, [id], context=context)[0]
+        voucher = self.browse(cr, uid, ids[0], context=context)
+        for move in voucher.move_ids:
+            if move.move_id.id not in accounting_entries_ids:
+                accounting_entries_ids.append(move.move_id.id)
+        if voucher.rejected_move_id:
+            accounting_entries_ids.append(voucher.rejected_move_id.id)
+        if len(accounting_entries_ids) > 1:
+            result['domain'] = "[('id','in',["+','.join(map(str, accounting_entries_ids))+"])]"
+        else:
+            res = model_data_obj.get_object_reference(cr, uid, 'account', 'view_move_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = accounting_entries_ids and accounting_entries_ids[0] or False
+        return result
+    
     _columns = {
-        'check_manage': fields.boolean('Check manage', help='Payment with check management'),
-        'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', help='Bank Account Number of the customer.',
-                                                   track_visibility='always'),
-        'check_deposit_id': fields.function(_get_invoice, relation='account.check.deposit', store=True,
-                                            type='many2one', multi='calc', string='Check Deposit', 
-                                            readonly=True, help='Deposit Check that belongs the voucher'),
+        'check_deposit_id': fields.many2one('account.check.deposit',
+                                            'Check Deposit'),
         'deposit_date': fields.date('Deposit Date', 
-                                    track_visibility='always',
-                                    help='Date on which the check will be deposited according to the negotiation with the customer.'),
-        'new_deposit_date': fields.date('Deposit Date', 
-                                        help='New deposit date of the check, used when the deposit is delayed',
-                                        track_visibility='always'),
-        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', 
-                                                help='It used to show what state of the process is the check',
-                                                track_visibility='always',),
-        'rejected_reason': fields.char('Rejected reason', help='Reason for what the check was rejected'),
+                                    track_visibility='onchange',
+                                    help="Date on which the check will be deposited according to the negotiation with the customer."),
+        'new_deposit_date': fields.date('Deposit Date', track_visibility='onchange',
+                                        help="New deposit date of the check, used when the deposit is delayed"),
+        'state_check_control': fields.selection(_STATES_CHECKS, 'State control checks', track_visibility='onchange',
+                                                help="It used to show what state of the process is the check"),
+        'rejected_reason': fields.char('Rejected reason', help="Reason for what the check was rejected"),
         'invoice_payed': fields.function(_get_invoice, method=True, type='char', 
                                          multi='calc', string='Payed Invoices',
-                                         help='This field is to make a list of invoices that are paid by this method'),
+                                         help="This field is to make a list of invoices that are paid by this method"),
+        'entry_date_rejected': fields.date('Document Date', 
+                                           help='The date of the document support if any (eg complaint to deregister a stolen good)'),
+        'date_rejected': fields.date('Accounting Date', 
+                                     help='The date of involvement based accounting which affects the balance of the company'),
+        'rejected_move_id': fields.many2one('account.move', 'Accounting Entries Rejected Check', 
+                                            help='This field defines the accounting entry related to the check protested'),
     }
     
     _defaults = {
         'state_check_control': 'got_check',
         'deposit_date': fields.date.context_today,
     }
+    
+    def onchange_journal(self, cr, uid, ids, journal_id, line_ids,
+                         tax_id, partner_id, date, amount, ttype,
+                         company_id, context=None):
+        '''
+        Al Cambio diario nos indicara si la forma de pago es por manejo,
+        de cheques o es un pago con otros diarios
+        :param journal_id: Diario de pago
+        :param line_ids: Lineas de deudas de facturas
+        :param tax_id: Impuestos
+        :param partner_id: Empresa del pago
+        :param date: Fecha del pago
+        :param amount: Monto del pago
+        :param ttype: Tipo de pago,(cliente o proveedor)
+        :param company_id: Compania del pago
+        :param context: Variables de contexto o de ambientes
+        '''
+        if not context:
+            context = {}            
+        default = super(account_voucher, self).onchange_journal(cr, uid, ids, journal_id, line_ids, tax_id, partner_id, date, amount, ttype, company_id, context=context)
+        if default and default.get('value',False):
+            journal_obj = self.pool.get('account.journal')
+            journal = None
+            allow_control_check = False
+            if journal_id:
+                # Si existe un diario en el pago entonces se verifica si tiene control de cheques
+                journal = journal_obj.browse(cr, uid, journal_id, context=context)
+                allow_control_check = journal.control_customer_check
+                if allow_control_check and default['value'].get('check_number'):
+                    res['value'].pop('check_number')
+            if ttype == 'receipt':
+                # Se aplica solo a pagos desde clientes
+                default['value'].update({'check_manage': allow_control_check})
+        return default
 
 account_voucher()

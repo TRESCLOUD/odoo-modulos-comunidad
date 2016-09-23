@@ -1,0 +1,38 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* product_purchase_history
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-19 16:48+0000\n"
+"PO-Revision-Date: 2016-09-19 16:48+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_purchase_history
+#: field:account.invoice.line,date_invoice:0
+msgid "Date Invoice"
+msgstr "Fecha de Factura"
+
+#. module: product_purchase_history
+#: model:ir.model,name:product_purchase_history.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: product_purchase_history
+#: model:ir.model,name:product_purchase_history.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: product_purchase_history
+#: view:product.product:0
+#: field:product.product,invoice_line_ids:0
+msgid "Purchase History"
+msgstr "Precio Histórico de Compras"
+

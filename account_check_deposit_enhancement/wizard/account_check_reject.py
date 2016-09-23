@@ -21,7 +21,9 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from datetime import date, datetime
 import time
+
 
 class account_check_reject(osv.osv_memory):
     _name = "account.check.reject"
@@ -39,6 +41,8 @@ class account_check_reject(osv.osv_memory):
             'partner_id': voucher.partner_id.id,
             'old_deposit_date': voucher.deposit_date,
             'voucher_id': voucher.id,
+            'entry_date_rejected': time.strftime('%Y-%m-%d'),
+            'date_rejected': time.strftime('%Y-%m-%d'),
         }
         return partial_move
     
@@ -50,7 +54,7 @@ class account_check_reject(osv.osv_memory):
         :param context: Variables de contexto o de ambiente
         '''
         if context is None: context = {}
-        res = {}
+        res = super(account_check_reject, self).default_get(cr, uid, fields, context=context)
         voucher_obj = self.pool.get('account.voucher')
         voucher_ids = context.get('active_ids', False)
         # Si no estamos en account.voucher entonces no hacemos nada
@@ -72,30 +76,41 @@ class account_check_reject(osv.osv_memory):
         @param uid: the current user’s ID for security checks,
         @param ids: account period close’s ID or list of IDs
         @param context: Variables de contexto o de ambiente
-         """
-        account_voucher_obj = self.pool.get('account.voucher')
-        for rejected_check_id in self.browse(cr, uid, ids, context=context):
-            if context.get('active_model') == 'account.voucher':
-                for line_id in rejected_check_id.reject_checks:
-                    note = line_id.note
-                    voucher_id = line_id.voucher_id.id
-                    # Se escribe la razon de protestado en el pago
-                    # Ademas se cambia de estado al pago.
-                    account_voucher_obj.write(cr, uid, voucher_id, {'rejected_reason': note,
-                                                                    'state_check_control': 'rejected_check'}, context=context)
-
-        return {'type': 'ir.actions.act_window_close'}
+        """
+        if context is None:
+            context = {}
+        context.update({'origin': 'multi_reject_checks'})
+        wizard = self.browse(cr, uid, ids[0], context=context)
+        for line in wizard.reject_checks:
+            self.pool.get('wizard.rejected.check').action_approve(cr, uid, [line.id], context=context)
+        return True
 
     _columns = {
         'reject_checks': fields.one2many('account.check.reject.line', 'wizard_id',string="Rejected Checks", help=""),
     }
 
-
 account_check_reject()
+
 
 class account_check_reject_line(osv.osv_memory):
     _name = "account.check.reject.line"
     _description = "Check reject line"
+        
+    def onchange_entry_date_rejected(self, cr, uid, ids, entry_date_rejected, context=None):
+        '''
+        Este método setea la fecha de contabilizacion
+        :param cr: Cursor estándar de base de datos de PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs del wizard
+        :param entry_date_rejected: Fecha de documento
+        :param context: Diccionario de datos de contexto adicional 
+        '''
+        if context is None:
+            context = {}
+        vals = {'value': {}, 'warning': {}, 'domain': {}}
+        if entry_date_rejected:
+            vals['value'].update({'date_rejected': entry_date_rejected})
+        return vals
     
     _columns = {
         'wizard_id': fields.many2one('account.check.reject', string="Wizard"),
@@ -105,8 +120,11 @@ class account_check_reject_line(osv.osv_memory):
         'old_deposit_date': fields.date('Old Deposit Date', help="Previous Date of the deposit"),
         'note': fields.text('Reject Reason', help="Reason for what the check is rejected"),
         'voucher_id': fields.many2one('account.voucher', string='Voucher', help=""),
+        'entry_date_rejected': fields.date('Document Date', 
+                                           help='The date of the document support if any (eg complaint to deregister a stolen good)'),
+        'date_rejected': fields.date('Accounting Date', 
+                                     help='The date of involvement based accounting which affects the balance of the company'),
     }
-
 
 account_check_reject_line()
 

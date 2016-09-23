@@ -89,7 +89,7 @@ class account_check_deposit(orm.Model):
         'move_id': fields.many2one(
             'account.move', 'Journal Entry', readonly=True),
         'partner_bank_id': fields.many2one(
-            'res.partner.bank', 'Bank Account', required=True,
+            'res.partner.bank', 'Bank Account',
             domain="[('company_id', '=', company_id)]",
             states={'done': [('readonly', '=', True)]}),
         'line_ids': fields.related(
@@ -118,39 +118,42 @@ class account_check_deposit(orm.Model):
         'company_id': lambda self, cr, uid, c: self.pool['res.company'].
         _company_default_get(cr, uid, 'account.check.deposit', context=c),
     }
-
-    def _check_deposit(self, cr, uid, ids):
-        for deposit in self.browse(cr, uid, ids):
-            deposit_currency = deposit.currency_id
-            if deposit_currency == deposit.company_id.currency_id:
-                for line in deposit.check_payment_ids:
-                    if line.currency_id:
-                        raise orm.except_orm(
-                            _('Error:'),
-                            _("The check with amount %s and reference '%s' "
-                                "is in currency %s but the deposit is in "
-                                "currency %s.") % (
-                                line.debit, line.ref or '',
-                                line.currency_id.name,
-                                deposit_currency.name))
-            else:
-                for line in deposit.check_payment_ids:
-                    if line.currency_id != deposit_currency:
-                        raise orm.except_orm(
-                            _('Error:'),
-                            _("The check with amount %s and reference '%s' "
-                                "is in currency %s but the deposit is in "
-                                "currency %s.") % (
-                                line.debit, line.ref or '',
-                                line.currency_id.name,
-                                deposit_currency.name))
-        return True
-
-    _constraints = [(
-        _check_deposit,
-        "All the checks of the deposit must be in the currency of the deposit",
-        ['currency_id', 'check_payment_ids', 'company_id']
-        )]
+# TODO: Realizar el constraint para la unicidad de moneda al momento de realizar
+# Depoositos en las cuentas.
+#===============================================================================
+#     def _check_deposit(self, cr, uid, ids):
+#         for deposit in self.browse(cr, uid, ids):
+#             deposit_currency = deposit.currency_id
+#             if deposit_currency == deposit.company_id.currency_id:
+#                 for line in deposit.check_payment_ids:
+#                     if line.currency_id:
+#                         raise orm.except_orm(
+#                             _('Error:'),
+#                             _("The check with amount %s and reference '%s' "
+#                                 "is in currency %s but the deposit is in "
+#                                 "currency %s.") % (
+#                                 line.debit, line.ref or '',
+#                                 line.currency_id.name,
+#                                 deposit_currency.name))
+#             else:
+#                 for line in deposit.check_payment_ids:
+#                     if line.currency_id != deposit_currency:
+#                         raise orm.except_orm(
+#                             _('Error:'),
+#                             _("The check with amount %s and reference '%s' "
+#                                 "is in currency %s but the deposit is in "
+#                                 "currency %s.") % (
+#                                 line.debit, line.ref or '',
+#                                 line.currency_id.name,
+#                                 deposit_currency.name))
+#         return True
+# 
+#     _constraints = [(
+#         _check_deposit,
+#         "All the checks of the deposit must be in the currency of the deposit",
+#         ['currency_id', 'check_payment_ids', 'company_id']
+#         )]
+#===============================================================================
 
     def unlink(self, cr, uid, ids, context=None):
         for deposit in self.browse(cr, uid, ids, context=context):
@@ -168,9 +171,13 @@ class account_check_deposit(orm.Model):
             if deposit.move_id:
                 # It will raise here if journal_id.update_posted = False
                 deposit.move_id.button_cancel()
-                for line in deposit.check_payment_ids:
-                    if line.reconcile_id:
-                        line.reconcile_id.unlink()
+                # TRESCLOUD: Correccion para que las cosas conciliadas se 
+                # cancelen de manera manual antes que se las realice 
+                #===============================================================
+                # for line in deposit.check_payment_ids:
+                #     if line.reconcile_id:
+                #         line.reconcile_id.unlink()
+                #===============================================================
                 deposit.move_id.unlink()
             deposit.write({'state': 'draft'})
         return True
@@ -216,7 +223,9 @@ class account_check_deposit(orm.Model):
             'name': _('Check Deposit %s') % deposit.name,
             'debit': total_debit,
             'credit': 0.0,
-            'account_id': deposit.company_id.check_deposit_account_id.id,
+            'account_id': deposit.company_id and \
+            deposit.company_id.check_deposit_account_id and \
+            deposit.company_id.check_deposit_account_id.id or False,
             'partner_id': False,
             'currency_id': deposit.currency_none_same_company_id.id or False,
             'amount_currency': total_amount_currency,
