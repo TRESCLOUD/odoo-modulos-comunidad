@@ -23,8 +23,8 @@
 #
 ##############################################################################
 
-from tools.translate import _
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
 class mrp_production(osv.Model):
@@ -66,11 +66,15 @@ class mrp_production(osv.Model):
                         body=message,
                         subtype='mail.mt_comment',
                         context=context)
-            
         return True
     
+    _columns = {
+        'landing_cost_id': fields.many2one('stock.picking.in', 'Landing Cost', 
+                                           help='If you select an import cost accounting entries are generated based on the cost CIF')
+    }
 
 mrp_production()
+
 
 class stock_move(osv.osv):
     
@@ -98,6 +102,13 @@ class stock_move(osv.osv):
                      or move.location_id.company_id != move.location_dest_id.company_id):
                 journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, src_company_ctx)
                 reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
+                #En caso que exista costo de importacion los asientos contables se generan en base al costo CIF
+                if move.move_dest_id.production_id.landing_cost_id:
+                    for line in move.move_dest_id.production_id.landing_cost_id.move_lines:
+                        if line.product_id.id == move.product_id.id:
+                            #En caso que exista conversion de unidades de medida
+                            qty = self.pool.get('product.uom')._compute_qty(cr, uid, move.product_uom.id, move.product_qty, move.product_uom.id)
+                            reference_amount = qty * line.price_unit
                 #returning goods to supplier
                 if move.location_dest_id.usage == 'supplier':
                     account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_src, reference_amount, reference_currency_id, context))]
@@ -128,6 +139,47 @@ class stock_move(osv.osv):
                          'period_id': period_id and period_id[0] or False,
                          'company_id': move.company_id.id,
                          'ref': move.picking_id and move.picking_id.name}, context=company_ctx)
-
-
+                
+    def action_return_product_to_consume(self, cr, uid, ids, context=None):
+        '''
+        Este método devuelve el producto seleccionado de consumido a por consumir y elimina los apuntes contables asociados
+        :param cr: Cursor de la base de datos
+        :param uid: ID del usuario actual
+        :param ids: IDs del movimiento
+        :param context: Diccionario de contexto adicional
+        '''
+        if context is None:
+            context = {}
+        changes = []
+        for move in  self.browse(cr, uid, ids, context=context):
+            oldvalue = 'Productos consumidos'
+            newvalue = 'Productos a consumir'
+            changes.append(_("Producto: %s: from %s to %s") %(move.product_id.name, oldvalue, newvalue))
+            if len(changes) > 0:
+                try:
+                    self.pool.get('mrp.production').message_post(cr, uid, [move.move_dest_id.production_id.id], body=", ".join(changes), context=context)
+                except:
+                    #Cuando el producto es agregado manualmente al listado de productos a consumir
+                    cr.execute('''
+                        select production_id 
+                        from mrp_production_move_ids 
+                        where move_id in %s
+                    ''', (tuple(ids),))
+                    res = cr.fetchall()
+                    if res:
+                        self.pool.get('mrp.production').message_post(cr, uid, [res[0][0]], body=", ".join(changes), context=context)
+        #Regresamos el producto consumido a producto por consumir
+        cr.execute('''
+            update stock_move
+            set state='waiting'
+            where id in %s
+        ''', (tuple(ids),))
+        #Eliminamos los asientos contables generados
+        cr.execute('''
+            delete 
+            from account_move_line 
+            where stock_move_id in %s
+        ''', (tuple(ids),))
+        return True
+    
 stock_move()
