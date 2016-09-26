@@ -107,9 +107,12 @@ class object_merger(orm.TransientModel):
             # Este código fue modificado por TRESCLOUD
             ################################################################################################################################
             if name == 'property_account_position' and model_raw == 'res.partner':                                                         #
-                for id in object_ids:                                                                                                      #
+                for id in object_ids:  
+                    # Se cambia la consulta ilike por igual, debido a que
+                    # se buscaba textos que contengan el numero 1 y como resultado 
+                    # salian el 11, 14, 15, etc.                                                                                                    #
                     property_ids.extend(property_obj.search(cr, uid, [('name','=','property_account_position'),                            #
-                                                                      ('value_reference','ilike','%s' %(id,))], context=context))          #
+                                                                      ('value_reference','=','account.fiscal.position,' + str(id))], context=context))          #
                 property_obj.write(cr, uid, property_ids, {'value_reference':'account.fiscal.position,'+str(object_id)}, context=context)  #
             ################################################################################################################################
             if hasattr(self.pool.get(model_raw), '_auto'):
