@@ -25,8 +25,7 @@
 	        	</xpath>
 	        	<xpath expr="//field[@name='origin']" position="after">
 	        		<field name="landing_cost_id" 
-	        			domain="[('type','=','in'), ('state','=','done'), ('allow_landing_costs','=',True)]"
-	        			attrs="{'readonly': [('state','!=','draft')]}"/>
+	        			domain="[('type','=','in'), ('state','=','done'), ('allow_landing_costs','=',True)]"/>
 	        	</xpath>
         	</field>
        	</record>
