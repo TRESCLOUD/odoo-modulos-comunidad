@@ -2,10 +2,10 @@
 <openerp>
     <data>
     
-    	<record id="view_account_journal_imbalance_form" model="ir.ui.view">
-            <field name="name">account.journal.form</field>
+    	<record id="ecua_view_account_journal_imbalance_form" model="ir.ui.view">
+            <field name="name">ecua.view.account.journal.imbalance.form</field>
             <field name="model">account.journal</field>
-            <field name="inherit_id" ref="ecua_payment.view_account_journal_form"/>
+            <field name="inherit_id" ref="ecua_payment.view_account_journal_imbalance_form"/>
             <field name="arch" type="xml">
            		<xpath expr="//field[@name='credit_journal']" position="after">
                 	<field name="control_customer_check" attrs="{'invisible': ['|',('type','!=','bank'),('customer_owner','=',False)]}" groups="base.group_system"/>
@@ -19,7 +19,6 @@
                         </group>
                     </page>
                 </xpath>
-                
                 <xpath expr="//field[@name='group_invoice_lines']" position="after">
                 	<field name="default_invalid_checks_acc_id" attrs="{'required': [('control_customer_check', '=', True)]}" domain="[('type', '=', 'receivable')]"/>
                 </xpath>          
