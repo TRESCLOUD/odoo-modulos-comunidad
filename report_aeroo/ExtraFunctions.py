@@ -201,14 +201,19 @@ class ExtraFunctions(object):
         #Aeroo no maneja conversion de zonas horarias, creamos nuestro propio metodo para la conversion a GMT -5
         local = pytz.timezone("America/Guayaquil") #la zona horaria del SRI es GMT -5
         utc = pytz.utc
+        format_time_str = "%Y-%m-%d %H:%M:%S.%f"
         try: #a veces el sri no responde con segundos 
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S.%f")
+            naive = datetime.datetime.strptime(date_as_string, format_time_str)
         except:
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S")
-            
+            try:
+                format_time_str = "%Y-%m-%d %H:%M:%S"
+                naive = datetime.datetime.strptime(date_as_string, format_time_str)
+            except:
+                format_time_str = "%Y-%m-%d"
+                naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d")
         utc_dt = utc.localize(naive, is_dst=None)
         auth_date_in_local = utc_dt.astimezone (local)
-        return auth_date_in_local.strftime ("%Y-%m-%d %H:%M:%S")
+        return auth_date_in_local.strftime (format_time_str)
 
     def __filter(self, val):
         if isinstance(val, osv.orm.browse_null):
