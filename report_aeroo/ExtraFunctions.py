@@ -47,6 +47,7 @@ import netsvc
 from tools.safe_eval import safe_eval as eval
 from aeroolib.plugins.opendocument import _filter
 import pytz, datetime
+from string import upper
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -172,6 +173,7 @@ class ExtraFunctions(object):
             'init_sequence': self._init_sequence,
             'next_sequence': self._next_sequence,
             'get_state_stock_move': self._get_state_stock_move,
+            'get_text_upper': self._get_text_upper
         }
 
     def _get_identification(self, vat):
@@ -838,3 +840,9 @@ class ExtraFunctions(object):
         elif state == 'confirmed':
             return 'Esperando disponibilidad'
         return ''
+    
+    def _get_text_upper(self, text):
+        '''
+        Este método convierte un texto a MAYÚSCULAS
+        '''
+        return upper(str(text))
