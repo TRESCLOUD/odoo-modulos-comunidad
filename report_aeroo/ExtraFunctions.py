@@ -826,7 +826,7 @@ class ExtraFunctions(object):
         elif state == 'assigned':
             return 'Reservado'
         elif state == 'cancel':
-            return 'Realizado'
+            return 'Cancelado'
         elif state == 'received':
             return 'Recibido'
         elif state == 'ready_to_receive':
