@@ -845,4 +845,7 @@ class ExtraFunctions(object):
         '''
         Este método convierte un texto a MAYÚSCULAS
         '''
-        return upper(str(text))
+        new_text = ''
+        if text:
+            new_text = upper(str(text))
+        return new_text
