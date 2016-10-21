@@ -34,7 +34,12 @@ class ir_model(orm.Model):
         def wrapper(cr, uid, name, context=None):
             raise orm.except_orm(_('Error'), _("Can't create quickly. Opening create form"))
         return wrapper
-
+    
+    def _wrap_name_create_pass(self, old_create, model):
+        def wrapper(cr, uid, name, context=None):
+            return old_create(cr, uid, name, context=context)
+        return wrapper
+    
     def _register_hook(self, cr, ids=None):
         if ids is None:
             ids = self.search(cr, SUPERUSER_ID, [])
@@ -45,7 +50,15 @@ class ir_model(orm.Model):
                 if not hasattr(model_obj, 'check_quick_create'):
                     if model_obj:
                         model_obj.name_create = self._wrap_name_create(model_obj.name_create, model_name)
-                        model_obj.check_quick_create = True
+                        model_obj.check_quick_create = model.avoid_quick_create
+            else:
+                model_name = model.model
+                model_obj = self.pool.get(model_name)
+                if hasattr(model_obj, 'check_quick_create'):
+                    if model_obj and hasattr(model_obj, 'name_create'):
+                        delattr(model_obj, 'name_create')
+                        model_obj.name_create = self._wrap_name_create_pass(model_obj.name_create, model_name)
+                        model_obj.check_quick_create = model.avoid_quick_create
         return True
 
     def create(self, cr, uid, vals, context=None):
