@@ -212,7 +212,7 @@ class ExtraFunctions(object):
                 naive = datetime.datetime.strptime(date_as_string, format_time_str)
             except:
                 format_time_str = "%Y-%m-%d"
-                naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d")
+                return date_as_string
         utc_dt = utc.localize(naive, is_dst=None)
         auth_date_in_local = utc_dt.astimezone (local)
         return auth_date_in_local.strftime (format_time_str)
