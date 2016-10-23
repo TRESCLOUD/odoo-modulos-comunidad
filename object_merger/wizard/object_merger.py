@@ -143,7 +143,16 @@ class object_merger(orm.TransientModel):
                 requete = "UPDATE "+model_m2m+" SET "+rel2+"="+str(object_id)+" WHERE "+ ustr(rel2) +" IN " + str(tuple(object_ids)) + ";"
                 cr.execute(requete)
         unactive_object_ids = model_pool.search(cr, uid, [('id', 'in', object_ids), ('id', '<>', object_id)], context=context)
+        context.update({'origin': 'object_merge'})
         model_pool.write(cr, uid, unactive_object_ids, {'active': False}, context=context)
+        if not context.get('active_model'):
+            raise orm.except_orm(_(u'¡Error de Usuario!'),
+                                 _(u'No existe un modelo activo, por favor verifique.'))
+        list = []
+        for id in unactive_object_ids:
+            list.append(context.get('active_model')+','+str(id))
+        property = "UPDATE ir_property SET value_reference = '"+context.get('active_model')+','+str(object_id)+"' WHERE value_reference IN " + str(tuple(list)) + ";"
+        cr.execute(property)
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
