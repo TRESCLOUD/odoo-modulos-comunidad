@@ -40,12 +40,15 @@ from PIL import Image
 import pooler
 import time
 import osv
+import re
 from report import report_sxw
 from tools.translate import _
 import netsvc
 from tools.safe_eval import safe_eval as eval
 from aeroolib.plugins.opendocument import _filter
 import pytz, datetime
+from string import upper
+from operator import itemgetter
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -165,20 +168,28 @@ class ExtraFunctions(object):
             'group_and_sum': self._group_and_sum,
             'get_identification': self._get_identification,
             'convert_datetime_to_ECT': self._convert_datetime_to_ECT,
+            'init_sequence': self._init_sequence,
+            'next_sequence': self._next_sequence,
+            'get_state_stock_move': self._get_state_stock_move,
+            'get_text_upper': self._get_text_upper
         }
-        
+
     def _get_identification(self, vat):
         '''
-        Remueve las letras EC en caso de haberlas del campo vat del partner
+        Verifica si es que la cedula o pasaporte hay que eliminar el 'EC'
+        :param vat: Cedula a analizar
+        :return: Devuelve la cedula ecuatoriana sin el ec si tuviera 'ec'
         '''
-        if vat!=False or vat is None:
-            if vat[:2] == 'EC':
-                partner_vat = vat[2:]
-            if vat[:2] != 'EC':
-                partner_vat = vat
+        if vat:
+            rex_product_code = '^EC[0-9]{10}$|^EC[0-9]{13}$'
+            regex = re.compile(rex_product_code, flags=re.IGNORECASE)
+            if regex.match(vat):
+                vat = vat[2:]
+            else:
+                vat = vat
         else:
-            partner_vat = 'Especifique identificacion correcta.'        
-        return partner_vat
+            vat = 'Especifique identificacion correcta.'
+        return vat
     
     def _convert_datetime_to_ECT(self, date_as_string):
         '''
@@ -190,14 +201,19 @@ class ExtraFunctions(object):
         #Aeroo no maneja conversion de zonas horarias, creamos nuestro propio metodo para la conversion a GMT -5
         local = pytz.timezone("America/Guayaquil") #la zona horaria del SRI es GMT -5
         utc = pytz.utc
+        format_time_str = "%Y-%m-%d %H:%M:%S.%f"
         try: #a veces el sri no responde con segundos 
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S.%f")
+            naive = datetime.datetime.strptime(date_as_string, format_time_str)
         except:
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S")
-            
+            try:
+                format_time_str = "%Y-%m-%d %H:%M:%S"
+                naive = datetime.datetime.strptime(date_as_string, format_time_str)
+            except:
+                format_time_str = "%Y-%m-%d"
+                naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d")
         utc_dt = utc.localize(naive, is_dst=None)
         auth_date_in_local = utc_dt.astimezone (local)
-        return auth_date_in_local
+        return auth_date_in_local.strftime (format_time_str)
 
     def __filter(self, val):
         if isinstance(val, osv.orm.browse_null):
@@ -720,7 +736,7 @@ class ExtraFunctions(object):
         obj = self.pool.get(model)
         return obj.read(self.cr, self.uid, ids, fields=fields, context=context)
 
-    def _group_and_sum(self, list_to_group, field_group_by, fields_sum):#, group_empty = False):
+    def _group_and_sum(self, list_to_group, field_group_by, fields_sum, order_result=False, order_asc=True):#, group_empty = False):
         """
         Group a list of items under this conditions:
         1) parameter list_to_group -> list of items to group by
@@ -728,8 +744,12 @@ class ExtraFunctions(object):
         3) parameter fields_sum -> List of fields to sum, this fields are returned
            If a field is string check if text is different and add the description, other case
            send one time the text
-        4) if field to group is False, if is blank o null they are independent values, don't group
-        5) the rest of fields are ignored
+        4) parameter order_result -> Boolean value that indicate the list must be order, else the returned 
+           list items not have any order in particular
+        5) parameter order_asc -> Boolean value that indicate the list must be order in ascendent mode, 
+           else order in reverse  
+        6) if field to group is False, if is blank o null they are independent values, don't group
+        7) the rest of fields are ignored
         
         -----------
         TODO (Next revision):    
@@ -738,16 +758,12 @@ class ExtraFunctions(object):
         5) the rest of fields are ignored
 
         """
-        
         groups = []
-        
         for item in list_to_group:
-            #group = {}
-            
             # Se requiere iterar varias veces dependiendo los niveles de puntuacion
             split_atributo = field_group_by.split('.')
             actual = item
-            
+
             for atrib in split_atributo:
                 actual = getattr(actual, atrib, None)
             
@@ -783,5 +799,53 @@ class ExtraFunctions(object):
                     group[field] = getattr(item, field, None) 
             
                 groups.append(group)
-            
-        return groups
+        # Esta parte ordena dependiendo si es ascendente o descendente
+        #sorted(groups, key=lambda group: group[field_group_by])
+        if order_result:
+            return sorted(groups, key=itemgetter(field_group_by), reverse=not order_asc)
+        else:
+            return groups
+
+    def _init_sequence(self, initial_value=0):
+        '''
+        This function set the initial value to count
+        :param initial_value: initial value
+        '''
+        self._sequence_value = initial_value        
+
+    def _next_sequence(self):
+        '''
+        This function add 1 and return the next value
+        '''
+        self._sequence_value = self._sequence_value + 1
+        return self._sequence_value
+    
+    def _get_state_stock_move(self, state):
+        '''
+        Este método devuelve el estado de un stock_move
+        :param state: Estado de un stock_move
+        '''
+        if state == 'done':
+            return 'Realizado'
+        elif state == 'assigned':
+            return 'Reservado'
+        elif state == 'cancel':
+            return 'Realizado'
+        elif state == 'received':
+            return 'Recibido'
+        elif state == 'ready_to_receive':
+            return 'Listo para recibir'
+        elif state == 'draft':
+            return 'Borrador'
+        elif state == 'auto':
+            return 'Esperando otra operación'
+        elif state == 'confirmed':
+            return 'Esperando disponibilidad'
+        return ''
+    
+    def _get_text_upper(self, text):
+        '''
+        Este método convierte un texto a MAYÚSCULAS
+        '''
+        return upper(str(text))
+
