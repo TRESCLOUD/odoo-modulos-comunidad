@@ -171,7 +171,8 @@ class ExtraFunctions(object):
             'init_sequence': self._init_sequence,
             'next_sequence': self._next_sequence,
             'get_state_stock_move': self._get_state_stock_move,
-            'get_text_upper': self._get_text_upper
+            'get_text_upper': self._get_text_upper,
+            'sum_operation_fields': self._sum_operation_fields
         }
 
     def _get_identification(self, vat):
@@ -849,3 +850,16 @@ class ExtraFunctions(object):
         '''
         return upper(str(text))
 
+    def _sum_operation_fields(self, attr, field_a, field_b, operand='*'):
+        '''
+        This function sum the operation between 2 fields, by default the opration is
+        multiplication '*'
+        :param attr: list to operate
+        :param field_a: name of field to use as operand a
+        :param field_b: name of field to use as operand b
+        :param operand: operand to use, can be any mathematical operand like *, /, +, - %
+        '''
+        expr = "for o in objects:\n\tsumm+=float(o.%s) %s float(o.%s)" %(field_a, operand, field_b)
+        localspace = {'objects':attr, 'summ':0}
+        exec expr in localspace
+        return localspace['summ']
