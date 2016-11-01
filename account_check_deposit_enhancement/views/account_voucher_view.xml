@@ -28,7 +28,9 @@
 					</page>
                 </xpath>
                 <xpath expr="//button[@name='cancel_voucher']" position="after">
-                	<button name="action_protesting_check" string="Reject Check" type="object" attrs="{'invisible': ['|', ('state','!=','posted'), ('rejected_move_id','!=',False)]}" class="oe_highlight" groups="account_check_deposit_enhancement.group_check_manage"/>
+                	<button name="action_protesting_check" string="Reject Check" type="object" 
+                		attrs="{'invisible': ['|','|',('state','!=','posted'),('rejected_move_id','!=',False),('check_manage', '=', False)]}" 
+                		class="oe_highlight" groups="account_check_deposit_enhancement.group_check_manage"/>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="after">
                 	<field name="state_check_control" invisible="1"/>

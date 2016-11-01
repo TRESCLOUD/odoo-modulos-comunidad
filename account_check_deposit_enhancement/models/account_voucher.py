@@ -100,6 +100,19 @@ class account_voucher(osv.osv):
             'target': 'new'
         }
         
+    def proforma_voucher(self, cr, uid, ids, context=None):
+        for voucher_id in self.browse(cr, uid, ids, context=context):
+            if voucher_id.check_manage:
+                voucher_ids = self.search(cr, uid, [('check_number','=',voucher_id.check_number), 
+                                                    ('journal_id','=',voucher_id.journal_id.id),
+                                                    ('partner_id','=',voucher_id.partner_id.id),
+                                                    ('id','!=',voucher_id.id),('state','!=','draft')], 
+                                          context=context)
+                if voucher_ids:
+                    raise osv.except_osv(_('Error!'), _('El cheque que esta intentando ingresar, ya fue registrado en el sistema!!!\n ' 
+                                                        'Por favor verifique la informacion ingresada'))
+        return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=context)
+        
     def show_accounting_entries(self, cr, uid, ids, context=None):
         '''
         Muestra los apuntes contables relacionados con el pago
