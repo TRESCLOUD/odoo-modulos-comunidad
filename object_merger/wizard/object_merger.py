@@ -86,7 +86,7 @@ class object_merger(orm.TransientModel):
         model_pool = self.pool.get(active_model)
         object_ids = context.get('active_ids',[])
         field_to_read = context.get('field_to_read')
-        fields = field_to_read and [field_to_read] or []        
+        fields = field_to_read and [field_to_read] or []
         # Este código fue modificado por TRESCLOUD
         #TODO: Se pudiera intentar pasar por contexto el modelo
         ###############################################################################
@@ -94,7 +94,9 @@ class object_merger(orm.TransientModel):
             object = self.read(cr, uid, ids[0], fields, context=context)              #
         else:                                                                         #
             fiscal_position = model_pool.browse(cr, uid, ids[0], context=context)     #
-            object.update({'id': ids[0], fields[0]: (ids[0], fiscal_position.name)})  # 
+            object.update({'id': ids[0], fields[0]: (ids[0], fiscal_position.name)})  #
+        if context.get('to_invoke'):                                                  #
+            object.update({field_to_read: [context.get('object_to_preserve_id')]})                     #  
         ###############################################################################       
         if object and fields and object[field_to_read]:
             object_id = object[field_to_read][0]
@@ -107,12 +109,9 @@ class object_merger(orm.TransientModel):
             # Este código fue modificado por TRESCLOUD
             ################################################################################################################################
             if name == 'property_account_position' and model_raw == 'res.partner':                                                         #
-                for id in object_ids:  
-                    # Se cambia la consulta ilike por igual, debido a que
-                    # se buscaba textos que contengan el numero 1 y como resultado 
-                    # salian el 11, 14, 15, etc.                                                                                                    #
+                for id in object_ids:                                                                                                      #
                     property_ids.extend(property_obj.search(cr, uid, [('name','=','property_account_position'),                            #
-                                                                      ('value_reference','=','account.fiscal.position,' + str(id))], context=context))          #
+                                                                      ('value_reference','ilike','%s' %(id,))], context=context))          #
                 property_obj.write(cr, uid, property_ids, {'value_reference':'account.fiscal.position,'+str(object_id)}, context=context)  #
             ################################################################################################################################
             if hasattr(self.pool.get(model_raw), '_auto'):
