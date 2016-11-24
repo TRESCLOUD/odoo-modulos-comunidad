@@ -112,7 +112,27 @@ class account_voucher(osv.osv):
                     raise osv.except_osv(_('Error!'), _('El cheque que esta intentando ingresar, ya fue registrado en el sistema!!!\n ' 
                                                         'Por favor verifique la informacion ingresada'))
         return super(account_voucher, self).proforma_voucher(cr, uid, ids, context=context)
-        
+    
+    def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id, amount, currency_id, type_, date, context=None):
+        """
+        Borramos la cuenta bancaria del partner asociado.
+        :param cr: Cursor estándar de base de datos PostgreSQL
+        :param uid: ID del usuario actual
+        :param ids: IDs de los elementos a los cuales procesar el cambio.
+        :param partner_id: Nuevo valor
+        :param journal_id: Nuevo valor
+        :param amount: Nuevo valor
+        :param currency_id: Nuevo valor
+        :param type_: Nuevo valor del campo type
+        :param date: Nuevo valor
+        :param context: Datos adicionales de contexto.
+        :return:
+        """
+        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount,
+                                                               currency_id, type_, date, context)
+        res['value'].update({'bank_account_partner_id': False})
+        return res
+    
     def show_accounting_entries(self, cr, uid, ids, context=None):
         '''
         Muestra los apuntes contables relacionados con el pago
@@ -162,6 +182,9 @@ class account_voucher(osv.osv):
                                      help='The date of involvement based accounting which affects the balance of the company'),
         'rejected_move_id': fields.many2one('account.move', 'Accounting Entries Rejected Check', 
                                             help='This field defines the accounting entry related to the check protested'),
+        'bank_account_partner_id': fields.many2one('res.partner.bank', 'Number account', 
+                                                   help="Bank Account Number of the customer.",
+                                                   track_visibility='onchange'),
     }
     
     _defaults = {
