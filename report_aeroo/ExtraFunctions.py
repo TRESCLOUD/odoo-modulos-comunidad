@@ -47,6 +47,7 @@ import netsvc
 from tools.safe_eval import safe_eval as eval
 from aeroolib.plugins.opendocument import _filter
 import pytz, datetime
+from string import upper
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -172,6 +173,7 @@ class ExtraFunctions(object):
             'init_sequence': self._init_sequence,
             'next_sequence': self._next_sequence,
             'get_state_stock_move': self._get_state_stock_move,
+            'get_text_upper': self._get_text_upper
         }
 
     def _get_identification(self, vat):
@@ -201,14 +203,19 @@ class ExtraFunctions(object):
         #Aeroo no maneja conversion de zonas horarias, creamos nuestro propio metodo para la conversion a GMT -5
         local = pytz.timezone("America/Guayaquil") #la zona horaria del SRI es GMT -5
         utc = pytz.utc
+        format_time_str = "%Y-%m-%d %H:%M:%S.%f"
         try: #a veces el sri no responde con segundos 
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S.%f")
+            naive = datetime.datetime.strptime(date_as_string, format_time_str)
         except:
-            naive = datetime.datetime.strptime(date_as_string, "%Y-%m-%d %H:%M:%S")
-            
+            try:
+                format_time_str = "%Y-%m-%d %H:%M:%S"
+                naive = datetime.datetime.strptime(date_as_string, format_time_str)
+            except:
+                format_time_str = "%Y-%m-%d"
+                return date_as_string
         utc_dt = utc.localize(naive, is_dst=None)
         auth_date_in_local = utc_dt.astimezone (local)
-        return auth_date_in_local.strftime ("%Y-%m-%d %H:%M:%S")
+        return auth_date_in_local.strftime (format_time_str)
 
     def __filter(self, val):
         if isinstance(val, osv.orm.browse_null):
@@ -821,7 +828,7 @@ class ExtraFunctions(object):
         elif state == 'assigned':
             return 'Reservado'
         elif state == 'cancel':
-            return 'Realizado'
+            return 'Cancelado'
         elif state == 'received':
             return 'Recibido'
         elif state == 'ready_to_receive':
@@ -833,3 +840,12 @@ class ExtraFunctions(object):
         elif state == 'confirmed':
             return 'Esperando disponibilidad'
         return ''
+    
+    def _get_text_upper(self, text):
+        '''
+        Este método convierte un texto a MAYÚSCULAS
+        '''
+        new_text = ''
+        if text:
+            new_text = upper(str(text))
+        return new_text
