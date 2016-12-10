@@ -9,6 +9,7 @@
                 <data>                     
                     <xpath expr="/form/sheet/notebook/page[@string='Sales']" position="after">
 						<page string="Purchase History" groups="purchase.group_purchase_user">
+							<label name="invoice_line_ids"/>
 							<field name="invoice_line_ids" colspan="4" nolabel="1">
 							    <tree>
 							        <field name="partner_id" />
