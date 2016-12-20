@@ -49,6 +49,8 @@ from aeroolib.plugins.opendocument import _filter
 import pytz, datetime
 from string import upper
 from operator import itemgetter
+# TRESCLOUD EXTENDED
+from trc_mod_python import amount_to_words_spanish
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -172,7 +174,8 @@ class ExtraFunctions(object):
             'next_sequence': self._next_sequence,
             'get_state_stock_move': self._get_state_stock_move,
             'get_text_upper': self._get_text_upper,
-            'sum_operation_fields': self._sum_operation_fields
+            'sum_operation_fields': self._sum_operation_fields,
+            'amount_to_word': self._amount_to_word
         }
 
     def _get_identification(self, vat):
@@ -863,3 +866,18 @@ class ExtraFunctions(object):
         localspace = {'objects':attr, 'summ':0}
         exec expr in localspace
         return localspace['summ']
+
+    def _amount_to_word(self, value, language='spanish', context=None):
+        '''
+        This function transform the amount total in text using the select language
+        :param value: numeric value to transform
+        :param language: text indicating the languaje to use, spanish predefined 
+        '''
+        context = context or {}
+        languages_function = {
+            'spanish': amount_to_words_spanish.amount_to_words_es
+            }
+        convert_text = languages_function.get(language, False)
+        if not convert_text:
+            convert_text = amount_to_words_spanish.amount_to_words_es
+        return convert_text(value)
