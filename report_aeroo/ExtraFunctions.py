@@ -867,10 +867,9 @@ class ExtraFunctions(object):
         exec expr in localspace
         return localspace['summ']
 
-    def _amount_to_word(value, language='spanish', context=None):
+    def _amount_to_word(self, value, language='spanish', context=None):
         '''
         This function transform the amount total in text using the select language
-
         :param value: numeric value to transform
         :param language: text indicating the languaje to use, spanish predefined 
         '''
