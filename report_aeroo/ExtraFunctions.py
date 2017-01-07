@@ -48,6 +48,9 @@ from tools.safe_eval import safe_eval as eval
 from aeroolib.plugins.opendocument import _filter
 import pytz, datetime
 from string import upper
+from operator import itemgetter
+# TRESCLOUD EXTENDED
+from trc_mod_python import amount_to_words_spanish
 
 try:
     from docutils.examples import html_parts # use python-docutils library
@@ -173,7 +176,10 @@ class ExtraFunctions(object):
             'init_sequence': self._init_sequence,
             'next_sequence': self._next_sequence,
             'get_state_stock_move': self._get_state_stock_move,
-            'get_text_upper': self._get_text_upper
+            'get_text_upper': self._get_text_upper,
+            'sum_operation_fields': self._sum_operation_fields,
+            'operation_values': self._operation_values,
+            'amount_to_word': self._amount_to_word
         }
 
     def _get_identification(self, vat):
@@ -738,7 +744,7 @@ class ExtraFunctions(object):
         obj = self.pool.get(model)
         return obj.read(self.cr, self.uid, ids, fields=fields, context=context)
 
-    def _group_and_sum(self, list_to_group, field_group_by, fields_sum):#, group_empty = False):
+    def _group_and_sum(self, list_to_group, field_group_by, fields_sum, order_result=False, order_asc=True):#, group_empty = False):
         """
         Group a list of items under this conditions:
         1) parameter list_to_group -> list of items to group by
@@ -746,8 +752,12 @@ class ExtraFunctions(object):
         3) parameter fields_sum -> List of fields to sum, this fields are returned
            If a field is string check if text is different and add the description, other case
            send one time the text
-        4) if field to group is False, if is blank o null they are independent values, don't group
-        5) the rest of fields are ignored
+        4) parameter order_result -> Boolean value that indicate the list must be order, else the returned 
+           list items not have any order in particular
+        5) parameter order_asc -> Boolean value that indicate the list must be order in ascendent mode, 
+           else order in reverse  
+        6) if field to group is False, if is blank o null they are independent values, don't group
+        7) the rest of fields are ignored
         
         -----------
         TODO (Next revision):    
@@ -756,16 +766,12 @@ class ExtraFunctions(object):
         5) the rest of fields are ignored
 
         """
-        
         groups = []
-        
         for item in list_to_group:
-            #group = {}
-            
             # Se requiere iterar varias veces dependiendo los niveles de puntuacion
             split_atributo = field_group_by.split('.')
             actual = item
-            
+
             for atrib in split_atributo:
                 actual = getattr(actual, atrib, None)
             
@@ -800,9 +806,12 @@ class ExtraFunctions(object):
                 for field in fields_sum:
                     group[field] = getattr(item, field, None) 
             
-                groups.append(group)
-            
-        return groups
+        # Esta parte ordena dependiendo si es ascendente o descendente
+        #sorted(groups, key=lambda group: group[field_group_by])
+        if order_result:
+            return sorted(groups, key=itemgetter(field_group_by), reverse=not order_asc)
+        else:
+            return groups
 
     def _init_sequence(self, initial_value=0):
         '''
@@ -849,3 +858,46 @@ class ExtraFunctions(object):
         if text:
             new_text = upper(str(text))
         return new_text
+
+    def _sum_operation_fields(self, attr, field_a, field_b, operand='*'):
+        '''
+        This function sum the operation between 2 fields, by default the opration is
+        multiplication '*'
+        :param attr: list to operate
+        :param field_a: name of field to use as operand a
+        :param field_b: name of field to use as operand b
+        :param operand: operand to use, can be any mathematical operand like *, /, +, - %
+        '''
+        expr = "for o in objects:\n\tsumm+=float(o.%s) %s float(o.%s)" %(field_a, operand, field_b)
+        localspace = {'objects':attr, 'summ':0}
+        exec expr in localspace
+        return localspace['summ']
+    
+    def _operation_values(self, field_a, field_b, operand='*'):
+        '''
+        This function sum the operation between 2 fields, by default the opration is
+        multiplication '*'
+        :param field_a: name of field to use as operand a
+        :param field_b: name of field to use as operand b
+        :param operand: operand to use, can be any mathematical operand like *, /, +, - %
+        '''
+        expr = "summ+=float(o.%s) %s float(o.%s)" %(field_a, operand, field_b)
+        localspace = {'summ':0}
+        exec expr in localspace
+        return localspace['summ']
+
+    def _amount_to_word(self, value, language='spanish', context=None):
+        '''
+        This function transform the amount total in text using the select language
+        :param value: numeric value to transform
+        :param language: text indicating the languaje to use, spanish predefined 
+        '''
+        context = context or {}
+        languages_function = {
+            'spanish': amount_to_words_spanish.amount_to_words_es
+            }
+        convert_text = languages_function.get(language, False)
+        if not convert_text:
+            convert_text = amount_to_words_spanish.amount_to_words_es
+        return convert_text(value)
+    

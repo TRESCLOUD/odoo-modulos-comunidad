@@ -173,7 +173,7 @@ class ZbPdfExport(ExportPdf):
         return req.make_response(self.from_data(uid, data.get('headers', []), data.get('rows', []),
                                                 data.get('company_name','')),
                                  headers=[('Content-Disposition',
-                                           'attachment; filename=PDF Export'),
+                                           'attachment; filename=PDF Export.pdf'),
                                           ('Content-Type', self.content_type)],
                                  cookies={'fileToken': int(token)})
 
