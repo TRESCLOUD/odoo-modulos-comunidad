@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
+    	<!-- vista eliminada en los modulos ecua -->
         <record id="product_normal_form_view_ext" model="ir.ui.view">
             <field name="name">product.normal.form.view.ext</field>
             <field name="inherit_id" ref="product.product_normal_form_view" />
