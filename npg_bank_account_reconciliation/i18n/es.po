@@ -53,7 +53,7 @@ msgstr "Ingrese nombre de companía"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Totals Area"
-msgstr "Área de totales"
+msgstr "Área de Totales"
 
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,company_id:0

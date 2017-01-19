@@ -31,25 +31,25 @@
                     <button name="action_review" type="object" states="draft" string="Ready for Review" icon="gtk-go-forward"/>
                     <button name="action_process" type="object" states="to_be_reviewed" string="Process" icon="gtk-apply"/>
                     <button name="action_cancel_draft" states="cancel,done" string="Set to Draft" type="object" icon="gtk-convert"
-                    context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}"/>
+                    	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}"/>
                     <button name='refresh_record' string='Refresh' type='object' 
-                    context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}"/>
+                    	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}"/>
                     <field name="state" widget="statusbar" nolabel="1"/>
 			    </header>
 			    <sheet>
 				    <group col="4" colspan="4">
 				        <field name="account_id" placeholder="Enter Account Name" 
-				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}"
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}"
 				         	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				        <field name="name" placeholder="Enter Name"/>
 				        <field name="ending_date" placeholder="Enter ending date" 
-				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}" 
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}" 
 				        	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				        <field name="starting_balance" placeholder="Enter Starting Balance"/>
 				        <field name="ending_balance" placeholder="Enter Ending Balance"/>
 				        <field name="company_id" groups="base.group_multi_company" placeholder="Enter Company Name"/>
 				        <field name="suppress_ending_date_filter" 
-				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids}" 
+				        	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}" 
 				        	on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter, context)"/>
 				    </group>
 			        <notebook colspan="5">
