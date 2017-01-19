@@ -179,7 +179,9 @@ class ExtraFunctions(object):
             'get_text_upper': self._get_text_upper,
             'sum_operation_fields': self._sum_operation_fields,
             'operation_values': self._operation_values,
-            'amount_to_word': self._amount_to_word
+            'amount_to_word': self._amount_to_word,
+            'float_as_string': self._float_as_string,
+            
         }
 
     def _get_identification(self, vat):
@@ -399,6 +401,20 @@ class ExtraFunctions(object):
             if isinstance(obj, (str,unicode)) or hasattr(obj, field):
                 digits = self.pool.get(model)._columns[field].digits
                 return digits or [16,2]
+        except Exception:
+            return []
+
+    def _float_as_string(self, obj, field, value):
+        '''
+        Retorna un campo float pero como string con rellenado conforme el numero de decimales declarado en columns
+        Ayuda a elaborar reportes donde se desea ver el campo con los mismos decimales que en openerp
+        '''
+        try:
+            if isinstance(value, (float)):
+                decimal_positions = self._field_accuracy(obj, field)[1]
+                value_as_string = '{:.{prec}f}'.format(value, prec=decimal_positions)
+                return value_as_string
+            return value
         except Exception:
             return []
 
