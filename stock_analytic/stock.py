@@ -29,7 +29,7 @@ class stock_move(orm.Model):
     _inherit = "stock.move"
 
     _columns = {
-        'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic account'),
+        'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic account', ondelete='restrict'),
     }
 
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
