@@ -53,7 +53,7 @@ msgstr "Ingrese nombre de companía"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Totals Area"
-msgstr "Área de Totales"
+msgstr "Saldos Conciliados"
 
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,company_id:0
@@ -136,7 +136,7 @@ msgstr "Saldo inicial"
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
 msgid "Checks, Withdrawals, Debits, and Service Charges"
-msgstr "Cheques, retiros, débitos, y cargos de servicios"
+msgstr "Cheques, retiros, débitos y cargos de servicios"
 
 #. module: npg_bank_account_reconciliation
 #: model:res.groups,name:npg_bank_account_reconciliation.group_bank_stmt_verifier
@@ -229,7 +229,7 @@ msgstr "El balance inicial de su estado de cuenta bancaria."
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,sum_of_credits:0
 msgid "Checks, Withdrawals, Debits, and Service Charges Amount"
-msgstr "Cantidad en cheques, retiros, débitos, y cargos de servicios"
+msgstr "Cantidad en Cheques, Retiros, Débitos y Cargos de Servicios"
 
 #. module: npg_bank_account_reconciliation
 #: view:bank.acc.rec.statement:0
@@ -249,7 +249,7 @@ msgstr "Otra información"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,sum_of_credits_lines:0
 msgid "Checks, Withdrawals, Debits, and Service Charges # of Items"
-msgstr "# de Items de cheques, retiros, débitos, y cargos de servicios"
+msgstr "# de Items de Cheques, Retiros, Débitos y Cargos de Servicios"
 
 #. module: npg_bank_account_reconciliation
 #: field:account.move.line,cleared_bank_account:0
@@ -265,7 +265,7 @@ msgstr "Fecha en la que el ticket de depósito fue verificada."
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,sum_of_debits:0
 msgid "Deposits, Credits, and Interest Amount"
-msgstr "Depósitos, créditos, y montos de intereses"
+msgstr "Depósitos, Créditos y Montos de Intereses"
 
 #. module: npg_bank_account_reconciliation
 #: help:bank.acc.rec.statement,ending_date:0
@@ -316,7 +316,7 @@ msgstr "Borrador"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,verified_by_user_id:0
 msgid "Verified By"
-msgstr "Verificado Por"
+msgstr "Verificado por"
 
 #. module: npg_bank_account_reconciliation
 #: help:account.move.line,draft_assigned_to_statement:0
@@ -521,7 +521,7 @@ msgstr "Ingrese el usuario que verificó"
 #. module: npg_bank_account_reconciliation
 #: field:bank.acc.rec.statement,sum_of_debits_lines:0
 msgid "Deposits, Credits, and Interest # of Items"
-msgstr "# de elementos de Depósitos, Créditos, e interés"
+msgstr "# de elementos de Depósitos, Créditos e Intereres"
 
 #. module: npg_bank_account_reconciliation
 #: help:bank.acc.rec.statement,ending_balance:0
