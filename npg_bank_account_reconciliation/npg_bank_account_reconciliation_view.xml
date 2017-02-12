@@ -32,7 +32,7 @@
                     <button name="action_process" type="object" states="to_be_reviewed" string="Process" icon="gtk-apply"/>
                     <button name="action_cancel_draft" states="cancel,done" string="Set to Draft" type="object" icon="gtk-convert"
                     	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}"/>
-                    <button name='refresh_record' string='Refresh' type='object' 
+                    <button name='refresh_record' string='Refresh' type='object' states="draft"
                     	context="{'debit_move_line_ids':debit_move_line_ids, 'credit_move_line_ids':credit_move_line_ids, 'start_date': start_date}"/>
                     <field name="state" widget="statusbar" nolabel="1"/>
 			    </header>
