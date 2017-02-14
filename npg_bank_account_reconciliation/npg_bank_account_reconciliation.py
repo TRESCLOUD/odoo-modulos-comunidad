@@ -69,10 +69,11 @@ class bank_acc_rec_statement(osv.osv):
 
     def check_difference_balance(self, cr, uid, ids, context=None):
         "Check if difference balance is zero or not."
-        for statement in self.browse(cr, uid, ids, context=context):
-            if statement.difference != 0.0:
-                raise osv.except_osv(_('!Error!'),
-                                     _(u'No se puede realizar una conciliación bancaria en cero, debe tener al menos un movimiento de débito o crédito seleccionado.'))
+        #El siguiente código fue comentado por TRESCLOUD para poder realizar conciliaciones en 0(sin movimientos)
+        #for statement in self.browse(cr, uid, ids, context=context):
+        #    if statement.difference != 0.0:
+        #        raise osv.except_osv(_('!Error!'),
+        #                             _(u'No se puede realizar una conciliación bancaria en cero, debe tener al menos un movimiento de débito o crédito seleccionado.'))
         return True
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -208,15 +209,19 @@ class bank_acc_rec_statement(osv.osv):
                 statement_line_ids = statement_line_obj.search(cr, uid, [('statement_id', '=', statement.id)], context=context)
                 # call unlink method to reset and remove existing statement lines and
                 # mark reset field values in related move lines
-                statement_line_obj.unlink(cr, uid, statement_line_ids, context=context)
-
+                #statement_line_obj.unlink(cr, uid, statement_line_ids, context=context)
+                if statement_line_ids:
+                    cr.execute('''delete from bank_acc_rec_statement_line where id in %s''', (tuple(statement_line_ids),))
+                
             # Apply filter on move lines to allow
             #1. credit and debit side journal items in posted state of the selected GL account
             #2. Journal items which are not assigned to previous bank statements
             #3. Date less than or equal to ending date provided the 'Suppress Ending Date Filter' is not checkec
-            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), ('cleared_bank_account', '=', False), ('draft_assigned_to_statement', '=', False)]
-            if not suppress_ending_date_filter:
-                domain += [('date', '<=', ending_date)]
+            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), ('cleared_bank_account', '=', False), ('draft_assigned_to_statement', '=', False), ('date', '<=', ending_date)]
+#             if not suppress_ending_date_filter:
+#                 domain += [('date', '<=', ending_date)]
+            if context.get('start_date'):
+                domain += [('date', '>=', context.get('start_date'))]
             line_ids = account_move_line_obj.search(cr, uid, domain, context=context)
             for line in account_move_line_obj.browse(cr, uid, line_ids, context=context):
                 res = {
