@@ -78,7 +78,7 @@ class landed_cost_position(orm.Model):
             digits_compute=dp.get_precision('Purchase Price'),
             help="Landed cost expressed in Landed Cost line currency"),
         'currency_id': fields.many2one(
-            'res.currency', 'Currency'),
+            'res.currency', 'Currency',ondelete='restrict'),
         'po_pricelist_id': fields.related(
             'purchase_order_id', 'pricelist_id',
             type='many2one',
@@ -95,14 +95,14 @@ class landed_cost_position(orm.Model):
             store=True,
             readonly=True,
             help="PO Currency"),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice',ondelete='restrict'),
         'active': fields.boolean('Active'),
         # once the template is deleted, this record should be deleted as well
         'template_id': fields.many2one(
             'landed.cost.position.template', 'Landed costs template',
             ondelete='restrict'),
         'shipment_id': fields.many2one(
-            'landed.costs.shipment', 'Landed Costs Shipment')
+            'landed.costs.shipment', 'Landed Costs Shipment',ondelete='restrict')
     }
 
     _defaults = {
