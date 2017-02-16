@@ -175,6 +175,7 @@ class account_check_deposit(orm.Model):
                                    journal.default_debit_account_id.id)
         else:
             values['value'].update(partner_bank_id=False,account_id=False)
+        values['value'].update(res and res.get('value'))
         return values 
     
     _columns = {
