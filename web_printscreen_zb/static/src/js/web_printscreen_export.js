@@ -9,13 +9,13 @@ openerp.web_printscreen_zb = function(instance, m) {
             this._super.apply(this, arguments);
             var links = document.getElementsByClassName("oe_list_button_import_excel");
             var links_pdf = document.getElementsByClassName("oe_list_button_import_pdf");
-            if (links && links[0]){
-                links[0].onclick = function() {
+            if (links && links[links.length -1]){
+                links[links.length -1].onclick = function() {
                     self.export_to_excel("excel")
                 };
             }
-            if (links_pdf && links_pdf[0]){
-                links_pdf[0].onclick = function() {
+            if (links_pdf && links_pdf[links_pdf.length -1]){
+                links_pdf[links_pdf.length -1].onclick = function() {
                     self.export_to_excel("pdf")
                 };
             }
