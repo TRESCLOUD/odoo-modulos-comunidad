@@ -63,8 +63,13 @@ openerp.web_printscreen_zb = function(instance, m) {
 	                    $data_td_ele = $(this)
 	                    text = $data_td_ele.text().trim() || ""
 	                    if ($data_td_ele && $data_td_ele[0].classList.contains('oe_number')){
-	                        text = instance.web.parse_value(text, { type:"float" })
-	                        data.push({'data': text || "", 'number': true})
+	                    	if ($data_td_ele && $data_td_ele[0].classList.contains('oe_list_field_float_time')){
+	                    		text = instance.web.parse_value(text, { type:"float_time" })
+	                        	data.push({'data': text || "", 'number': true})
+	                    	} else {
+	                    		text = instance.web.parse_value(text, { type:"float" })
+	                        	data.push({'data': text || "", 'number': true})
+	                    	}
 	                    }
 	                    else{
 	                        data.push({'data': text})
@@ -85,8 +90,13 @@ openerp.web_printscreen_zb = function(instance, m) {
                     $footer_td_ele = $(this)
                     text = $footer_td_ele.text().trim() || ""
                     if ($footer_td_ele && $footer_td_ele[0].classList.contains('oe_number')){
-                        text = instance.web.parse_value(text, { type:"float" })
-                        data.push({'data': text || "", 'bold': true, 'number': true})
+                    	if ($data_td_ele && $data_td_ele[0].classList.contains('oe_list_field_float_time')){
+                    		text = instance.web.parse_value(text, { type:"float_time" })
+                        	data.push({'data': text || "", 'number': true})
+                    	} else {
+                    		text = instance.web.parse_value(text, { type:"float" })
+                        	data.push({'data': text || "", 'number': true})
+                    	}
                     }
                     else{
                         data.push({'data': text, 'bold': true})
