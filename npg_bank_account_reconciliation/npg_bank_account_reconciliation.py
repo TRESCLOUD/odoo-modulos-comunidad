@@ -108,9 +108,13 @@ class bank_acc_rec_statement(osv.osv):
                     
             for statement_line in statement_line_obj.browse(cr, uid, statement_lines_ids, context=context):
                 #Mark the move lines as 'Cleared'mand assign the 'Bank Acc Rec Statement ID'
+                if not statement_line.statement_id.id:
+                    raise osv.except_osv(_(u'¡Error de Usuario!'),
+                                         _(u'Esta conciliación tiene datos incoherentes, envíela a borrador, hago clic en el botón Actualizar y '
+                                           u'comience nuevamente el proceso de aprobación, por favor, comunique este error a soporte de Trescloud.'))
                 account_move_line_obj.write(cr, uid, [statement_line.move_line_id.id],
                                             {'cleared_bank_account': statement_line.cleared_bank_account,
-                                             'bank_acc_rec_statement_id': statement_line.cleared_bank_account and statement.id or False
+                                             'bank_acc_rec_statement_id': statement_line.statement_id.id
                                              }, context=context)
 
             self.write(cr, uid, [statement.id], {'state': 'done',
