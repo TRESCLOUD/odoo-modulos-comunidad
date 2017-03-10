@@ -821,7 +821,8 @@ class ExtraFunctions(object):
                 group[field_group_by] = actual 
                 for field in fields_sum:
                     group[field] = getattr(item, field, None) 
-            
+                
+                groups.append(group)
         # Esta parte ordena dependiendo si es ascendente o descendente
         #sorted(groups, key=lambda group: group[field_group_by])
         if order_result:
