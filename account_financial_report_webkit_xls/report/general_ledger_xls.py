@@ -179,7 +179,9 @@ class general_ledger_xls(report_xls):
         cnt = 0
         sheet_number = 1
         for account in objects:
-            if (row_pos + len(account.ledger_lines)) >= 65536:
+            if len(account.ledger_lines) >= 65536:
+                raise ValueError("La cuenta %s tiene mas 65536 registros y es imposible presentarla."%(account.code + ' - ' + account.name))
+            elif (row_pos + len(account.ledger_lines)) >= 65536:
                 ws.name = _p.report_name[:31] + ' ' + str(sheet_number)
                 sheet_number += 1
                 row_pos, row_data, ws = \
