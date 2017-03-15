@@ -289,7 +289,7 @@ class partners_balance_xls(report_xls):
                                     ('init_bal', 1, 0, 'number', partner.get('init_balance', 0.0), None, regular_cell_style_decimal),
                                 ]                
                     else:
-                        debit_col = 3
+                        debit_col = 4
                     c_specs += [
                                  ('debit', 1, 0, 'number', partner.get('debit', 0.0), None, regular_cell_style_decimal),
                                  ('credit', 1, 0, 'number', partner.get('credit', 0.0), None, regular_cell_style_decimal), 
