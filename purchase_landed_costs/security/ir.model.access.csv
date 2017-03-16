@@ -3,3 +3,4 @@ access_landed_cost,landed.cost.position,model_landed_cost_position,purchase.grou
 access_landed_cost_manager,landed.cost.position,model_landed_cost_position,purchase.group_purchase_manager,1,1,1,1
 access_landed_cost_distribution_type_user,landed.cost.distribution user,model_landed_cost_distribution_type,purchase.group_purchase_user,1,0,0,0
 access_landed_cost_distribution_type_manager,landed.cost.distribution manager.type,model_landed_cost_distribution_type,purchase.group_purchase_manager,1,1,1,1
+access_stock_user_landed_cost_position,access_stock_user_landed_cost_position,model_landed_cost_position,stock.group_stock_user,1,0,0,0

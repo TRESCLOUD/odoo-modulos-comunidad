@@ -87,7 +87,7 @@ TODO/Ideas:
 
 """,
     'author': 'Camptocamp',
-    'depends': ['purchase' ],
+    'depends': ['purchase', 'stock'],
     'website': 'http://www.camptocamp.com',
     'data': ['security/ir.model.access.csv',
              'security/landed_cost_security.xml',
