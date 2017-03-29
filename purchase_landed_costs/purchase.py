@@ -157,7 +157,7 @@ class landed_cost_position(orm.Model):
             'res.partner',
             'Partner',
             help="The supplier of this cost component.",
-            required=True),
+            ),
         'distribution_type_id': fields.many2one(
             'landed.cost.distribution.type',
             'Distribution Type',
