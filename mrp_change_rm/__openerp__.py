@@ -41,6 +41,7 @@ The module allows you to:
 
     """,
     'data': [
+        'security/ir.model.access.csv',
         'mrp_view.xml',
     ],
     'demo': [],
