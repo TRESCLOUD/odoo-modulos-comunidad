@@ -48,6 +48,12 @@
                     <field name="fiscalyear_id" position="attributes">
                         <attribute name="attrs">{'required': [('filter', '=', 'filter_opening')]}</attribute>
                     </field>
+                    <field name="target_move" position="after">
+                        <field name="type"/>
+                    </field>
+                    <field name="type" position="after">
+                        <field name="niveles"/>
+                    </field>
                 </data>
             </field>
         </record>

@@ -90,6 +90,8 @@ class AccountBalanceCommonWizard(orm.TransientModel):
                                     required=True,
                                     help='Filter by date: no opening balance will be displayed. '
                                          '(opening balance can only be computed based on period to be correct).'),
+        'type': fields.boolean("Solo movimientos", help="Filtrar solo movimientos"),
+        'niveles':fields.char("Niveles de cuenta a filtrar", help="Estos niveles seran filtrados en el reporte"),
     }
 
     for index in range(COMPARISON_LEVEL):

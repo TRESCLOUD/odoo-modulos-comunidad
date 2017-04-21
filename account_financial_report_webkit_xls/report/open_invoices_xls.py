@@ -148,11 +148,11 @@ class open_invoices_xls(report_xls):
     def print_header_titles(self, _p, data, row_position): #Fill in the titles of the header summary tables: Chart of account - Fiscal year - ...    
         c_specs = [
             ('coa', 2, 0, 'text', _('Chart of Account'), None, style_bold_blue_center),
-            ('fy', 2, 0, 'text', _('Fiscal Year'), None, style_bold_blue_center),
-            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Dates Filter') or _('Periods Filter'), None, style_bold_blue_center),
+            ('fy', 2, 0, 'text', _('Año Fiscal'), None, style_bold_blue_center),
+            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtros por fecha') or _('Filtros por periodo'), None, style_bold_blue_center),
             ('cd', 1 if nbr_columns == 11 else 2 , 0, 'text', _('Clearance Date'), None, style_bold_blue_center),
-            ('af', 2, 0, 'text', _('Accounts Filter'), None, style_bold_blue_center),
-            ('tm', 3 if nbr_columns == 13 else 2, 0, 'text', _('Target Moves'), None, style_bold_blue_center),
+            ('af', 2, 0, 'text', _('Filtro de cuentas'), None, style_bold_blue_center),
+            ('tm', 3 if nbr_columns == 13 else 2, 0, 'text', _('Movimientos destinos'), None, style_bold_blue_center),
         ]       
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
         row_position = self.xls_write_row(ws, row_position, row_data, row_style=style_bold_blue_center)
@@ -196,8 +196,8 @@ class open_invoices_xls(report_xls):
             ('label', 1, 0, 'text', _('Label'),None,style_yellow_bold),
             ('rec', 1, 0, 'text', _('Rec.'),None,style_yellow_bold),
             ('due_date', 1, 0, 'text', _('Due Date'),None,style_yellow_bold),
-            ('debit', 1, 0, 'text', _('Debit'),None,style_yellow_bold_right),
-            ('credit', 1, 0, 'text', _('Credit'),None,style_yellow_bold_right),
+            ('debit', 1, 0, 'text', _('Debe'),None,style_yellow_bold_right),
+            ('credit', 1, 0, 'text', _('Haber'),None,style_yellow_bold_right),
             ('cumul', 1, 0, 'text', _('Cumul. Bal.'),None,style_yellow_bold_right),  
         ]       
         if group_lines:

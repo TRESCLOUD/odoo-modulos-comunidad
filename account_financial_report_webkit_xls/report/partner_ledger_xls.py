@@ -91,9 +91,9 @@ class partner_ledger_xls(report_xls):
         c_specs = [
             ('coa', 2, 0, 'text', _('Plan de Cuentas')),
             ('fy', 1, 0, 'text', _('Año Fiscal')),
-            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtro fecha') or _('Filtro Periodos')),
-            ('af', 1, 0, 'text', _('Filtro Cuentas')),
-            ('tm', 2, 0, 'text',  _('Movimientos Contables')),
+            ('df', 2, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtros por fecha') or _('Filtros por periodo')),
+            ('af', 1, 0, 'text', _('Filtro de cuentas')),
+            ('tm', 2, 0, 'text',  _('Movimientos destinos')),
             ('ib', nbr_columns-8, 0, 'text',  _('Balance Inicial')),
 
         ]       

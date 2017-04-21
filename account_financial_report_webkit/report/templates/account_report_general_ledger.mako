@@ -24,18 +24,18 @@
 
         <div class="act_as_table data_table">
             <div class="act_as_row labels">
-                <div class="act_as_cell">${_('Chart of Account')}</div>
+                <div class="act_as_cell">${_('Plan de cuentas')}</div>
                 <div class="act_as_cell">${_('Fiscal Year')}</div>
                 <div class="act_as_cell">
                     %if filter_form(data) == 'filter_date':
                         ${_('Dates Filter')}
                     %else:
-                        ${_('Periods Filter')}
+                        ${_('Filtro por periodos')}
                     %endif
                 </div>
-                <div class="act_as_cell">${_('Accounts Filter')}</div>
+                <div class="act_as_cell">${_('Filtros de Cuentas')}</div>
                 <div class="act_as_cell">${_('Target Moves')}</div>
-                <div class="act_as_cell">${_('Initial Balance')}</div>
+                <div class="act_as_cell">${_('Balance Inicial')}</div>
             </div>
             <div class="act_as_row">
                 <div class="act_as_cell">${ chart_account.name }</div>
@@ -92,7 +92,7 @@
                         ## period
                         <div class="act_as_cell" style="width: 50px;">${_('Period')}</div>
                         ## move
-                        <div class="act_as_cell" style="width: 60px;">${_('Entry')}</div>
+                        <div class="act_as_cell" style="width: 60px;">${_('Entrada')}</div>
                         ## journal
                         <div class="act_as_cell" style="width: 70px;">${_('Journal')}</div>
                         ## account code
@@ -100,9 +100,9 @@
                         ## partner
                         <div class="act_as_cell" style="width: 120px;">${_('Partner')}</div>
                         ## label
-                        <div class="act_as_cell" style="width: 200px;">${_('Label')}</div>
+                        <div class="act_as_cell" style="width: 200px;">${_('Referencia')}</div>
                         ## counterpart
-                        <div class="act_as_cell" style="width: 100px;">${_('Counter part')}</div>
+                        <div class="act_as_cell" style="width: 100px;">${_('Contrapartida')}</div>
                         ## debit
                         <div class="act_as_cell amount" style="width: 75px;">${_('Debit')}</div>
                         ## credit
@@ -164,9 +164,17 @@
                         cumul_credit += line.get('credit') or 0.0
                         cumul_balance_curr += line.get('amount_currency') or 0.0
                         cumul_balance += line.get('balance') or 0.0
-                        label_elements = [line.get('lname') or '']
+                        #if something in lref, add it
+                        label_elements = [line.get('lref') or '']
+
+                        # **Se comenta en acaso se necesitan hacer cambios de condiciones**
+                        label_elements.append(line.get('lname') or '')
+
                         if line.get('invoice_number'):
-                          label_elements.append("(%s)" % (line['invoice_number'],))
+                           label_elements.append("(%s)" % (line['invoice_number'],))
+
+                        #Here we join the three things: line['lref'], line['lname'], and line['invoice_number'].
+
                         label = ' '.join(label_elements)
                         %>
 

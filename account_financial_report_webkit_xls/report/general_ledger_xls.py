@@ -89,9 +89,9 @@ class general_ledger_xls(report_xls):
         c_specs = [
             ('coa', 2, 0, 'text', _('Plan de cuentas')),
             ('fy', 1, 0, 'text', _('Año Fiscal')),
-            ('df', 3, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtro por Fechas') or _('Filtro por periodos')),
-            ('af', 1, 0, 'text', _('Filtro Cuentas')),
-            ('tm', 2, 0, 'text',  _('Movimientos')),
+            ('df', 3, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtros por fecha') or _('Filtros por periodo')),
+            ('af', 1, 0, 'text', _('Filtro de cuentas')),
+            ('tm', 2, 0, 'text',  _('Movimientos destinos')),
             ('ib', 2, 0, 'text',  _('Balance Inicial')),
 
         ]       
@@ -154,11 +154,11 @@ class general_ledger_xls(report_xls):
             ('journal', 1, 0, 'text', _('Diario'), None, c_hdr_cell_style),
             ('account_code', 1, 0, 'text', _('Cuenta'), None, c_hdr_cell_style),
             ('account_analytic', 1, 0, 'text', _('Centro de Costo'), None, c_hdr_cell_style),
-            ('partner', 1, 0, 'text', _('Empresa'), None, c_hdr_cell_style),
-            ('label', 1, 0, 'text', _('Descripcion'), None, c_hdr_cell_style),
+            ('partner', 1, 0, 'text', _('Asociado'), None, c_hdr_cell_style),
+            ('label', 1, 0, 'text', _('Referencia'), None, c_hdr_cell_style),
             ('counterpart', 1, 0, 'text', _('Contrapartida'), None, c_hdr_cell_style),
-            ('debit', 1, 0, 'text', _('Debito'), None, c_hdr_cell_style_right),
-            ('credit', 1, 0, 'text', _('Credito'), None, c_hdr_cell_style_right),
+            ('debit', 1, 0, 'text', _('Debe'), None, c_hdr_cell_style_right),
+            ('credit', 1, 0, 'text', _('Haber'), None, c_hdr_cell_style_right),
             ('cumul_bal', 1, 0, 'text', _('Cumul. Bal.'), None, c_hdr_cell_style_right),                    
         ]  
         if _p.amount_currency(data):
@@ -234,9 +234,17 @@ class general_ledger_xls(report_xls):
                     cumul_credit += line.get('credit') or 0.0
                     cumul_balance_curr += line.get('amount_currency') or 0.0
                     cumul_balance += line.get('balance') or 0.0
-                    label_elements = [line.get('lname') or '']
+
+                    #if something in lref, add it
+                    label_elements = [line.get('lref') or '']
+
+                    # **Se comenta en acaso se necesitan hacer cambios de condiciones**
+                    label_elements.append(line.get('lname') or '')
+
                     if line.get('invoice_number'):
-                      label_elements.append("(%s)" % (line['invoice_number'],))
+                       label_elements.append("(%s)" % (line['invoice_number'],))
+
+                    #Here we join the three things: line['lref'], line['lname'], and line['invoice_number'].
                     label = ' '.join(label_elements)
 
                     if line.get('ldate'):

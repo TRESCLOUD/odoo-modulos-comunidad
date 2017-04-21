@@ -23,6 +23,9 @@
 from operator import add
 
 from .common_reports import CommonReportHeaderWebkit
+import string
+import re
+from openerp.osv import osv
 
 
 class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
@@ -34,6 +37,13 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
     @staticmethod
     def find_key_by_value_in_list(dic, value):
         return [key for key, val in dic.iteritems() if value in val][0]
+
+    def _get_move_type_accounts(self,account_ids):
+        res=[]
+        for account in self.pool.get('account.account').browse(self.cursor, self.uid, account_ids):
+            if account.type != 'view':
+                res.append(account)
+        return res
 
     def _get_account_details(self, account_ids, target_move, fiscalyear, main_filter, start, stop, initial_balance_mode, context=None):
         """
@@ -49,7 +59,7 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         """
         if context is None:
             context = {}
-
+        byType=True
         account_obj = self.pool.get('account.account')
         period_obj = self.pool.get('account.period')
         use_period_ids = main_filter in ('filter_no', 'filter_period', 'filter_opening')
@@ -77,17 +87,24 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         elif main_filter == 'filter_date':
             ctx.update({'date_from': start,
                         'date_to': stop})
-
+        # new_account_ids=self.pool.get('account.account').search(self.cr, self.uid,
+        #         [('type', '!=', 'view'),('id','in',account_ids)], context=context)
+        # if byType:
+        #     accounts=self._get_move_type_accounts(account_ids)
+        # else:
+        # account_ids=new_account_ids
         accounts = account_obj.read(
                 self.cursor,
                 self.uid,
                 account_ids,
-                ['type', 'code', 'name', 'debit', 'credit',  'balance', 'parent_id', 'level', 'child_id'],
+                ['type', 'code', 'name', 'debit', 'credit',  'balance', 'parent_id', 'level', 'child_id','balance_signed'],
                 ctx)
 
         accounts_by_id = {}
         for account in accounts:
+            account['balance'] = account['balance_signed']
             if init_balance:
+                is_reversed = False
                 # sum for top level views accounts
                 child_ids = account_obj._get_children_and_consol(self.cursor, self.uid, account['id'], ctx)
                 if child_ids:
@@ -99,7 +116,14 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
                     account['init_balance'] = top_init_balance
                 else:
                     account.update(init_balance[account['id']])
-                account['balance'] = account['init_balance'] + account['debit'] - account['credit']
+                if( account['code'] and len(account['code']) > 0 and account['code'][0] in ['2','3','4']):
+                    is_reversed = True
+                    if account['init_balance']!=0.00:
+                        account['init_balance']=account['init_balance']*-1
+                if is_reversed:
+                    account['balance'] = account['init_balance'] - account['debit'] + account['credit']
+                else:
+                    account['balance'] = account['init_balance'] + account['debit'] - account['credit']
             accounts_by_id[account['id']] = account
         return accounts_by_id
 
@@ -179,6 +203,8 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         else:
             comparison_mode = 'single'
         return comp_filters, nb_comparisons, comparison_mode
+    def special_match(self, my_string, search=re.compile(r'[^0-9,]').search):
+        return not bool(search(my_string))
 
     def _get_start_stop_for_filter(self, main_filter, fiscalyear, start_date, stop_date, start_period, stop_period):
         if main_filter in ('filter_no', 'filter_year'):
@@ -212,6 +238,10 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         start_date = self._get_form_param('date_from', data)
         stop_date = self._get_form_param('date_to', data)
         chart_account = self._get_chart_account_id_br(data)
+        byType=self._get_form_param('type',data)
+        byLevel=self._get_form_param('niveles',data)
+        niveles_in=""
+        niveles_out=""
 
         start_period, stop_period, start, stop = \
             self._get_start_stop_for_filter(main_filter, fiscalyear, start_date, stop_date, start_period, stop_period)
@@ -221,6 +251,21 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
 
         # Retrieving accounts
         account_ids = self.get_all_accounts(new_ids, only_type=filter_report_type)
+
+        if byType:
+            new_account_ids=self.pool.get('account.account').search(self.cr, self.uid,
+                    [('type', '!=', 'view'),('id','in',account_ids)], context=None)
+            account_ids=new_account_ids
+
+        if byLevel!=False:
+            if self.special_match(byLevel):
+                niveles_in=str(byLevel)
+                niveles=niveles_in.split(',')
+                niveles=[int(i) for i in niveles]
+                new_account_ids=self.pool.get('account.account').search(self.cr, self.uid,[('level', 'in', niveles),('id','in',account_ids)], context=None)
+                account_ids=new_account_ids
+            else:
+                raise osv.except_osv( "Error!", "Solo puede el nivel con numeros y seprados por comas ','" )
 
         # get details for each accounts, total of debit / credit / balance
         accounts_by_ids = self._get_account_details(account_ids, target_move, fiscalyear, main_filter, start, stop, initial_balance_mode)

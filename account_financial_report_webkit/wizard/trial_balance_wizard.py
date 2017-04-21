@@ -33,6 +33,9 @@ class AccountTrialBalanceWizard(osv.osv_memory):
         context = context or {}
         # we update form with display account value
         data = self.pre_print_report(cursor, uid, ids, data, context=context)
+        cuenta=self.pool.get('trial.balance.webkit').browse(cursor, uid,ids, context=None)
+        data['form']['type'] = cuenta[0].type
+        data['form']['niveles']=cuenta[0].niveles
 
         return {'type': 'ir.actions.report.xml',
                 'report_name': 'account.account_report_trial_balance_webkit',

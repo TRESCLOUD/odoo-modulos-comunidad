@@ -59,12 +59,12 @@ class partners_balance_xls(report_xls):
         cell_style_center = xlwt.easyxf(cell_format + _xs['center'])
 
         c_specs = [
-            ('fy', 1, 0, 'text', _('Fiscal Year'), None, cell_style_center),
-            ('af', 1, 0, 'text', _('Accounts Filter'), None, cell_style_center),
-            ('df', 1, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Dates Filter') or _('Periods Filter'), None, cell_style_center),
+            ('fy', 1, 0, 'text', _('Año Fiscal'), None, cell_style_center),
+            ('af', 1, 0, 'text', _('Filtro de cuentas'), None, cell_style_center),
+            ('df', 1, 0, 'text', _p.filter_form(data) == 'filter_date' and _('Filtros por fecha') or _('Filtros por periodo'), None, cell_style_center),
             ('pf', 1, 0, 'text',  _('Partners Filter'), None, cell_style_center),
-            ('tm', 1, 0, 'text',  _('Target Moves'), None, cell_style_center),
-            ('ib', 1, 0, 'text',  _('Initial Balance'), None, cell_style_center),
+            ('tm', 1, 0, 'text',  _('Movimientos destinos'), None, cell_style_center),
+            ('ib', 1, 0, 'text',  _('Balance Inicial'), None, cell_style_center),
             ('coa', 1, 0, 'text', _('Chart of Account'), None, cell_style_center),
         ]       
         row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
@@ -111,12 +111,12 @@ class partners_balance_xls(report_xls):
         for index, params in enumerate(_p.comp_params):
             c_specs = [('c', 2, 0, 'text', _('Comparison') + str(index + 1) + ' (C' + str(index + 1) + ')')]
             if params['comparison_filter'] == 'filter_date':
-                    c_specs += [('f', 2, 0, 'text', _('Dates Filter') + ': ' + _p.formatLang(params['start'], date=True) + ' - ' + _p.formatLang(params['stop'], date=True))]
+                    c_specs += [('f', 2, 0, 'text', _('Filtros por fecha') + ': ' + _p.formatLang(params['start'], date=True) + ' - ' + _p.formatLang(params['stop'], date=True))]
             elif params['comparison_filter'] == 'filter_period':
-                    c_specs += [('f', 2, 0, 'text', _('Periods Filter') + ': ' + params['start'].name + ' - ' + params['stop'].name)]
+                    c_specs += [('f', 2, 0, 'text', _('Filtros por periodo') + ': ' + params['start'].name + ' - ' + params['stop'].name)]
             else:
-                    c_specs += [('f', 2, 0, 'text', _('Fiscal Year') + ': ' + params['fiscalyear'].name)]
-            c_specs += [('ib', 2, 0, 'text', _('Initial Balance') + ': ' + initial_balance_text[params['initial_balance_mode']])]
+                    c_specs += [('f', 2, 0, 'text', _('Año Fiscal') + ': ' + params['fiscalyear'].name)]
+            c_specs += [('ib', 2, 0, 'text', _('Balance Inicial') + ': ' + initial_balance_text[params['initial_balance_mode']])]
             row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
             row_position = self.xls_write_row(ws, row_position, row_data, row_style=cell_style_center) 
         return row_position
@@ -136,10 +136,10 @@ class partners_balance_xls(report_xls):
         ]
         if _p.comparison_mode == 'no_comparison':
             if _p.initial_balance_mode:
-                c_specs += [('init_bal', 1, 0, 'text', _('Initial Balance'), None, cell_style_right)]
+                c_specs += [('init_bal', 1, 0, 'text', _('Balance Inicial'), None, cell_style_right)]
             c_specs += [
-                ('debit', 1, 0, 'text', _('Debit'), None, cell_style_right),
-                ('credit', 1, 0, 'text', _('Credit'), None, cell_style_right),
+                ('debit', 1, 0, 'text', _('Debe'), None, cell_style_right),
+                ('credit', 1, 0, 'text', _('Haber'), None, cell_style_right),
             ]       
 
         if _p.comparison_mode == 'no_comparison' or not _p.fiscalyear:
@@ -289,7 +289,7 @@ class partners_balance_xls(report_xls):
                                     ('init_bal', 1, 0, 'number', partner.get('init_balance', 0.0), None, regular_cell_style_decimal),
                                 ]                
                     else:
-                        debit_col = 4
+                        debit_col = 3
                     c_specs += [
                                  ('debit', 1, 0, 'number', partner.get('debit', 0.0), None, regular_cell_style_decimal),
                                  ('credit', 1, 0, 'number', partner.get('credit', 0.0), None, regular_cell_style_decimal), 
