@@ -53,13 +53,14 @@ class landed_cost_position(orm.Model):
         cur_obj = self.pool.get('res.currency')
         amount = amount_currency
         if currency_id != parent_currency_id:
-            ctx = context.copy()
-            ctx['date'] = date_po or False
-            amount = cur_obj.compute(cr, uid,
-                                     currency_id,
-                                     parent_currency_id,
-                                     amount,
-                                     context=ctx)
+#             ctx = context.copy()
+#             ctx['date'] = date_po or False
+#             amount = cur_obj.compute(cr, uid,
+#                                      currency_id,
+#                                      parent_currency_id,
+#                                      amount,
+#                                      context=ctx)
+            amount = amount * context.get('currency_rate', 0.0)
         return {'value': {'amount': amount}}
 
     def _default_currency(self, cr, uid, context=None):
