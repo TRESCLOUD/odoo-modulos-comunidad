@@ -32,6 +32,7 @@
     'depends': ['web'],
     'js': ['static/src/js/web_printscreen_export.js'],
     'qweb': ['static/src/xml/web_printscreen_export.xml'],
+    'css' : ["static/src/css/base.css"],
     'installable': True,
     'auto_install': False,
     'web_preload': False,
