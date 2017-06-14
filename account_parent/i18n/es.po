@@ -23,7 +23,7 @@ msgstr "Cuenta"
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_account_open_chart
 msgid "Account Open chart"
-msgstr ""
+msgstr "Abrir plan de cuentas"
 
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_account_account_type
@@ -38,17 +38,17 @@ msgstr "Tipos de cuenta"
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_chart
 msgid "Account charts"
-msgstr ""
+msgstr "Plan de cuentas"
 
 #. module: account_parent
 #: selection:account.open.chart,target_move:0
 msgid "All Entries"
-msgstr ""
+msgstr "Todos los asientos"
 
 #. module: account_parent
 #: selection:account.open.chart,target_move:0
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Todos los asientos asentados"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_balance
@@ -76,7 +76,7 @@ msgstr "Reporte de jerarquías de cuentas"
 #: model:ir.ui.view,arch_db:account_parent.view_account_noparent_tree
 #: model:ir.ui.view,arch_db:account_parent.view_account_tree
 msgid "Chart of accounts"
-msgstr ""
+msgstr "Plan contable"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_child_ids
@@ -96,7 +96,7 @@ msgstr "Creado por"
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_credit
@@ -106,7 +106,7 @@ msgstr "Crédito"
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_chart
 msgid "Date(s)"
-msgstr ""
+msgstr "Fecha(s)"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_debit
@@ -116,7 +116,7 @@ msgstr "Débito"
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre a mostrar"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_date_to
@@ -126,7 +126,7 @@ msgstr "Fecha fin"
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_id
 msgid "ID"
-msgstr ""
+msgstr "Id"
 
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_account_journal
@@ -146,22 +146,22 @@ msgstr ""
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación en"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última modificación por"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_parent_left
 msgid "Left Parent"
-msgstr ""
+msgstr "Padre izquierdo"
 
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_chart
@@ -187,12 +187,12 @@ msgstr "Cuenta relacionada"
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_account_parent_right
 msgid "Right Parent"
-msgstr ""
+msgstr "Padre derecho"
 
 #. module: account_parent
 #: model:res.groups,name:account_parent.group_coas_user
 msgid "Show Chart of Account Structure"
-msgstr ""
+msgstr "Mostar estructura del plan de cuentas"
 
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_date_from
@@ -202,45 +202,45 @@ msgstr "Fecha Inicio"
 #. module: account_parent
 #: model:ir.model.fields,field_description:account_parent.field_account_open_chart_target_move
 msgid "Target Moves"
-msgstr ""
+msgstr "Apuntes a listar"
 
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_account_chart_template
 msgid "Templates for Account Chart"
-msgstr ""
+msgstr "Plantillas para el plan contable"
 
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_account_account_template
 msgid "Templates for Accounts"
-msgstr ""
+msgstr "Plantillas para cuentas"
 
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_noparent_tree
 #: model:ir.ui.view,arch_db:account_parent.view_account_tree
 msgid "Total Balance"
-msgstr ""
+msgstr "Balance total"
 
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_noparent_tree
 #: model:ir.ui.view,arch_db:account_parent.view_account_tree
 msgid "Total Credit"
-msgstr ""
+msgstr "Crédito total"
 
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_noparent_tree
 #: model:ir.ui.view,arch_db:account_parent.view_account_tree
 msgid "Total Debit"
-msgstr ""
+msgstr "Débito total"
 
 #. module: account_parent
 #: model:account.account.type,name:account_parent.data_account_type_view
 msgid "View Type"
-msgstr ""
+msgstr "Vista"
 
 #. module: account_parent
 #: model:ir.ui.view,arch_db:account_parent.view_account_chart
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #. module: account_parent
 #: model:ir.model,name:account_parent.model_wizard_multi_charts_accounts
