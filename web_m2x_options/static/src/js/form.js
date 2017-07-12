@@ -54,9 +54,11 @@ openerp.web_m2x_options = function (instance) {
         },
 
         show_error_displayer: function () {
+        	var can_create = false
+        	can_create = this.can_create
             if(this.is_option_set(this.options.m2o_dialog) ||
                _.isUndefined(this.options.m2o_dialog) && this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']) ||
-               this.can_create && _.isUndefined(this.options.m2o_dialog) && _.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
+               can_create && _.isUndefined(this.options.m2o_dialog) && _.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
@@ -111,7 +113,7 @@ openerp.web_m2x_options = function (instance) {
 
                 var can_create = _can_create ? _can_create[0] : null;
 
-                self.can_create = can_create;  // for ``.show_error_displayer()``
+                self.can_create = self.options.create || false;  // for ``.show_error_displayer()``
                 self.last_search = data;
                 // possible selections for the m2o
                 var values = _.map(data, function (x) {

@@ -153,8 +153,10 @@ class object_merger(orm.TransientModel):
         list = []
         for id in unactive_object_ids:
             list.append(context.get('active_model')+','+str(id))
-        property = "UPDATE ir_property SET value_reference = '"+context.get('active_model')+','+str(object_id)+"' WHERE value_reference IN " + str(tuple(list)) + ";"
-        cr.execute(property)
+        cr.execute('''
+                    UPDATE ir_property SET value_reference = %s 
+                    WHERE value_reference IN %s''', 
+                    tuple([context.get('active_model')+','+str(object_id), tuple(list)]))
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
