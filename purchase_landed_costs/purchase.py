@@ -550,7 +550,8 @@ class purchase_order(orm.Model):
         po = (landed_cost.purchase_order_id or
               landed_cost.purchase_order_line_id.order_id)
         currency_id = landed_cost.purchase_order_id.pricelist_id.currency_id.id
-        fiscal_position_id = landed_cost.partner_id.commercial_partner_id.property_account_position and landed_cost.partner_id.\
+        fiscal_position_id = landed_cost.partner_id.commercial_partner_id.property_account_position and \
+            landed_cost.partner_id.commercial_partner_id.\
             property_account_position.id or po.fiscal_position.id if po.fiscal_position else False
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(
