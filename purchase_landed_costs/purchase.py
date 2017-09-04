@@ -550,7 +550,9 @@ class purchase_order(orm.Model):
         po = (landed_cost.purchase_order_id or
               landed_cost.purchase_order_line_id.order_id)
         currency_id = landed_cost.purchase_order_id.pricelist_id.currency_id.id
-        fiscal_position_id = po.fiscal_position.id if po.fiscal_position else False
+        fiscal_position_id = landed_cost.partner_id.commercial_partner_id.property_account_position and \
+            landed_cost.partner_id.commercial_partner_id.\
+            property_account_position.id or po.fiscal_position.id if po.fiscal_position else False
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(
             cr, uid,
@@ -587,7 +589,7 @@ class purchase_order(orm.Model):
         vals_inv = self._prepare_landed_cost_inv(cr, uid, landed_cost,
                                                  context=context)
         inv_id = invoice_obj.create(cr, uid, vals_inv, context=context)
-        fiscal_position = (po.fiscal_position or False)
+        fiscal_position = (landed_cost.partner_id.commercial_partner_id.property_account_position or po.fiscal_position or False)
         exp_account_id = prod_obj._choose_exp_account_from(
             cr, uid,
             landed_cost.product_id,

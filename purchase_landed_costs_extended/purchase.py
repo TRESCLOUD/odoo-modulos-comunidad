@@ -96,7 +96,7 @@ class landed_cost_position(orm.Model):
             store=True,
             readonly=True,
             help="PO Currency"),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice',ondelete='restrict'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'active': fields.boolean('Active'),
         # once the template is deleted, this record should be deleted as well
         'template_id': fields.many2one(
