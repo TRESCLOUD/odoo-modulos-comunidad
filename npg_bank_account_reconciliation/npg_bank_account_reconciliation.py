@@ -226,6 +226,12 @@ class bank_acc_rec_statement(osv.osv):
 #                 domain += [('date', '<=', ending_date)]
             if context.get('start_date'):
                 domain += [('date', '>=', context.get('start_date'))]
+                
+            #Diarios de apertura
+            journal_ids = self.pool.get('account.journal').search(cr, uid, [('type','=','situation')], context=context)
+            if not context.get('opening_entries'):
+                domain += [('journal_id', 'not in', journal_ids)]
+               
             line_ids = account_move_line_obj.search(cr, uid, domain, context=context)
             for line in account_move_line_obj.browse(cr, uid, line_ids, context=context):
                 res = {
