@@ -64,7 +64,7 @@ class AccountAccount(models.Model):
 
     @api.multi
     @api.depends('move_line_ids','move_line_ids.amount_currency','move_line_ids.debit','move_line_ids.credit')
-    def compute_values(self):
+    def compute_values(self, domain=None):
         default_domain = self._move_domain_get()
         for account in self:
             sub_accounts = self.with_context({'show_parent_account':True}).search([('id','child_of',[account.id])])
@@ -73,6 +73,8 @@ class AccountAccount(models.Model):
             debit = 0.0
             search_domain = default_domain[:]
             search_domain.insert(0,('account_id','in',sub_accounts.ids))
+            if domain:
+                search_domain += domain
             for aml in self.env['account.move.line'].search(search_domain):
                 balance += aml.debit - aml.credit
                 credit += aml.credit
@@ -180,7 +182,9 @@ class AccountAccount(models.Model):
         res = []
         parent_accounts = []
         for account in accounts:
-            parent_accounts += account._get_parent(not all_accounts)
+            acc = account._get_parent(not all_accounts)
+            if acc:
+                parent_accounts += acc
             set_accounts = set(parent_accounts)
             parent_accounts = list(set_accounts)
         for accountp in sorted(parent_accounts, key=lambda aux: aux.code):
