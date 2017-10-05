@@ -20,10 +20,11 @@ class AccountAccount(models.Model):
 
     level =  fields.Integer(string='Level', compute='_get_level', stored=True, help='Account Level')
 
-    "Funcion que obtiene el level de la cuenta contable."
     @api.one
     @api.depends('parent_id')
     def _get_level(self):
+        "Funcion que obtiene el level de la cuenta contable."
+
         level = 0
         parent = self.parent_id
         while parent:
@@ -35,7 +36,6 @@ class AccountAccount(models.Model):
     def _move_domain_get(self, domain=None):
         context = dict(self._context or {})
         domain = domain and safe_eval(str(domain)) or []
-
         date_field = 'date'
         if context.get('aged_balance'):
             date_field = 'date_maturity'
@@ -48,23 +48,17 @@ class AccountAccount(models.Model):
                 domain += [(date_field, '<', context['date_from'])]
             else:
                 domain += [(date_field, '>=', context['date_from'])]
-
         if context.get('journal_ids'):
             domain += [('journal_id', 'in', context['journal_ids'])]
-
         state = context.get('state')
         if state and state.lower() != 'all':
             domain += [('move_id.state', '=', state)]
-
         if context.get('company_id'):
             domain += [('company_id', '=', context['company_id'])]
-
         if 'company_ids' in context:
             domain += [('company_id', 'in', context['company_ids'])]
-
         if context.get('reconcile_date'):
             domain += ['|', ('reconciled', '=', False), '|', ('matched_debit_ids.create_date', '>', context['reconcile_date']), ('matched_credit_ids.create_date', '>', context['reconcile_date'])]
-
         return domain
 
 
@@ -110,18 +104,18 @@ class AccountAccount(models.Model):
             args += [('user_type_id.type', '!=', 'view')]
         return super(AccountAccount, self).search(args, offset, limit, order, count=count)
 
-    "Funcion para obtener padres de cuenta contables."
     @api.model
     def _get_parent(self, all_parents=False):
+        "Funcion para obtener padres de cuenta contables."
         res = None
         parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
         if parents:
             res = parents[0]._get_array_parent(all_parents)
         return res
 
-    "Funcion para obtener Arreglo de cuentas padres"
     @api.model
     def _get_array_parent(self, all_parents=False):
+        "Funcion para obtener Arreglo de cuentas padres"
         res = self
         parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
         if parents:
@@ -132,9 +126,9 @@ class AccountAccount(models.Model):
                     res = parent._get_array_parent(all_parents)
         return res
 
-    "Funcion para obtener hijos de cuenta contables."
     @api.model
     def _get_principal_children_by_order(self, **kwargs):
+        "Funcion para obtener hijos de cuenta contables."
         res = None
         children = self.with_context({'show_parent_account': True}, **kwargs).search([('parent_id', 'in', self._ids)], order='code ASC')
         if children:
@@ -154,9 +148,9 @@ class AccountAccount(models.Model):
                 res += child._get_children_by_order()
         return res
 
-    "Funcion para obtener sumatoria de Debitos y Creditos de cuenta contables."
     @api.model
     def _get_balance_account(self, where=None):
+        "Funcion para obtener sumatoria de Debitos y Creditos de cuenta contables."
         sql = "select SUM(debit) AS debit, SUM(credit) AS credit " \
               "from account_move_line " \
               "where account_id = "+str(self.id)
@@ -166,31 +160,29 @@ class AccountAccount(models.Model):
         res = self.env.cr.dictfetchone()
         return res.get('debit') or 0.0, res.get('credit') or 0.0
 
-    "Funcion para obtener el Level mas alto de todas las cuentas contables."
     @api.multi
     def _get_max_level(self):
+        "Funcion para obtener el Level mas alto de todas las cuentas contables."
         search_ids = self.env['account.account'].search([])
         max_id = search_ids and max(search_ids, key=lambda item: item.level)
         if max_id:
             return max_id.level or 0
         return 0
 
-    "Metodo que recorre un arreglo de cuentas contables, crea un arbol con el saldo debito, credito y balance de dicho arbol contable."
     def _get_set_accounts_data(self, accounts, where, all_accounts=False):
+        "Metodo que recorre un arreglo de cuentas contables, crea un arbol con el saldo debito, credito y balance de dicho arbol contable."
         class VirtualData():
             def __init__(self, account_id, debit=0.0, credit=0.0):
                 self.account_id = account_id
                 self.debit = debit
                 self.credit = credit
                 self.balance = debit - credit
-
         res = []
         parent_accounts = []
         for account in accounts:
             parent_accounts += account._get_parent(not all_accounts)
             set_accounts = set(parent_accounts)
             parent_accounts = list(set_accounts)
-
         for accountp in sorted(parent_accounts, key=lambda aux: aux.code):
             accounts = accountp._get_children_by_order()
             for account in sorted(accounts, key=lambda aux: aux.code, reverse=True):
