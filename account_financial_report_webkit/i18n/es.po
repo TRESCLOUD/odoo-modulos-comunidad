@@ -238,7 +238,6 @@ msgstr "Este informe le permite imprimir o generar un pdf de sus facturas pendie
 #: selection:account.common.balance.report,comp1_filter:0
 #: selection:account.common.balance.report,comp2_filter:0
 #: selection:account.common.balance.report,filter:0
-#: selection:general.ledger.webkit,filter:0
 #: selection:open.invoices.webkit,filter:0
 #: selection:partner.balance.webkit,comp0_filter:0
 #: selection:partner.balance.webkit,comp1_filter:0
@@ -252,6 +251,11 @@ msgstr "Este informe le permite imprimir o generar un pdf de sus facturas pendie
 #: selection:trial.balance.webkit,filter:0
 msgid "Date"
 msgstr "Fecha"
+
+#. module: account_financial_report_webkit
+#: selection:general.ledger.webkit,filter:0
+msgid "Date"
+msgstr "Fecha (con detalle de asiento de apertura)"
 
 #. module: account_financial_report_webkit
 #: help:general.ledger.webkit,centralize:0
