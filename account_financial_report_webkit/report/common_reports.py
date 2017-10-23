@@ -130,7 +130,7 @@ class CommonReportHeaderWebkit(common_report_header):
             if not level_accounts:
                 return []
 
-            level_accounts = sorted(level_accounts, key=lambda a: a['code'])
+            level_accounts = sorted(level_accounts, key=lambda a: (a['type'],a['code']))
 
             for level_account in level_accounts:
                 sorted_accounts.append(level_account['id'])
@@ -142,7 +142,7 @@ class CommonReportHeaderWebkit(common_report_header):
 
         accounts_data = self.pool.get('account.account').read(self.cr, self.uid,
                                                          account_ids,
-                                                         ['id', 'parent_id', 'level', 'code', 'child_consol_ids'],
+                                                         ['id', 'parent_id', 'level', 'code', 'child_consol_ids','type'],
                                                          context=context)
 
         sorted_accounts = []

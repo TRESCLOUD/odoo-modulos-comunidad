@@ -50,9 +50,9 @@ _column_sizes = [
 class partner_ledger_xls(report_xls):
     column_sizes = [x[1] for x in _column_sizes]
     
-    def generate_xls_report(self, _p, _xs, data, objects, wb):
-        
-        ws = wb.add_sheet(_p.report_name[:31])
+    def create_ws(self, _p, _xs, data, wb, context=None):
+        context = context or {}
+        ws = wb.add_sheet(context.get('name', '') or _p.report_name[:31])
         ws.panes_frozen = True
         ws.remove_splits = True
         ws.portrait = 0 # Landscape
@@ -127,7 +127,10 @@ class partner_ledger_xls(report_xls):
         row_pos = self.xls_write_row(ws, row_pos, row_data, row_style=cell_style_center)  
         ws.set_horz_split_pos(row_pos)          
         row_pos += 1
-
+        return row_pos, row_data, ws
+    
+    def generate_xls_report(self, _p, _xs, data, objects, wb):
+        row_pos, row_data, ws = self.create_ws(_p, _xs, data, wb)
         # Account Title Row
         cell_format = _xs['xls_title'] + _xs['bold'] + _xs['fill'] + _xs['borders_all']
         account_cell_style = xlwt.easyxf(cell_format)
@@ -192,7 +195,18 @@ class partner_ledger_xls(report_xls):
         ll_cell_style_decimal = xlwt.easyxf(ll_cell_format + _xs['right'], num_format_str = report_xls.decimal_format)
         
         cnt = 0
+        sheet_number = 1
         for account in objects:
+            if len(account.ledger_lines) >= 65536:
+                raise ValueError("La cuenta %s tiene mas 65536 registros y es imposible presentarla."%(account.code + ' - ' + account.name))
+            elif (row_pos + len(account.ledger_lines)) >= 65536:
+                ws.name = _p.report_name[:31] + ' ' + str(sheet_number)
+                sheet_number += 1
+                row_pos, row_data, ws = \
+                self.create_ws(_p, _xs, data, wb, context={'name': _p.report_name[:31] + ' ' + str(sheet_number)})
+            nbr_columns = 10  
+            if _p.amount_currency(data):
+                nbr_columns = 12
             if account.ledger_lines or account.init_balance:            
                 if not account.partners_order:
                     continue
@@ -221,6 +235,13 @@ class partner_ledger_xls(report_xls):
                         ('partner_title', nbr_columns, 0, 'text', partner_name or _('No Partner'), None, c_part_cell_style),
                     ]
                     row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
+                    if len(account.partners_order) >= 65536:
+                        raise ValueError("La cuenta %s tiene mas 65536 registros y es imposible presentarla."%(account.code + ' - ' + account.name))
+                    elif (row_pos + 5) >= 65536:
+                        ws.name = _p.report_name[:31] + ' ' + str(sheet_number)
+                        sheet_number += 1
+                        row_pos, row_data, ws = \
+                        self.create_ws(_p, _xs, data, wb, context={'name': _p.report_name[:31] + ' ' + str(sheet_number)})
                     row_pos = self.xls_write_row(ws, row_pos, row_data, c_title_cell_style)    
                     row_pos = self.xls_write_row(ws, row_pos, c_hdr_data)   
                     row_start_partner = row_pos
