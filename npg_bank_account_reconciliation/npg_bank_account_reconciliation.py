@@ -101,7 +101,7 @@ class bank_acc_rec_statement(osv.osv):
             if statement_line.cleared_bank_account:
                 if statement_line.move_line_id.bank_acc_rec_statement_id.id != ids[0]:
                     raise osv.except_osv(_(u'¡Error de Usuario!'),
-                                         _(u'El registro contable con referencia %s se encuentra asociado a la conciliación %s. Dar click en Actualizar en el estado Borrador')%(statement_line.move_line_id.ref, statement_line.move_line_id.bank_acc_rec_statement_id.name))
+                                         _(u'El registro contable con referencia %s se encuentra asociado a la conciliación %s. Dar click en Actualizar en el estado Borrador para poder procesar ')%(statement_line.move_line_id.ref, statement_line.move_line_id.bank_acc_rec_statement_id.name))
         # If difference balance not zero prevent further processing
         self.check_difference_balance(cr, uid, ids, context=context)
         statement_lines_ids = []
