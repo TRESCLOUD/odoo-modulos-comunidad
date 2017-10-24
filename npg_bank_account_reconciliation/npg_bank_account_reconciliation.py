@@ -91,8 +91,17 @@ class bank_acc_rec_statement(osv.osv):
     def action_process(self, cr, uid, ids, context=None):
         """Set the account move lines as 'Cleared' and Assign 'Bank Acc Rec Statement ID'
         for the statement lines which are marked as 'Cleared'."""
+        
+#        self.action_review(cr, uid, ids, context=context)
+        
         account_move_line_obj = self.pool.get('account.move.line')
         statement_line_obj = self.pool.get('bank.acc.rec.statement.line')
+        statement_line_ids = statement_line_obj.search(cr, uid, [('statement_id', 'in', ids)], context=context)
+        for statement_line in statement_line_obj.browse(cr, uid, statement_line_ids, context=context):
+            if statement_line.cleared_bank_account:
+                if statement_line.move_line_id.bank_acc_rec_statement_id.id != ids[0]:
+                    raise osv.except_osv(_(u'¡Error de Usuario!'),
+                                         _(u'El registro contable con referencia %s se encuentra asociado a la conciliación %s. Dar click en Actualizar en el estado Borrador')%(statement_line.move_line_id.ref, statement_line.move_line_id.bank_acc_rec_statement_id.name))
         # If difference balance not zero prevent further processing
         self.check_difference_balance(cr, uid, ids, context=context)
         statement_lines_ids = []
