@@ -230,7 +230,10 @@ class bank_acc_rec_statement(osv.osv):
             #1. credit and debit side journal items in posted state of the selected GL account
             #2. Journal items which are not assigned to previous bank statements
             #3. Date less than or equal to ending date provided the 'Suppress Ending Date Filter' is not checkec
-            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), ('cleared_bank_account', '=', False), ('draft_assigned_to_statement', '=', False), ('date', '<=', ending_date)]
+            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), 
+                      ('cleared_bank_account', '=', False), ('bank_acc_rec_statement_id','=', False), 
+                      ('draft_assigned_to_statement', '=', False), 
+                      ('date', '<=', ending_date)]
 #             if not suppress_ending_date_filter:
 #                 domain += [('date', '<=', ending_date)]
             if context.get('start_date'):
