@@ -101,9 +101,10 @@ class MrpProduction(models.Model):
                 picking_type = self.env.ref('stock.picking_type_consume', raise_if_not_found=True)
                 if picking_type:
                     if not picking:
+                        #el campo location_id fue modificado por Trescloud.
                         picking = self.env['stock.picking'].create({'picking_type_id': picking_type.id,
                                                                     'date': production.date_planned_start,
-                                                                    'location_id': picking_type.default_location_src_id.id,
+                                                                    'location_id': production.location_src_id.id or picking_type.default_location_src_id.id,
                                                                     'location_dest_id': picking_type.default_location_dest_id.id,
                                                                     'origin': production.name})
                     move_list.write({'picking_id': picking.id})
@@ -126,10 +127,11 @@ class MrpProduction(models.Model):
 
                 if picking_type:
                     if not picking:
+                         #El campo location_dest_id fue modificado por Trescloud.
                         picking = self.env['stock.picking'].create({'picking_type_id': picking_type.id,
                                                                     'date': production.date_planned_start,
                                                                     'location_id': picking_type.default_location_src_id.id,
-                                                                    'location_dest_id': picking_type.default_location_dest_id.id,
+                                                                    'location_dest_id': production.location_src_id.id or picking_type.default_location_dest_id.id,
                                                                     'origin': production.name})
                     move_list.write({'picking_id': picking.id})
                     picking.recheck_availability()
