@@ -274,7 +274,7 @@ class stock_move_add(osv.osv_memory):
             return False
         destination_location_id = new_move.location_dest_id.id or production.product_id.property_stock_production.id
         source_location_id = new_move.location_id.id or production.location_src_id.id
-        move_id = stock_move.create(cr, uid, {
+        stock_move_vals = {
             'name': production.name,
             'date': new_move.date_expected,
             'date_expected': new_move.date_expected,
@@ -288,7 +288,11 @@ class stock_move_add(osv.osv_memory):
             'move_dest_id': production.move_prod_id.id,
             'state': 'waiting',
             'company_id': production.company_id.id,
-        })
+        }
+        if 'analytic_acc' in stock_move._all_columns and \
+        'analytic_acc_rm' in production._all_columns:
+            stock_move_vals.update(analytic_acc=production.analytic_acc_rm.id)
+        move_id = stock_move.create(cr, uid, stock_move_vals)
         production.write({'move_lines': [(4, move_id)]}, context=context)
         return move_id
 
@@ -298,15 +302,11 @@ class stock_move_add(osv.osv_memory):
         """        
         if context is None:
             context = {}
-        
         if not context.get('mo_id', False) or not context.get('active_id', False) :
             raise osv.except_osv(_('Exception!'), _('Can not create the Move related to MO'))
-        
         new_move = self.browse(cr, uid, ids, context)[0]
-        
         mrp_obj = self.pool.get('mrp.production')
         production = mrp_obj.browse(cr, uid, context.get('mo_id', False) or context.get('active_id', False), context)
-
         prod_line_obj = self.pool.get('mrp.production.product.line')
         line_ids = prod_line_obj.search(cr, uid, [('production_id','=', production.id),('product_id','=', new_move.product_id.id)], context=context)
         if line_ids:
@@ -319,7 +319,6 @@ class stock_move_add(osv.osv_memory):
                 qty_in_line_uos = product_uom_obj._compute_qty(cr, uid, pl.product_uos.id, new_move.product_uos_qty or 0.0, to_uom_id=new_move.product_uos.id)
                 vals={'product_uos_qty': pl.product_uos_qty or 0.0 + qty_in_line_uos}
             prod_line_obj.write(cr, uid, [pl.id], vals)
-            
             found = False
             for move in production.move_lines:
                 if move.product_id.id == new_move.product_id.id:
@@ -345,12 +344,10 @@ class stock_move_add(osv.osv_memory):
             prod_line_obj.create(cr, uid, line)
             consume_move_id = self.add_production_consume_line(cr, uid, new_move, production, context=context)
         #shipment_id = self._make_production_internal_shipment(cr, uid, production, context=context)
-        
         shipment_move_id = self.add_production_internal_shipment_line(cr, uid, new_move, production, consume_move_id, context=context)
         self.add_production_line_procurement(cr, uid, new_move, production, shipment_move_id, context=context)
-        
-        
         return True
+    
 stock_move_add()
 
 class stock_move(osv.osv):
