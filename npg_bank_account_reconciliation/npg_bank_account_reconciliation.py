@@ -311,7 +311,7 @@ class bank_acc_rec_statement(osv.osv):
     _defaults = {
         'state': 'draft',
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
-        'ending_date': time.strftime('%Y-%m-%d'),
+        'ending_date': fields.date.context_today,
     }
     _order = "ending_date desc"
     _sql_constraints = [
