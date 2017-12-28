@@ -401,22 +401,28 @@ class CommonReportHeaderWebkit(common_report_header):
 
     def _get_move_ids_from_dates(self, account_id, date_start, date_stop, target_move, mode='include_opening'):
         # TODO imporve perfomance by setting opening period as a property
+        period_where = ''
+        target_where = ''
         move_line_obj = self.pool.get('account.move.line')
-        search_period = [('date', '>=', date_start),
-                         ('date', '<=', date_stop),
-                         ('account_id', '=', account_id)]
-
-        # actually not used because OpenERP itself always include the opening when we
-        # get the periods from january to december
         if mode == 'exclude_opening':
             opening = self._get_opening_periods()
             if opening:
-                search_period += ['period_id', 'not in', opening]
+                period_where = (' and aml.period_id not in %s', tuple(opening))
 
         if target_move == 'posted':
-            search_period += [('move_id.state', '=', 'posted')]
-
-        return move_line_obj.search(self.cursor, self.uid, search_period)
+            target_where = " and am.state = 'posted'"
+        self.cursor.execute('''
+        select aml.id from account_move_line as aml
+        left join account_move as am on am.id = aml.move_id
+        where aml.date >= %s and aml.date <= %s and aml.account_id = %s
+        ''' + period_where + target_where, (date_start, date_stop, account_id))
+        
+        # actually not used because OpenERP itself always include the opening when we
+        # get the periods from january to december
+        
+        res = self.cursor.fetchall()
+        res = [x[0] for x in res]
+        return res
 
     def get_move_lines_ids(self, account_id, main_filter, start, stop, target_move, mode='include_opening'):
         """Get account move lines base on form data"""
@@ -498,8 +504,8 @@ SELECT account_move.id,
 
 FROM account_move
         JOIN account_move_line on (account_move_line.move_id = account_move.id)
-        JOIN account_account on (account_move_line.account_id = account_account.id)
-WHERE move_id in %s"""
+        --JOIN account_account on (account_move_line.account_id = account_account.id)
+WHERE account_move_line.id in %s"""
 
         try:
             self.cursor.execute(sql, (account_id, limit, tuple(move_ids)))
