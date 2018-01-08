@@ -145,6 +145,7 @@ class MrpProduction(models.Model):
         for move in self.move_finished_ids:
             pickings |= move.picking_id
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
+        action['domain'] = "[('id','in',[0] )]" #if no pickings the domain excludes them all
         if pickings:
             action['domain'] = "[('id','in'," + str(pickings.ids) + " )]"
         return action
