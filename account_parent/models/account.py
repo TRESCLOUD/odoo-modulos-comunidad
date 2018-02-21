@@ -110,7 +110,7 @@ class AccountAccount(models.Model):
     def _get_parent(self, all_parents=False):
         "Funcion para obtener padres de cuenta contables."
         res = None
-        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
+        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id), ('code', '!=', '0.'), ('code', '!=', '0')], order='code ASC')
         if parents:
             res = parents[0]._get_array_parent(all_parents)
         return res
@@ -119,7 +119,7 @@ class AccountAccount(models.Model):
     def _get_array_parent(self, all_parents=False):
         "Funcion para obtener Arreglo de cuentas padres"
         res = self
-        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
+        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id), ('code', '!=', '0.'), ('code', '!=', '0')], order='code ASC')
         if parents:
             for parent in parents:
                 if all_parents:
@@ -192,9 +192,10 @@ class AccountAccount(models.Model):
         for accountp in sorted(parent_accounts, key=lambda aux: aux.code):
             accounts = accountp._get_children_by_order()
             for account in sorted(accounts, key=lambda aux: aux.code, reverse=True):
+                childrens = account._get_principal_children_by_order()
                 debit = 0
                 credit = 0
-                if account.level == self._get_max_level():
+                if account.level == self._get_max_level() or not childrens:
                     debit, credit = account._get_balance_account(where)
                 else:
                     for record in res:
