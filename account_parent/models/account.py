@@ -146,7 +146,7 @@ class AccountAccount(models.Model):
     @api.model
     def _get_children_by_order(self, **kwargs):
         res = self
-        children = self.with_context({'show_parent_account': True, }, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
+        children = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True }, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
         if children:
             for child in children:
                 res += child._get_children_by_order()
@@ -186,14 +186,20 @@ class AccountAccount(models.Model):
         res = []
         parent_accounts = []
         for account in accounts:
+            if account.code == 'NO-USAR-10102050101':
+                print '1'
             acc = account._get_parent(not all_accounts)
             if acc:
                 parent_accounts += acc
             set_accounts = set(parent_accounts)
             parent_accounts = list(set_accounts)
         for accountp in sorted(parent_accounts, key=lambda aux: aux.code):
+            if account.code == 'NO-USAR-10102050101':
+                print '1'
             accounts = accountp._get_children_by_order()
             for account in sorted(accounts, key=lambda aux: aux.code, reverse=True):
+                if account.code == 'NO-USAR-10102050101':
+                    print '1'
                 childrens = account._get_principal_children_by_order()
                 debit = 0
                 credit = 0
