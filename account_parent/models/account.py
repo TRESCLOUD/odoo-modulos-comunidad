@@ -146,7 +146,7 @@ class AccountAccount(models.Model):
     @api.model
     def _get_children_by_order(self, **kwargs):
         res = self
-        children = self.with_context({'show_parent_account': True, }, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
+        children = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True }, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
         if children:
             for child in children:
                 res += child._get_children_by_order()
