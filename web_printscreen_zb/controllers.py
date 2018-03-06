@@ -59,22 +59,25 @@ class ZbExcelExport(ExcelExport):
             else:
                 count += 1
                 ignore_index.append(i)
+        style = xlwt.easyxf('align: wrap yes')
+        bold_style = xlwt.easyxf('align: wrap yes')
+        font = xlwt.Font()
+        font.bold = True
+        bold_style.font = font
         for row_index, row in enumerate(rows):
             count = 0
             for cell_index, cell_value in enumerate(row):
                 if cell_index not in ignore_index:
-                    style = xlwt.easyxf('align: wrap yes')
+                    cell_style = style
                     if cell_value.get('bold', False):
-                        font = xlwt.Font()
-                        font.bold = True
-                        style.font = font
+                        cell_style = bold_style
                     cellvalue = cell_value.get('data', '')
                     if isinstance(cellvalue, basestring):
                         cellvalue = re.sub("\r", " ", cellvalue)
                     if cell_value.get('number', False) and cellvalue:
                         cellvalue = float(cellvalue)
                     if cellvalue is False: cellvalue = None
-                    worksheet.write(row_index + 1, cell_index - count, cellvalue, style)
+                    worksheet.write(row_index + 1, cell_index - count, cellvalue, cell_style)
                 else:
                     count += 1
         fp = StringIO()
@@ -90,7 +93,7 @@ class ZbExcelExport(ExcelExport):
         return req.make_response(
             self.from_data(data.get('headers', []), data.get('rows', [])),
                            headers=[
-                                    ('Content-Disposition', 'attachment; filename="%s"'
+                                    ('Content-Disposition', 'attachment; filename="%s.xls"'
                                         % data.get('model', 'Export.xls')),
                                     ('Content-Type', self.content_type)
                                     ],
@@ -105,6 +108,7 @@ class ExportPdf(Export):
         'error': None
     }
     
+    @property
     def content_type(self):
         return 'application/pdf'
     
