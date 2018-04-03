@@ -13,6 +13,9 @@
     'description': "Claim system for your product, claim management, submit claim, claim form, Ticket claim, support ticket, issue, website project issue, crm management, ticket handling,support management, project support, crm support, online support management, online claim, claim product, claim services, issue claim, fix claim, raise ticket, raise issue, view claim, display claim, list claim on website ",
     'depends': ['crm','sale'],
     'data': [
+        #Security
+        'security/ir.model.access.csv',
+        #Views
         'views/crm_claim_menu.xml',
         'views/crm_claim_data.xml',
         'views/res_partner_view.xml',
