@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_claim,access_crm_claim,model_crm_claim,sales_team.group_sale_salesman,1,1,1,1
+access_crm_claim_category,access_crm_claim_category,model_crm_claim_category,sales_team.group_sale_salesman,1,1,1,1
+access_crm_claim_report,access_crm_claim_report,l10n_ec.model_crm_claim_report,sales_team.group_sale_salesman,1,1,1,1
+access_crm_claim_stage,access_crm_claim_stage,model_crm_claim_stage,sales_team.group_sale_salesman,1,1,1,1
