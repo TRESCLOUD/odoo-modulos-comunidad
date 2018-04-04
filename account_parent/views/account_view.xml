@@ -96,6 +96,21 @@
             <field name="name">Accounts</field>
             <field eval="'ir.actions.act_window,%d'%action_move_lines_open" name="value"/>
         </record>
+
+    <!--Agregando color azul a las cuentas de tipo vista-->
+    <record id="view_account_charts_tree_inherit" model="ir.ui.view">
+        <field name="name">account.account.tree</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="internal_type" invisible="1"/>
+            </xpath>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="colors">blue:internal_type=='view'</attribute>
+            </xpath>
+        </field>
+    </record>
     
 </data>
 </odoo>
