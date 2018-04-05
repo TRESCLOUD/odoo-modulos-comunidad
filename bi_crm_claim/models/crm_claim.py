@@ -110,7 +110,7 @@ class res_partner(models.Model):
     @api.multi
     def _claim_count(self):
         for claim in self:
-            claim_ids = self.env['crm.claim'].search([('partner_id','=',claim.id)])
+            claim_ids = self.env['crm.claim'].sudo().search([('partner_id','=',claim.id)])
             claim.claim_count = len(claim_ids)
             
     @api.multi
