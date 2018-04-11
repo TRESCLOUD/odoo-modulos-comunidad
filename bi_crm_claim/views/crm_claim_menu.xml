@@ -21,7 +21,7 @@
                 <form string="Claim Categories">
                     <group>
                         <field name="name"/>
-                        <field name="team_id"/>
+                        <field name="team_id" string="Equipo de ventas"/>
                     </group>
                 </form>
             </field>
@@ -33,7 +33,7 @@
             <field name="arch" type="xml">
                 <tree string="Claim Categories">
                     <field name="name"/>
-                    <field name="team_id"/>
+                    <field name="team_id" string="Equipo de ventas"/>
                 </tree>
             </field>
         </record>
@@ -140,7 +140,7 @@
                     <group colspan="4" col="4" groups="base.group_user">
                         <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager']}"/>
                         <field name="priority" widget="priority"/>
-                        <field name="team_id"/>
+                        <field name="team_id" string="Equipo de ventas"/>
                         <field name="date_deadline"/>
                     </group>
                     <group colspan="4" col="4">

@@ -28,7 +28,7 @@ msgstr "Acciones"
 #. module: bi_crm_claim
 #: model:ir.ui.menu,name:bi_crm_claim.menu_aftersale
 msgid "After-Sale"
-msgstr "Después de la venta"
+msgstr "Post-Venta"
 
 #. module: bi_crm_claim
 #: model:ir.ui.menu,name:bi_crm_claim.menu_crm_case_claim-act

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import api, fields, models, _
 from itertools import groupby
 from datetime import datetime, timedelta
 
-from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.misc import formatLang
@@ -54,7 +54,7 @@ class crm_claim(models.Model):
     date = fields.Datetime('Claim Date', select=True,default=lambda self: self._context.get('date', fields.Date.context_today(self)))
     categ_id = fields.Many2one('crm.claim.category', 'Category')
     priority = fields.Selection([('0','Low'), ('1','Normal'), ('2','High')], 'Priority',default='1')
-    type_action = fields.Selection([('correction','Corrective Action'),('prevention','Preventive Action')], 'Action Type')
+    type_action = fields.Selection([('correction','Corrective Action'),('prevention','Preventive Action')], string='Tipo de acción')
     user_id = fields.Many2one('res.users', 'Responsible', track_visibility='always',default=lambda self: self.env.user)
     user_fault = fields.Char('Trouble Responsible')
     team_id = fields.Many2one('crm.team', 'Sales Team', oldname='section_id',\
@@ -131,4 +131,4 @@ class crm_claim_category(models.Model):
     _description = "Category of claim"
 
     name = fields.Char('Name', required=True, translate=True)
-    team_id = fields.Many2one('crm.team', 'Sales Team')
+    team_id = fields.Many2one('crm.team', string='Equipo de ventas')
