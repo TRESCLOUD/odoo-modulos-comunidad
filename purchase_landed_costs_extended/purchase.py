@@ -434,10 +434,12 @@ class purchase_order_line(orm.Model):
             string="Product CBM"),
         'landing_costs_order': fields.function(
             _landing_cost_order,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs from Order'),
         'landing_costs': fields.function(
             _landing_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs'),
     }

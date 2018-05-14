@@ -378,14 +378,17 @@ class purchase_order_line(orm.Model):
             'Landed Costs Positions'),
         'landing_costs': fields.function(
             _landing_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs'),
         'landing_costs_order': fields.function(
             _landing_cost_order,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs from Order'),
         'landed_costs': fields.function(
             _landed_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landed Costs'),
     }
