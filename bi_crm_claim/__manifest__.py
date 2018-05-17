@@ -19,6 +19,9 @@
         'views/crm_claim_menu.xml',
         'views/crm_claim_data.xml',
         'views/res_partner_view.xml',
+        #TODO: ANALIZAR SI SE ELIMINA DEFINITIVAMENTE ESTE ARCHIVO.
+        #El codigo se encuentra en 'crm_claim_menu.xml' con adiciones y modificaciones.
+        #'views/crm_claim_view.xml',
     ],
     #'demo': ['demo/crm_claim_demo.xml'],
     'installable': True,

@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
+<!-- 	Este archivo se encuentra deprecado, se mantiene por motivos de la comunidad. -->
+<!-- 	El codigo se encuentra en 'crm_claim_menu.xml' con adiciones y modificaciones. -->
     <data>
 
         <menuitem id="menu_config_claim" name="Claim"

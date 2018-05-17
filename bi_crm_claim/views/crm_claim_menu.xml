@@ -157,7 +157,7 @@
                                     <separator colspan="2" string="Responsibilities"/>
                                     <field name="user_fault"/>
                                     <field name="categ_id" options="{'no_create': True, 'no_open': True}"/>
-                                    <!--<field name="ref"/>-->
+                                    <field name="ref"/>
                                 </group>
                                 <separator colspan="4" string="Claim/Action Description" groups="base.group_user"/>
                                 <field name="description" colspan="4" nolabel="1"/>

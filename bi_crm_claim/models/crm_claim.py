@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import odoo
 from odoo import api, fields, models, _
 from itertools import groupby
 from datetime import datetime, timedelta
@@ -69,6 +69,7 @@ class crm_claim(models.Model):
     stage_id = fields.Many2one ('crm.claim.stage', 'Stage', track_visibility='onchange',
                 domain="['|', ('team_ids', '=', team_id), ('case_default', '=', True)]")    #,default=lambda self:self.env['crm.claim']._get_default_stage_id()
     cause = fields.Text('Root Cause')
+    ref = fields.Reference(string = 'Reference', selection = odoo.addons.base.res.res_request.referenceable_models, help = "Permite al usuario colocar una relacion hacia al objeto al cual se le esta haciendo el reclamo.")
 
     @api.multi
     @api.onchange('partner_id')
