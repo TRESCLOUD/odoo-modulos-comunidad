@@ -1,25 +1,6 @@
-<?xml version="1.0"?>
-<openerp>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
     <data noupdate="1">
-
-        <!--
-        Claims Categories
-        -->
-        
-        <record model="crm.claim.category" id="categ_claim1">
-            <field name="name">Factual Claims</field>
-            <field name="team_id" ref="sales_team.team_sales_department"/>
-            </record>
-        
-        <record model="crm.claim.category" id="categ_claim2">
-            <field name="name">Value Claims</field>
-            <field name="team_id" ref="sales_team.team_sales_department"/>
-             </record>
-        
-        <record model="crm.claim.category" id="categ_claim3">
-            <field name="name">Policy Claims</field>
-            <field name="team_id" ref="sales_team.team_sales_department"/>
-        </record>
     
         <!--
         Case Category2
@@ -42,11 +23,6 @@
             <field name="sequence">1</field>
             <field name="case_default" eval="True"/>
         </record>
-        <record model="crm.claim.stage" id="stage_claim5">
-            <field name="name">In Progress</field>
-            <field name="sequence">27</field>
-            <field name="case_default" eval="True"/>
-        </record>
         <record model="crm.claim.stage" id="stage_claim2">
             <field name="name">Settled</field>
             <field name="sequence">28</field>
@@ -57,7 +33,6 @@
             <field name="sequence">29</field>
             <field name="case_default" eval="True"/>
         </record>
-        
 
     </data>
-</openerp>
+</odoo>
