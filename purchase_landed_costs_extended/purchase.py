@@ -155,7 +155,7 @@ class landed_cost_position(orm.Model):
         account_id = prod_obj._choose_exp_account_from(
             cr, uid, prod, fiscal_position=fiscal_position, context=context)
         # here we add a new distribution type
-        if prod.landed_cost_type in ('per_unit', 'value', 'volume', 'weight'):
+        if prod.landed_cost_type in ('per_unit', 'value', 'volume', 'weight', 'equal'):
             landed_cost_type = dist_type_obj.search(
                 cr, uid,
                 [('apply_on', '=', apply_on),
