@@ -1,3 +1,4 @@
+## -*- coding: utf-8 -*-
 <!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -24,7 +25,7 @@
         %>
 
         <div class="act_as_table data_table">
-            <div class="act_as_row labels">
+            <div class="act_as_row labels" style="page-break-inside: avoid">
                 <div class="act_as_cell">${_('Chart of Account')}</div>
                 <div class="act_as_cell">${_('Fiscal Year')}</div>
                 <div class="act_as_cell">
@@ -38,7 +39,7 @@
                 <div class="act_as_cell">${_('Target Moves')}</div>
                 <div class="act_as_cell">${_('Initial Balance')}</div>
             </div>
-            <div class="act_as_row">
+            <div class="act_as_row" style="page-break-inside: avoid">
                 <div class="act_as_cell">${ chart_account.name }</div>
                 <div class="act_as_cell">${ fiscalyear.name if fiscalyear else '-' }</div>
                 <div class="act_as_cell">
@@ -66,7 +67,7 @@
                 <div class="act_as_cell">${ initial_balance_text[initial_balance_mode] }</div>
             </div>
         </div>
-    
+
         %for account in objects:
             %if account.ledger_lines or account.init_balance:
                 <%
@@ -95,19 +96,21 @@
                         ${partner_name or _('No Partner')}
                     </div>
                     <div class="act_as_thead">
-                        <div class="act_as_row labels">
+                        <div class="act_as_row labels" style="page-break-inside: avoid">
                             ## date
                             <div class="act_as_cell first_column" style="width: 50px;">${_('Date')}</div>
                             ## period
                             <div class="act_as_cell" style="width: 70px;">${_('Period')}</div>
                             ## move
-                            <div class="act_as_cell" style="width: 70px;">${_('Entry')}</div>
+                            <div class="act_as_cell" style="width: 100px;">${_('Entry')}</div>
                             ## journal
                             <div class="act_as_cell" style="width: 70px;">${_('Journal')}</div>
                             ## partner
-                            <div class="act_as_cell" style="width: 60px;">${_('Partner')}</div>
+                            <div class="act_as_cell" style="width: 100px;">${_('Partner')}</div>
+                            ## move reference
+                            <div class="act_as_cell" style="width: 60px;">${_('Reference')}</div>
                             ## label
-                            <div class="act_as_cell" style="width: 310px;">${_('Label')}</div>
+                            <div class="act_as_cell" style="width: 280px;">${_('Label')}</div>
                             ## reconcile
                             <div class="act_as_cell" style="width: 80px;">${_('Rec.')}</div>
                             ## debit
@@ -138,7 +141,7 @@
                               cumul_balance += part_cumul_balance
                               cumul_balance_curr += part_cumul_balance_curr
                             %>
-                            <div class="act_as_row initial_balance">
+                            <div class="act_as_row initial_balance" style="page-break-inside: avoid">
                               ## date
                               <div class="act_as_cell first_column"></div>
                               ## period
@@ -148,6 +151,8 @@
                               ## journal
                               <div class="act_as_cell"></div>
                               ## partner
+                              <div class="act_as_cell"></div>
+                              ## move reference
                               <div class="act_as_cell"></div>
                               ## label
                               <div class="act_as_cell" >${_('Initial Balance')}</div>
@@ -179,7 +184,7 @@
                             label_elements.append("(%s)" % (line['invoice_number'],))
                           label = ' '.join(label_elements)
                           %>
-                            <div class="act_as_row lines">
+                            <div class="act_as_row lines" style="page-break-inside: avoid">
                               ## date
                               <div class="act_as_cell first_column">${formatLang(line.get('ldate') or '', date=True)}</div>
                               ## period
@@ -190,6 +195,8 @@
                               <div class="act_as_cell">${line.get('jcode') or ''}</div>
                               ## partner
                               <div class="act_as_cell overflow_ellipsis">${line.get('partner_name') or ''}</div>
+                              ## move reference
+                              <div class="act_as_cell">${line.get('lref') or ''}</div>
                               ## label
                               <div class="act_as_cell">${label}</div>
                               ## reconcile
@@ -209,7 +216,7 @@
                               %endif
                           </div>
                         %endfor
-                        <div class="act_as_row lines labels">
+                        <div class="act_as_row lines labels" style="page-break-inside: avoid">
                           ## date
                           <div class="act_as_cell first_column"></div>
                           ## period
@@ -219,6 +226,8 @@
                           ## journal
                           <div class="act_as_cell"></div>
                           ## partner
+                          <div class="act_as_cell"></div>
+                          ## move reference
                           <div class="act_as_cell"></div>
                           ## label
                           <div class="act_as_cell">${_('Cumulated Balance on Partner')}</div>
@@ -252,10 +261,10 @@
                 %endfor
 
                 <div class="act_as_table list_table" style="margin-top:5px;">
-                    <div class="act_as_row labels" style="font-weight: bold; font-size: 12px;">
-                            <div class="act_as_cell first_column" style="width: 320px;">${account.code} - ${account.name}</div>
+                    <div class="act_as_row labels" style="font-weight: bold; font-size: 12px; page-break-inside: avoid">
+                            <div class="act_as_cell first_column" style="width: 450px;">${account.code} - ${account.name}</div>
                             ## label
-                            <div class="act_as_cell" style="width: 390px;">${_("Cumulated Balance on Account")}</div>
+                            <div class="act_as_cell" style="width: 360px;">${_("Cumulated Balance on Account")}</div>
                             ## debit
                             <div class="act_as_cell amount" style="width: 80px;">${ formatLang(account_total_debit) | amount }</div>
                             ## credit

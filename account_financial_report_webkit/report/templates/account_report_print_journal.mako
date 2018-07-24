@@ -1,3 +1,4 @@
+## -*- coding: utf-8 -*-
 <!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -19,7 +20,7 @@
         <%setLang(user.lang)%>
 
         <div class="act_as_table data_table">
-            <div class="act_as_row labels">
+            <div class="act_as_row labels" style="page-break-inside: avoid">
                 <div class="act_as_cell">${_('Chart of Account')}</div>
                 <div class="act_as_cell">${_('Fiscal Year')}</div>
                 <div class="act_as_cell">
@@ -32,7 +33,7 @@
                 <div class="act_as_cell">${_('Journal Filter')}</div>
                 <div class="act_as_cell">${_('Target Moves')}</div>
             </div>
-            <div class="act_as_row">
+            <div class="act_as_row" style="page-break-inside: avoid">
                 <div class="act_as_cell">${ chart_account.name }</div>
                 <div class="act_as_cell">${ fiscalyear.name if fiscalyear else '-' }</div>
                 <div class="act_as_cell">
@@ -73,7 +74,7 @@
         <!-- we use div with css instead of table for tabular data because div do not cut rows at half at page breaks -->
         <div class="act_as_table list_table" style="margin-top: 5px;">
             <div class="act_as_thead">
-                <div class="act_as_row labels">
+                <div class="act_as_row labels" style="page-break-inside: avoid">
                     ## date
                     <div class="act_as_cell first_column">${_('Date')}</div>
                     ## move
@@ -109,7 +110,7 @@
                     account_total_debit += line.debit or 0.0
                     account_total_credit += line.credit or 0.0
                     %>
-                    <div class="act_as_row lines">
+                    <div class="act_as_row lines" style="page-break-inside: avoid">
                         ## date
                         <div class="act_as_cell first_column">${formatLang(move.date, date=True) if new_move else ''}</div>
                         ## move
@@ -139,7 +140,7 @@
                 </div>
                 %endfor
             %endfor
-            <div class="act_as_row lines labels">
+            <div class="act_as_row lines labels" style="page-break-inside: avoid">
                 ## date
                 <div class="act_as_cell first_column"></div>
                 ## move

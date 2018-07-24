@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Authors: Nicolas Bessi, Guewen Baconnier
@@ -31,11 +31,11 @@ This module adds or replaces the following standard OpenERP financial reports:
  - Partner balance
  - Open invoices report
 
-
 Main improvements per report:
 -----------------------------
 
-The General ledger: details of all entries posted in your books sorted by account.
+The General ledger: details of all entries posted in your books sorted by
+account.
 
 * Filter by account is available in the wizard (no need to go to the
   Chart of Accounts to do this anymore) or by View account (the report
@@ -126,8 +126,8 @@ an issue in wkhtmltopdf
 the header and footer are created as text with arguments passed to
 wkhtmltopdf. The texts are defined inside the report classes.
 """,
-    'version': '1.0',
-    'author': 'Camptocamp',
+    'version': '1.1.0',
+    'author': "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'category': 'Finance',
     'website': 'http://www.camptocamp.com',
@@ -135,28 +135,27 @@ wkhtmltopdf. The texts are defined inside the report classes.
         'images/ledger.png',],
     'depends': ['account',
                 'report_webkit'],
-    'init_xml': [],
-    'demo_xml' : [],
-    'update_xml': ['account_view.xml',
-                   'data/financial_webkit_header.xml',
-                   'report/report.xml',
-                   'wizard/wizard.xml',
-                   'wizard/balance_common_view.xml',
-                   'wizard/general_ledger_wizard_view.xml',
-                   'wizard/partners_ledger_wizard_view.xml',
-                   'wizard/trial_balance_wizard_view.xml',
-                   'wizard/partner_balance_wizard_view.xml',
-                   'wizard/open_invoices_wizard_view.xml',
-                   'wizard/print_journal_view.xml',
-                   'report_menus.xml',
-                   ],
+    'demo': [],
+    'data': ['account_view.xml',
+             'data/financial_webkit_header.xml',
+             'report/report.xml',
+             'wizard/wizard.xml',
+             'wizard/balance_common_view.xml',
+             'wizard/general_ledger_wizard_view.xml',
+             'wizard/partners_ledger_wizard_view.xml',
+             'wizard/trial_balance_wizard_view.xml',
+             'wizard/partner_balance_wizard_view.xml',
+             'wizard/open_invoices_wizard_view.xml',
+             'wizard/print_journal_view.xml',
+             'report_menus.xml',
+             ],
     # tests order matter
     'test': ['tests/general_ledger.yml',
              'tests/partner_ledger.yml',
              'tests/trial_balance.yml',
              'tests/partner_balance.yml',
              'tests/open_invoices.yml',],
-    #'tests/account_move_line.yml'
+    # 'tests/account_move_line.yml'
     'active': False,
     'installable': True,
     'application': True,

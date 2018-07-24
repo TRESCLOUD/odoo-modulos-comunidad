@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Guewen Baconnier
@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from osv import osv
+from openerp.osv import orm
 
 
-class AccountTrialBalanceWizard(osv.osv_memory):
+class AccountTrialBalanceWizard(orm.TransientModel):
     """Will launch trial balance report and pass required args"""
 
     _inherit = "account.common.balance.report"
@@ -37,5 +37,3 @@ class AccountTrialBalanceWizard(osv.osv_memory):
         return {'type': 'ir.actions.report.xml',
                 'report_name': 'account.account_report_trial_balance_webkit',
                 'datas': data}
-
-AccountTrialBalanceWizard()
