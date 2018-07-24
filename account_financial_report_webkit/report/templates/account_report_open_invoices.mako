@@ -1,3 +1,4 @@
+## -*- coding: utf-8 -*-
 <!DOCTYPE html SYSTEM
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,7 +45,7 @@
                 <div class="act_as_cell">${_('Target Moves')}</div>
 
             </div>
-            <div class="act_as_row">
+            <div class="act_as_row" style="page-break-inside: avoid">
                 <div class="act_as_cell">${ chart_account.name }</div>
                 <div class="act_as_cell">${ fiscalyear.name if fiscalyear else '-' }</div>
                 <div class="act_as_cell">
@@ -73,7 +74,7 @@
             </div>
         </div>
         %for acc in objects:
-            %if hasattr(acc, 'grouped_ledger_lines'):
+            %if 'grouped_ledger_lines' in acc:
                <% fl = formatLang %>
               <%include file="grouped_by_curr_open_invoices_inclusion.mako.html" args="account=acc,formatLang=fl"/>
             %else:

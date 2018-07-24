@@ -27,7 +27,6 @@
         <record id="account_report_print_journal_view_webkit" model="ir.ui.view">
             <field name="name">Journals</field>
             <field name="model">print.journal.webkit</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="account.account_common_report_view"/>
             <field name="arch" type="xml">
                 <data>
@@ -56,7 +55,6 @@
         <record id="account_report_print_journal_view_inherit" model="ir.ui.view">
             <field name="name">Journals</field>
             <field name="model">print.journal.webkit</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="account.account_report_print_journal"/>
             <field name="arch" type="xml">
                 <field name="fiscalyear_id" position="replace">
@@ -77,24 +75,12 @@
 
         <record model="ir.values" id="action_account_print_journal_values_webkit">
             <field name="model_id" ref="account.model_account_account"/>
-            <field name="object" eval="1"/>
             <field name="name">Journals</field>
             <field name="key2">client_print_multi</field>
             <field name="value"
                 eval="'ir.actions.act_window,' +str(ref('action_account_print_journal_menu_webkit'))"/>
             <field name="key">action</field>
             <field name="model">account.journal.period</field>
-        </record>
-
-        <record id="action_account_print_journal_sale_purchase_menu_webkit" model="ir.actions.act_window">
-            <field name="name">Journals</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">print.journal.webkit</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="account_report_print_journal_view_webkit"/>
-            <field name="context">{'sale_purchase_only':True}</field>
-            <field name="target">new</field>
         </record>
 
     </data>
