@@ -34,7 +34,8 @@ class account_move_line(orm.Model):
 #            if line.move_id.state <> 'draft' and (not line.journal_id.entry_posted):
 #                raise osv.except_osv(_('Error!'), _('You cannot do this modification on a confirmed entry. You can just change some non legal fields or you must unconfirm the journal entry first.\n%s.') % err_msg)
             if line.reconcile_id:
-                raise osv.except_osv(_('Error!'), _('You cannot do this modification on a reconciled entry. You can just change some non legal fields or you must unreconcile first.\n%s.') % err_msg)
+                if not context.get('allow_write'):
+                    raise osv.except_osv(_('Error!'), _('You cannot do this modification on a reconciled entry. You can just change some non legal fields or you must unreconcile first.\n%s.') % err_msg)
             t = (line.journal_id.id, line.period_id.id)
             if t not in done:
                 self._update_journal_check(cr, uid, line.journal_id.id, line.period_id.id, context)
