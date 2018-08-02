@@ -516,6 +516,7 @@ class CommonReportHeaderWebkit(common_report_header):
             per.special AS peropen,
             l.partner_id AS lpartner_id,
             p.name AS partner_name,
+            aa.name AS account_analytic_name,
             m.name AS move_name,
             COALESCE(partialrec.name, fullrec.name, '') AS rec_name,
             COALESCE(partialrec.id, fullrec.id, NULL) AS rec_id,
@@ -555,6 +556,7 @@ class CommonReportHeaderWebkit(common_report_header):
                 ON (l.reconcile_partial_id = partialrec.id)
             LEFT JOIN account_move_reconcile fullrec
                 ON (l.reconcile_id = fullrec.id)
+            LEFT JOIN account_analytic_account aa on (l.analytic_account_id=aa.id)
             LEFT JOIN res_partner p on (l.partner_id=p.id)
             LEFT JOIN account_invoice i on (m.id =i.move_id)
             LEFT JOIN account_period per on (per.id=l.period_id)
