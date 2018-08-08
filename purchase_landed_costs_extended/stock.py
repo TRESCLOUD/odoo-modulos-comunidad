@@ -220,58 +220,60 @@ class stock_move(orm.Model):
 class stock_picking(orm.Model):
     _inherit = 'stock.picking'
     
-    def _get_valuation_picking_in(self, cr, uid, pick, move, product_price, product_uom,
-                                  product_qty, product_currency, product_avail, context=None):
-        """
-        Valoracion de inventario
-        """
-        context = context or {}
-        move_obj = self.pool.get('stock.move')
-        location_obj = self.pool.get('stock.location')
-        currency_obj = self.pool.get('res.currency')
-        uom_obj = self.pool.get('product.uom')
-        product_obj = self.pool.get('product.product')
-        # <<<< change begin <<<<<<<<<<
-        # get the qty of available Alex
-        product_qty_available = location_obj.get_product_qty_of_checked_locations(
-            cr, uid, [],
-            move.product_id.id, domain=[], context=context, states=['done']).get(
-            move.product_id.id, 0.0)
-        # <<<< change ends <<<<<<<<<<<<
-
-        # Average price computation
-        if (pick.type == 'in') and (move.product_id.cost_method == 'average'):
-            product = product_obj.browse(cr, uid, move.product_id.id)
-            move_currency_id = move.company_id.currency_id.id
-            context['currency_id'] = move_currency_id
-            qty = uom_obj._compute_qty(cr, uid, product_uom, product_qty, product.uom_id.id)
-
-            if product.id in product_avail:
-                product_avail[product.id] += qty
-            else:
-                # <<< changes begin. we change the way
-                # of geting available products. Alex
-                product_avail[product.id] = product_qty_available
-
-            if qty > 0:
-                new_price = currency_obj.compute(cr, uid, product_currency,
-                        move_currency_id, product_price)
-                new_price = uom_obj._compute_price(cr, uid, product_uom, new_price,
-                        product.uom_id.id)
-                if product_qty_available <= 0:
-                    new_std_price = new_price
-                else:
-                    # Get the standard price
-                    amount_unit = product.price_get('standard_price', context=context)[product.id]
-                    new_std_price = ((amount_unit * product_avail[product.id])\
-                        + (new_price * qty))/(product_avail[product.id] + qty)
-                # Write the field according to price type field
-                product_obj.write(cr, uid, [product.id], {'standard_price': new_std_price})
-
-                # Record the values that were chosen in the wizard, so they can be
-                # used for inventory valuation if real-time valuation is enabled.
-                move_obj.write(cr, uid, [move.id],
-                        {'price_unit': product_price,
-                         'price_currency_id': product_currency})
+#===============================================================================
+#     def _get_valuation_picking_in(self, cr, uid, pick, move, product_price, product_uom,
+#                                   product_qty, product_currency, product_avail, context=None):
+#         """
+#         Valoracion de inventario
+#         """
+#         context = context or {}
+#         move_obj = self.pool.get('stock.move')
+#         location_obj = self.pool.get('stock.location')
+#         currency_obj = self.pool.get('res.currency')
+#         uom_obj = self.pool.get('product.uom')
+#         product_obj = self.pool.get('product.product')
+#         # <<<< change begin <<<<<<<<<<
+#         # get the qty of available Alex
+#         product_qty_available = location_obj.get_product_qty_of_checked_locations(
+#             cr, uid, [],
+#             move.product_id.id, domain=[], context=context, states=['done']).get(
+#             move.product_id.id, 0.0)
+#         # <<<< change ends <<<<<<<<<<<<
+# 
+#         # Average price computation
+#         if (pick.type == 'in') and (move.product_id.cost_method == 'average'):
+#             product = product_obj.browse(cr, uid, move.product_id.id)
+#             move_currency_id = move.company_id.currency_id.id
+#             context['currency_id'] = move_currency_id
+#             qty = uom_obj._compute_qty(cr, uid, product_uom, product_qty, product.uom_id.id)
+# 
+#             if product.id in product_avail:
+#                 product_avail[product.id] += qty
+#             else:
+#                 # <<< changes begin. we change the way
+#                 # of geting available products. Alex
+#                 product_avail[product.id] = product_qty_available
+# 
+#             if qty > 0:
+#                 new_price = currency_obj.compute(cr, uid, product_currency,
+#                         move_currency_id, product_price)
+#                 new_price = uom_obj._compute_price(cr, uid, product_uom, new_price,
+#                         product.uom_id.id)
+#                 if product_qty_available <= 0:
+#                     new_std_price = new_price
+#                 else:
+#                     # Get the standard price
+#                     amount_unit = product.price_get('standard_price', context=context)[product.id]
+#                     new_std_price = ((amount_unit * product_avail[product.id])\
+#                         + (new_price * qty))/(product_avail[product.id] + qty)
+#                 # Write the field according to price type field
+#                 product_obj.write(cr, uid, [product.id], {'standard_price': new_std_price})
+# 
+#                 # Record the values that were chosen in the wizard, so they can be
+#                 # used for inventory valuation if real-time valuation is enabled.
+#                 move_obj.write(cr, uid, [move.id],
+#                         {'price_unit': product_price,
+#                          'price_currency_id': product_currency})
+#===============================================================================
 
 stock_picking()
