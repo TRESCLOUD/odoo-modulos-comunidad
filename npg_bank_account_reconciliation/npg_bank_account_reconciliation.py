@@ -91,8 +91,17 @@ class bank_acc_rec_statement(osv.osv):
     def action_process(self, cr, uid, ids, context=None):
         """Set the account move lines as 'Cleared' and Assign 'Bank Acc Rec Statement ID'
         for the statement lines which are marked as 'Cleared'."""
+        
+#        self.action_review(cr, uid, ids, context=context)
+        
         account_move_line_obj = self.pool.get('account.move.line')
         statement_line_obj = self.pool.get('bank.acc.rec.statement.line')
+        statement_line_ids = statement_line_obj.search(cr, uid, [('statement_id', 'in', ids)], context=context)
+        for statement_line in statement_line_obj.browse(cr, uid, statement_line_ids, context=context):
+            if statement_line.cleared_bank_account:
+                if statement_line.move_line_id.bank_acc_rec_statement_id.id != ids[0]:
+                    raise osv.except_osv(_(u'¡Error de Usuario!'),
+                                         _(u'El registro contable con referencia %s se encuentra asociado a la conciliación %s. Dar click en Actualizar en el estado Borrador para poder procesar ')%(statement_line.move_line_id.ref, statement_line.move_line_id.bank_acc_rec_statement_id.name))
         # If difference balance not zero prevent further processing
         self.check_difference_balance(cr, uid, ids, context=context)
         statement_lines_ids = []
@@ -221,7 +230,10 @@ class bank_acc_rec_statement(osv.osv):
             #1. credit and debit side journal items in posted state of the selected GL account
             #2. Journal items which are not assigned to previous bank statements
             #3. Date less than or equal to ending date provided the 'Suppress Ending Date Filter' is not checkec
-            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), ('cleared_bank_account', '=', False), ('draft_assigned_to_statement', '=', False), ('date', '<=', ending_date)]
+            domain = [('account_id', '=', account_id), ('move_id.state', '=', 'posted'), 
+                      ('cleared_bank_account', '=', False), ('bank_acc_rec_statement_id','=', False), 
+                      ('draft_assigned_to_statement', '=', False), 
+                      ('date', '<=', ending_date)]
 #             if not suppress_ending_date_filter:
 #                 domain += [('date', '<=', ending_date)]
             if context.get('start_date'):
@@ -299,7 +311,7 @@ class bank_acc_rec_statement(osv.osv):
     _defaults = {
         'state': 'draft',
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
-        'ending_date': time.strftime('%Y-%m-%d'),
+        'ending_date': fields.date.context_today,
     }
     _order = "ending_date desc"
     _sql_constraints = [

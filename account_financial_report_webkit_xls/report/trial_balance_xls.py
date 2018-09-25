@@ -225,13 +225,13 @@ class trial_balance_xls(report_xls):
             ]
             if _p.comparison_mode == 'no_comparison':
                 
-                debit_cell = rowcol_to_cell(row_pos, 4)                
+                debit_cell = rowcol_to_cell(row_pos, 4)
                 credit_cell = rowcol_to_cell(row_pos, 5)
                 bal_formula = debit_cell + '-' + credit_cell
                 
                 if _p.initial_balance_mode:
                     init_cell = rowcol_to_cell(row_pos, 3)
-                    debit_cell = rowcol_to_cell(row_pos, 4)                
+                    debit_cell = rowcol_to_cell(row_pos, 4)
                     credit_cell = rowcol_to_cell(row_pos, 5)
                     bal_formula = init_cell + '+' + debit_cell + '-' + credit_cell
                     c_specs += [('init_bal', 1, 0, 'number', current_account.init_balance, None, cell_style_decimal)]
@@ -290,7 +290,7 @@ class trial_balance_xls(report_xls):
             else:
                 c_specs += [('balance', 1, 0, 'number', current_account.balance, None, cell_style_decimal)]
                 
-            if _p.comparison_mode in ('single', 'multiple'):                
+            if _p.comparison_mode in ('single', 'multiple'):
                 c = 1
                 for comp_account in comparisons:
                     c_specs += [('balance_%s' %c, 1, 0, 'number', comp_account['balance'], None, cell_style_decimal)]
@@ -301,7 +301,7 @@ class trial_balance_xls(report_xls):
                             ('diff_percent', 1, 0, 'number', comp_account['percent_diff'] and comp_account['percent_diff'] or 0, None, cell_style_pct),
                         ]      
                         
-            c_specs += [('type', 1, 0, 'number', current_account.level, None, cell_style_center)]          
+            c_specs += [('type', 1, 0, 'number', current_account.level, None, cell_style_center)]
             row_data = self.xls_row_template(c_specs, [x[0] for x in c_specs])
             row_pos = self.xls_write_row(ws, row_pos, row_data, row_style=cell_style)
             

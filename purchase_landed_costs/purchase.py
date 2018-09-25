@@ -378,14 +378,17 @@ class purchase_order_line(orm.Model):
             'Landed Costs Positions'),
         'landing_costs': fields.function(
             _landing_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs'),
         'landing_costs_order': fields.function(
             _landing_cost_order,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs from Order'),
         'landed_costs': fields.function(
             _landed_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landed Costs'),
     }
@@ -550,9 +553,9 @@ class purchase_order(orm.Model):
         po = (landed_cost.purchase_order_id or
               landed_cost.purchase_order_line_id.order_id)
         currency_id = landed_cost.purchase_order_id.pricelist_id.currency_id.id
-        fiscal_position_id = landed_cost.partner_id.commercial_partner_id.property_account_position and \
-            landed_cost.partner_id.commercial_partner_id.\
-            property_account_position.id or po.fiscal_position.id if po.fiscal_position else False
+        fiscal_position_id = landed_cost.partner_id.commercial_partner_id and landed_cost.partner_id.\
+            commercial_partner_id.property_account_position and landed_cost.partner_id.commercial_partner_id.\
+            property_account_position.id or po.fiscal_position.id if po.fiscal_position.id else False
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(
             cr, uid,
@@ -567,7 +570,8 @@ class purchase_order(orm.Model):
         return {
             'currency_id': currency_id,
             'partner_id': landed_cost.partner_id.id,
-            'account_id': landed_cost.partner_id.property_account_payable.id,
+            'account_id': landed_cost.partner_id.property_account_payable and \
+                landed_cost.partner_id.property_account_payable.id or False,
             'type': 'in_invoice',
             'origin': po.name,
             'fiscal_position': fiscal_position_id,

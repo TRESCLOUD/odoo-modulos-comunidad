@@ -155,7 +155,7 @@ class landed_cost_position(orm.Model):
         account_id = prod_obj._choose_exp_account_from(
             cr, uid, prod, fiscal_position=fiscal_position, context=context)
         # here we add a new distribution type
-        if prod.landed_cost_type in ('per_unit', 'value', 'volume', 'weight'):
+        if prod.landed_cost_type in ('per_unit', 'value', 'volume', 'weight', 'equal'):
             landed_cost_type = dist_type_obj.search(
                 cr, uid,
                 [('apply_on', '=', apply_on),
@@ -434,10 +434,12 @@ class purchase_order_line(orm.Model):
             string="Product CBM"),
         'landing_costs_order': fields.function(
             _landing_cost_order,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs from Order'),
         'landing_costs': fields.function(
             _landing_cost,
+            store=True,
             digits_compute=dp.get_precision('Account'),
             string='Landing Costs'),
     }
