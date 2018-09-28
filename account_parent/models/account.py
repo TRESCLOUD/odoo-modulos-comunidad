@@ -67,7 +67,7 @@ class AccountAccount(models.Model):
     def compute_values(self, domain=None):
         default_domain = self._move_domain_get()
         for account in self:
-            sub_accounts = self.with_context({'show_parent_account':True}).search([('id','child_of',[account.id])])
+            sub_accounts = self.with_context({'show_parent_account':True, 'not_show_deprecated_account': True}).search([('id','child_of',[account.id])])
             balance = 0.0
             credit = 0.0
             debit = 0.0
@@ -104,13 +104,15 @@ class AccountAccount(models.Model):
         context = self._context or {}
         if not context.get('show_parent_account',False):
             args += [('user_type_id.type', '!=', 'view')]
+        if context.get('not_show_deprecated_account',False):
+            args += [('deprecated', '!=', True)]
         return super(AccountAccount, self).search(args, offset, limit, order, count=count)
 
     @api.model
     def _get_parent(self, all_parents=False):
         "Funcion para obtener padres de cuenta contables."
         res = None
-        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
+        parents = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True}).search([('child_ids', 'in', self.id), ('code', '!=', '0.'), ('code', '!=', '0')], order='code ASC')
         if parents:
             res = parents[0]._get_array_parent(all_parents)
         return res
@@ -119,7 +121,7 @@ class AccountAccount(models.Model):
     def _get_array_parent(self, all_parents=False):
         "Funcion para obtener Arreglo de cuentas padres"
         res = self
-        parents = self.with_context({'show_parent_account': True}).search([('child_ids', 'in', self.id),('code', '!=', '0.')], order='code ASC')
+        parents = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True}).search([('child_ids', 'in', self.id), ('code', '!=', '0.'), ('code', '!=', '0')], order='code ASC')
         if parents:
             for parent in parents:
                 if all_parents:
@@ -132,7 +134,7 @@ class AccountAccount(models.Model):
     def _get_principal_children_by_order(self, **kwargs):
         "Funcion para obtener hijos de cuenta contables."
         res = None
-        children = self.with_context({'show_parent_account': True}, **kwargs).search([('parent_id', 'in', self._ids)], order='code ASC')
+        children = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True}, **kwargs).search([('parent_id', 'in', self._ids)], order='code ASC')
         if children:
             for child in children:
                 if res:
@@ -144,7 +146,7 @@ class AccountAccount(models.Model):
     @api.model
     def _get_children_by_order(self, **kwargs):
         res = self
-        children = self.with_context({'show_parent_account': True}, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
+        children = self.with_context({'show_parent_account': True, 'not_show_deprecated_account': True }, **kwargs).search([('parent_id', 'in', self.ids)], order='code ASC')
         if children:
             for child in children:
                 res += child._get_children_by_order()
@@ -153,9 +155,11 @@ class AccountAccount(models.Model):
     @api.model
     def _get_balance_account(self, where=None):
         "Funcion para obtener sumatoria de Debitos y Creditos de cuenta contables."
-        sql = "select SUM(debit) AS debit, SUM(credit) AS credit " \
-              "from account_move_line " \
-              "where account_id = "+str(self.id)
+        sql = "select COALESCE(SUM(debit),0) AS debit, COALESCE(SUM(credit),0) AS credit " \
+              "from account_move_line l " \
+              "JOIN account_account acc ON l.account_id = acc.id " \
+              "JOIN account_account_type acct ON acc.user_type_id = acct.id " \
+              "where l.account_id = "+str(self.id)
         if where:
             sql += where
         self.env.cr.execute(sql)
@@ -190,9 +194,10 @@ class AccountAccount(models.Model):
         for accountp in sorted(parent_accounts, key=lambda aux: aux.code):
             accounts = accountp._get_children_by_order()
             for account in sorted(accounts, key=lambda aux: aux.code, reverse=True):
+                childrens = account._get_principal_children_by_order()
                 debit = 0
                 credit = 0
-                if account.level == self._get_max_level():
+                if account.level == self._get_max_level() or not childrens:
                     debit, credit = account._get_balance_account(where)
                 else:
                     for record in res:

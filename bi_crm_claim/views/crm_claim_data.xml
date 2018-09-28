@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <!--
+        Case Category2
+        -->
+        
+        <record model="utm.campaign" id="claim_source1">
+            <field name="name">Corrective</field>
+        </record>
+        
+        <record model="utm.campaign" id="claim_source2">
+            <field name="name">Preventive</field>
+        </record>
+    
+        <!--
+        Case Stage
+        -->
+        
+        <record model="crm.claim.stage" id="stage_claim1">
+            <field name="name">New</field>
+            <field name="sequence">1</field>
+            <field name="case_default" eval="True"/>
+        </record>
+        <record model="crm.claim.stage" id="stage_claim2">
+            <field name="name">Settled</field>
+            <field name="sequence">28</field>
+            <field name="case_default" eval="True"/>
+        </record>
+        <record model="crm.claim.stage" id="stage_claim3">
+            <field name="name">Rejected</field>
+            <field name="sequence">29</field>
+            <field name="case_default" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
