@@ -18,6 +18,7 @@
     ],
     'data': [
         #Security
+        'security/bi_crm_claim_security.xml',
         'security/ir.model.access.csv',
         #Views
         'views/crm_claim_menu.xml',
