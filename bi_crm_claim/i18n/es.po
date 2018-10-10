@@ -86,16 +86,6 @@ msgid "Claim/Action Description"
 msgstr "Reclamo/Acción descripción"
 
 #. module: bi_crm_claim
-#: model:ir.actions.act_window,name:bi_crm_claim.crm_claim_view_act1
-#: model:ir.ui.menu,name:bi_crm_claim.menu_crm_case_claims
-#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_calendar_view1
-#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_form_view1
-#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_tree_view1
-#: model:ir.ui.view,arch_db:bi_crm_claim.view_claim_res_partner_info_form
-msgid "Claims"
-msgstr "Reclamos"
-
-#. module: bi_crm_claim
 #: model:ir.actions.act_window,help:bi_crm_claim.crm_claim_categ_action
 msgid "Click to create a claim category."
 msgstr "Hacer clic para crear una categoría de reclamo."
@@ -225,3 +215,22 @@ msgstr "Tu puedes crear etapas de reclamo para categorizar el estado de cada\n"
 "                reclamo ingresado en el sistema. Las etapas definen todos los pasos\n"
 "                requeridos para la resolución de un reclamo."
 
+#. module: bi_crm_claim
+#: model:ir.actions.act_window,name:bi_crm_claim.crm_claim_view_act1
+#: model:ir.module.category,name:bi_crm_claim.module_bi_crm_claim_category
+#: model:ir.ui.menu,name:bi_crm_claim.menu_crm_case_claims
+#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_calendar_view1
+#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_form_view1
+#: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_tree_view1
+msgid "Claims"
+msgstr "Reclamaciones"
+
+#. module: bi_crm_claim
+#: model:ir.module.category,description:bi_crm_claim.module_bi_crm_claim_category
+msgid "Helps you manage your claims."
+msgstr "Permite gestionar sus reclamos."
+
+#. module: bi_crm_claim
+#: model:res.groups,name:bi_crm_claim.group_claim_manager
+msgid "Claim Manager"
+msgstr "Responsable de reclamaciones"
