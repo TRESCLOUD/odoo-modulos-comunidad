@@ -39,14 +39,14 @@ class mrp_production(osv.osv):
                 if _production_id.product_id.cost_method == 'average' and accounts['stock_account_input'] and accounts['property_stock_valuation_account_id']:
                     _debit= 0.00
                     _credit = 0.00
-                    _move_line_ids = self.pool.get('account.move.line').search(cr, uid, [('name','=',_name),
+                    _move_line_ids = self.pool.get('account.move.line').search(cr, uid, [('production_id','=',_production_id.id),
                                                                                          ('product_id','!=',_product_id)])
                     _move_lines = self.pool.get('account.move.line').browse(cr, uid, _move_line_ids, context=None)
                     for _move_line in _move_lines:
                         _debit += _move_line.debit
                         _credit += _move_line.credit
                     
-                    _move_line_ids = self.pool.get('account.move.line').search(cr, uid, [('name','=',_name),
+                    _move_line_ids = self.pool.get('account.move.line').search(cr, uid, [('production_id','=',_production_id.id),
                                                                                          ('product_id','=',_product_id)], order='id')
                     _move_lines = self.pool.get('account.move.line').browse(cr, uid, _move_line_ids, context=None)
     
