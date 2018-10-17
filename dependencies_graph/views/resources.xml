@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="graph">
+            <html>
+                <head>
+                    <!--Load Odoo assets -->
+                    <t t-call-assets="web.assets_common"/>
+                    <t t-call-assets="web.assets_backend"/>
+
+                    <!--Vis-->
+                    <script type="text/javascript" src="/dependencies_graph/static/lib/vis/vis.min.js"/>
+                    <link rel="stylesheet" href="/dependencies_graph/static/lib/vis/vis.min.css"/>
+
+                    <!--Chosen-->
+                    <script type="text/javascript" src="/dependencies_graph/static/lib/chosen/chosen.jquery.min.js"/>
+                    <script type="text/javascript" src="/dependencies_graph/static/lib/chosen/chosen.proto.min.js"/>
+                    <link rel="stylesheet" href="/dependencies_graph/static/lib/chosen/chosen.min.css"/>
+
+                    <script type="text/javascript" src="/dependencies_graph/static/src/js/graph.js"/>
+                    <link rel="stylesheet" href="/dependencies_graph/static/src/css/graph.css"/>
+
+                    <!--External JS assets-->
+                    <t t-foreach="scripts" t-as="script">
+                        <script type="text/javascript" t-att-src="script"/>
+                    </t>
+                </head>
+                <body>
+                    <div class="row">
+                        <h1 class="text-center">Dependencies Graph</h1>
+                        <div class="col-md-4">
+                            <h2 class="text-center">Settings</h2>
+
+                            <div class="form-horizontal col-md-8">
+                                <div class="form-group">
+                                    <label for="type" class="col-sm-2 control-label">Type</label>
+                                    <div class="col-sm-10">
+                                        <select id="type" class="form-control"
+                                                onchange="window.dependencies_graph.type_changed()">
+                                            <optgroup label="Odoo modules">
+                                                <option value="module_parents">Odoo Module Parents</option>
+                                                <option value="module_children">Odoo Module Children</option>
+                                            </optgroup>
+
+                                            <optgroup label="Odoo models">
+                                                <option value="models_graph">Odoo Models Relationship</option>
+                                            </optgroup>
+
+                                            <optgroup label="JS assets">
+                                                <option value="js_parents">JavaScript Parents</option>
+                                                <option value="js_children">JavaScript Children</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="odoo-module-options">
+                                    <div class="form-group">
+                                        <label for="odoo-module" class="col-sm-2 control-label">Odoo Module</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" class="form-control" id="odoo-module"
+                                                    placeholder="Module"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="acyclic graph" class="col-sm-2 control-label">Acyclic graph</label>
+                                        <div class="col-sm-10">
+                                            <input type="checkbox" class="form-check" id="acyclic-graph"
+                                                   checked="checked" onchange="window.dependencies_graph.generate()"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="js-service-options">
+                                    <div class="form-group">
+                                        <label for="js-module" class="col-sm-2 control-label">Js Services</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" class="form-control" id="js-module" multiple=""/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="odoo-model-options">
+                                    <div class="form-group">
+                                        <label for="odoo-model" class="col-sm-2 control-label">Models</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" class="form-control" id="odoo-model" multiple=""/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="odoo-model-ignore" class="col-sm-2 control-label">Ignore</label>
+                                        <div class="col-sm-10">
+                                            <select type="text" class="form-control" id="odoo-model-ignore"
+                                                    multiple=""/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="odoo-model-depth" class="col-sm-2 control-label">Depth</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" id="odoo-model-depth" value="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-horizontal col-md-4">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default"
+                                                onclick="window.dependencies_graph.generate()">Generate
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="settings"/>
+                        </div>
+                        <div id="graph" class="col-md-8"/>
+                    </div>
+                </body>
+            </html>
+        </template>
+
+        <record id="basic_settings" model="dependencies_graph.settings"/>
+
+        <record id="action_dependencies_graph" model="ir.actions.act_url">
+            <field name="name">Dependencies Graph</field>
+            <field name="url">/dependencies_graph/graph</field>
+            <field name="type">ir.actions.act_url</field>
+            <field name="target">self</field>
+        </record>
+
+        <record id="dependencies_graph_settings_form" model="ir.ui.view">
+            <field name="name">Setting</field>
+            <field name="model">dependencies_graph.settings</field>
+            <field name="arch" type="xml">
+                <form string="Settings" class="oe_form_configuration" create="0" delete="0">
+                    <header>
+                        <button type="action" name="%(action_dependencies_graph)d" string="Launch"/>
+                    </header>
+                    <group>
+                        <field name="module_ids" widget="many2many_tags" string="Load additional assets from"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_settings" model="ir.actions.act_window">
+            <field name="name">Settings Action</field>
+            <field name="res_model">dependencies_graph.settings</field>
+            <field name="view_mode">form</field>
+            <field name="res_id" ref="basic_settings"/>
+        </record>
+
+        <menuitem id="menu_dependencies_graph" name="Dependencies Graph" sequence="500"
+                  action="action_settings" web_icon="dependencies_graph,static/description/icon.png"/>
+
+    </data>
+</odoo>
