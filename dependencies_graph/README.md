@@ -39,3 +39,7 @@ The option `Depth` specifies how deep the graph is going to be. A lower value is
 2. JavaScript Children
 
     Given some JavaScript constructor functions, the graph shows the functions (children) that extend the given functions.
+    
+# Autor web: 
+
+https://github.com/adrian-chang-alcover/dependencies_graph
