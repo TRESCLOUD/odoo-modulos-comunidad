@@ -1,0 +1,70 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">Odoo Dependencies Graph</h2>
+        <div class="oe_span8">
+            <img class="oe_picture oe_screenshot" src="dashboard.png">
+        </div>
+        <div class="oe_span4 text-justify">
+            <p class="oe_mt64">This tool is aimed to help software developers to get a better understanding of the
+                dependencies among the modules
+                and the models relationship in an Odoo application. It also shows the inheritance graph of JavaScript
+                objects defined
+                in Odoo.</p>
+            <p class="oe_mt32">The library <a src="http://visjs.org/">vis.js</a> is used to render the graph.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span4">
+            <h2 class="oe_slogan" style="color:#875A7B;">Modules Dependencies</h2>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                <strong>Odoo Module Parents:</strong>
+                Given an Odoo module it shows every module in which the module depends on. These are the modules that
+                need to be installed before it.
+            </p>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                <strong>Odoo Module Children:</strong>
+                Given an Odoo module it shows every module that depends of it directly or indirectly.
+            </p>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                A module can have redundant dependencies. The option <strong>Acyclic graph</strong> shows or hides these
+                redundant dependencies.
+            </p>
+            <img class="oe_picture oe_screenshot" style="margin-left: -1px;" src="module children.png">
+        </div>
+
+        <div class="oe_span4">
+            <h2 class="oe_slogan" style="color:#875A7B;">Models Relationship</h2>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                Given some models it shows the relationship graph with other models.
+            </p>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                Some models, for example <strong>res.users</strong>, have relations with all models. The option <strong>Ignore</strong>
+                exclude some models
+                from the graph.
+            </p>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                The option <strong>Depth</strong> specifies how deep the graph is going to be. A lower value is
+                recommended.
+            </p>
+            <img class="oe_picture oe_screenshot" style="margin-left: -1px; margin-top: 48px;" src="models.png">
+        </div>
+
+        <div class="oe_span4">
+            <h2 class="oe_slogan" style="color:#875A7B;">JS Objects Inheritance</h2>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                <strong>JavaScript Parents:</strong>
+                Given some JavaScript constructor functions, the graph shows the functions (parents) which the given
+                functions extend.
+            </p>
+            <p class="oe_mt8 oe_mb8 text-justify">
+                <strong>JavaScript Children:</strong>
+                Given some JavaScript constructor functions, the graph shows the functions (children) that extend the
+                given functions.
+            </p>
+            <img class="oe_picture oe_screenshot" style="margin-left: -1px;" src="JS assets.png">
+        </div>
+    </div>
+</section>
