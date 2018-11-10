@@ -218,6 +218,7 @@ msgstr "Tu puedes crear etapas de reclamo para categorizar el estado de cada\n"
 #. module: bi_crm_claim
 #: model:ir.actions.act_window,name:bi_crm_claim.crm_claim_view_act1
 #: model:ir.module.category,name:bi_crm_claim.module_bi_crm_claim_category
+#: model:ir.ui.menu,name:bi_crm_claim.menu_base_crm_case_claims
 #: model:ir.ui.menu,name:bi_crm_claim.menu_crm_case_claims
 #: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_calendar_view1
 #: model:ir.ui.view,arch_db:bi_crm_claim.crm_case_claims_form_view1
