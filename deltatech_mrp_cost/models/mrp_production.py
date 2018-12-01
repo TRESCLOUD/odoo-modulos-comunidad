@@ -81,7 +81,30 @@ class MrpProduction(models.Model):
         res = super(MrpProduction, self)._generate_moves()
         self.assign_picking()
         return res
-
+    
+    #siguiente metodo agregado por Trescloud
+    @api.model
+    def _dict_assign_picking(self, production, picking_type):
+        '''
+        Hook para agregar la bodega de intermedia en un metodo superior
+        '''
+        dic = {
+            'picking_type_id': picking_type.id,
+            'date': production.date_planned_start,
+            'origin': production.name
+        }
+        if picking_type == self.env.ref('stock.picking_type_consume', raise_if_not_found=True):
+            dic.update({
+                    'location_id': production.location_src_id.id or picking_type.default_location_src_id.id,
+                    'location_dest_id': picking_type.default_location_dest_id.id,
+                })
+        elif picking_type == self.env.ref('stock.picking_type_receipt_production', raise_if_not_found=True):
+            dic.update({
+                    'location_id': picking_type.default_location_src_id.id,
+                    'location_dest_id': production.location_src_id.id or picking_type.default_location_dest_id.id,
+                })
+        return dic
+    
     @api.multi
     def assign_picking(self):
         """
@@ -101,12 +124,8 @@ class MrpProduction(models.Model):
                 picking_type = self.env.ref('stock.picking_type_consume', raise_if_not_found=True)
                 if picking_type:
                     if not picking:
-                        #el campo location_id fue modificado por Trescloud.
-                        picking = self.env['stock.picking'].create({'picking_type_id': picking_type.id,
-                                                                    'date': production.date_planned_start,
-                                                                    'location_id': production.location_src_id.id or picking_type.default_location_src_id.id,
-                                                                    'location_dest_id': picking_type.default_location_dest_id.id,
-                                                                    'origin': production.name})
+                        #la siguiente linea fue modificado por Trescloud.
+                        picking = self.env['stock.picking'].create(self._dict_assign_picking(production, picking_type))
                     move_list.write({'picking_id': picking.id})
                     picking.recheck_availability()
                     # picking.get_account_move_lines()  # din localizare
@@ -127,12 +146,8 @@ class MrpProduction(models.Model):
 
                 if picking_type:
                     if not picking:
-                         #El campo location_dest_id fue modificado por Trescloud.
-                        picking = self.env['stock.picking'].create({'picking_type_id': picking_type.id,
-                                                                    'date': production.date_planned_start,
-                                                                    'location_id': picking_type.default_location_src_id.id,
-                                                                    'location_dest_id': production.location_src_id.id or picking_type.default_location_dest_id.id,
-                                                                    'origin': production.name})
+                        #la siguiente linea fue modificado por Trescloud.
+                        picking = self.env['stock.picking'].create(self._dict_assign_picking(production, picking_type))
                     move_list.write({'picking_id': picking.id})
                     picking.recheck_availability()
         return
