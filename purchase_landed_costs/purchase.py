@@ -240,6 +240,10 @@ class landed_cost_position(orm.Model):
             string='Company',
             store=True,
             readonly=True),
+        'invoice_line_id': fields.many2one('account.invoice.line', 'Linea de factura',
+                                           help="Vinculo de la linea de factura con el costo, "
+                                           "cuando este se vincula con una factura, o al "
+                                           "crear una factura del costo de la importacion."),
       }
 
     _default = {
@@ -606,6 +610,7 @@ class purchase_order(orm.Model):
         )
         inv_line_id = invoice_line_obj.create(cr, uid, vals_line,
                                               context=context)
+        landed_cost.write({'invoice_line_id': inv_line_id})
         return inv_id
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
