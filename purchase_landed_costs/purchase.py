@@ -240,7 +240,10 @@ class landed_cost_position(orm.Model):
             string='Company',
             store=True,
             readonly=True),
-        'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice'),
+        'invoice_line_id': fields.many2one('account.invoice.line', 'Linea de factura',
+                                           help="Vinculo de la linea de factura con el costo, "
+                                           "cuando este se vincula con una factura, o al "
+                                           "crear una factura del costo de la importacion."),
       }
 
     _default = {
