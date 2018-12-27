@@ -240,6 +240,7 @@ class landed_cost_position(orm.Model):
             string='Company',
             store=True,
             readonly=True),
+        'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice'),
       }
 
     _default = {
@@ -606,6 +607,7 @@ class purchase_order(orm.Model):
         )
         inv_line_id = invoice_line_obj.create(cr, uid, vals_line,
                                               context=context)
+        landed_cost.write({'invoice_line_id': inv_line_id})
         return inv_id
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
