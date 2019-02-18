@@ -873,7 +873,7 @@ class ExtraFunctions(object):
         '''
         new_text = ''
         if text:
-            new_text = upper(str(text))
+            new_text = upper(unicode(text))
         return new_text
 
     def _sum_operation_fields(self, attr, field_a, field_b, operand='*'):

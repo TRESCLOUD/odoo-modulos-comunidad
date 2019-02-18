@@ -594,7 +594,7 @@ FROM account_move
             on (account_move_line.move_id = account_move.id)
         JOIN account_account
             on (account_move_line.account_id = account_account.id)
-WHERE move_id in %s"""
+WHERE account_move_line.id in %s"""
 
         try:
             self.cursor.execute(sql, (account_id, limit, tuple(move_ids)))
