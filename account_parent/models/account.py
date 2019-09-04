@@ -156,7 +156,8 @@ class AccountAccount(models.Model):
     def _get_balance_account(self, where=None):
         "Funcion para obtener sumatoria de Debitos y Creditos de cuenta contables."
         sql = "select COALESCE(SUM(debit),0) AS debit, COALESCE(SUM(credit),0) AS credit " \
-              "from account_move_line l " \
+              "from account_move am " \
+              "JOIN account_move_line l on am.id=l.move_id " \
               "JOIN account_account acc ON l.account_id = acc.id " \
               "JOIN account_account_type acct ON acc.user_type_id = acct.id " \
               "where l.account_id = "+str(self.id)
