@@ -8,6 +8,8 @@
 ##############################################################################
 from odoo import api, fields, models, _
 import odoo.addons.decimal_precision as dp
+from odoo.tools import float_is_zero, float_compare, float_round
+
 
 class AccountAccountType(models.Model):
     _inherit = "account.account.type"
@@ -186,6 +188,7 @@ class AccountAccount(models.Model):
                 self.balance = debit - credit
         res = []
         parent_accounts = []
+        prec = self.env['decimal.precision'].precision_get('Account')
         for account in accounts:
             acc = account._get_parent(not all_accounts)
             if acc:
@@ -205,6 +208,8 @@ class AccountAccount(models.Model):
                         if record.account_id.parent_id.id == account.id:
                             debit += record.debit
                             credit += record.credit
+                debit = float_round(debit, precision_digits=prec)
+                credit = float_round(credit, precision_digits=prec)
                 res += [VirtualData(account, debit, credit)]
         res_aux = []
         for aux in sorted(res, key=lambda account: account.account_id.code):
