@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        
+    <record model="ir.ui.view" id="budget_template_tree">
+        <field name="name">template.tree</field>
+        <field name="model">budget.template</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree> 
+        </field>
+    </record>
+ 
+    <record model="ir.ui.view" id="budget_template_form">
+        <field name="name">template.form</field>
+        <field name="model">budget.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                    <field name='name'/>
+                    <field name="template_lines_ids" widget="one2many_list" class="oe_inline oe_no_button">
+                        <tree string="Budget lines" editable="bottom">
+                            <field name="budget_position"/>
+                            <field name="amount"/>
+                            <field name="analytic_account_id" />
+                        </tree>
+                    </field>
+                    </group> 
+                </sheet>   
+            </form> 
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="budget_template_action">
+        <field name="name">Modeles de budgets</field>
+        <field name="res_model">budget.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem id="budget_template" name="Budget Templates" parent="account.account_management_menu" action="budget_template_action" sequence="2"/>
+ 
+     
+    <!-- inherited budget view --> 
+
+    <record model="ir.ui.view" id="budget_with_template_form">
+        <field name="name">budget_inherit_form</field>
+        <field name="model">crossovered.budget</field>
+        <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+        <field name="arch" type="xml">
+            <form>
+                <field name='name' position="after">
+                        <field name='template' invisible="1"/> <!-- TODO : change this ligne-->
+                </field>
+            </form> 
+        </field>
+    </record>
+</odoo>

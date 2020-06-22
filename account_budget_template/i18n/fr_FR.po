@@ -1,0 +1,225 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_budget_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-31 11:12+0000\n"
+"PO-Revision-Date: 2018-03-31 11:12+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_analytic_account_id
+msgid "Analyitc account"
+msgstr "Compte analytique"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_analytic_account_id
+msgid "Analytic account"
+msgstr "Compte analytique"
+
+#. module: account_budget_template
+#: model:ir.model,name:account_budget_template.model_crossovered_budget
+msgid "Budget"
+msgstr "Budget"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_budget_position
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_budget_position
+msgid "Budget Position"
+msgstr "Poste budgétaire"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_template_id
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_template_id
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_template_id
+msgid "Budget Template"
+msgstr "Modéle de Budget"
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.budget_template_form
+msgid "Budget lines"
+msgstr "Lignes du budget"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_crossovered_budget_template
+msgid "Budget template"
+msgstr "Modéle de Budget"
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.select_budget_template_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_company_id
+msgid "Company"
+msgstr "société"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_create_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_create_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_create_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_create_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_create_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_create_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.select_budget_template_form
+msgid "Créer"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_date_end
+msgid "Date end"
+msgstr "Date fin"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_date_start
+msgid "Date start"
+msgstr "Date début"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_display_name
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_display_name
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_display_name
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_budget_template
+#: code:addons/account_budget_template/wizard/select_template.py:49
+#, python-format
+msgid "Error, fill mandatory fields first !"
+msgstr "Erreur, rensigner les champs obligatoires"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_id
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_id
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_id
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_budget_template
+#: model:ir.ui.menu,name:account_budget_template.print_template_menu
+msgid "Import a Budget Template"
+msgstr "Importer un Budget Type"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template___last_update
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line___last_update
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard___last_update
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_write_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_write_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_write_uid
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_write_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_write_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_write_date
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.select_budget_template_form
+msgid "Load"
+msgstr "Charger"
+
+#. module: account_budget_template
+#: model:ir.ui.menu,name:account_budget_template.budget_template
+msgid "Modeles de budget"
+msgstr "Modeles de budget"
+
+#. module: account_budget_template
+#: model:ir.actions.act_window,name:account_budget_template.budget_template_action
+msgid "Modeles de budgets"
+msgstr "Modéles de Budget"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_name
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_name
+msgid "Nom"
+msgstr "Nom"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_line_amount
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_line_amount
+msgid "Planned amount"
+msgstr "Montant prévu"
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.select_budget_template_form
+msgid "Période"
+msgstr "Période"
+
+#. module: account_budget_template
+#: model:ir.actions.act_window,name:account_budget_template.select_budget_template_action
+msgid "Select a Template"
+msgstr "Choisir un modéle"
+
+#. module: account_budget_template
+#: model:ir.ui.view,arch_db:account_budget_template.select_budget_template_form
+msgid "Select a template"
+msgstr "Choisir un modéle"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_template_lines_ids
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_template_line_ids
+msgid "Template Lines"
+msgstr "Lignes du budget"
+
+#. module: account_budget_template
+#: model:ir.model.fields,field_description:account_budget_template.field_budget_template_wizard_template_selected
+msgid "Template selected"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model,name:account_budget_template.model_budget_template
+msgid "budget.template"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model,name:account_budget_template.model_budget_template_line
+msgid "budget.template.line"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model,name:account_budget_template.model_budget_template_wizard
+msgid "budget.template.wizard"
+msgstr ""
+
+#. module: account_budget_template
+#: model:ir.model,name:account_budget_template.model_budget_template_wizard_line
+msgid "budget.template.wizard.line"
+msgstr ""
+

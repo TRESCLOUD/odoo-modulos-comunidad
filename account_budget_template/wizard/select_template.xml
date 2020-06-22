@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="select_budget_template_form">
+        <field name="name">Select_template_form</field>
+        <field name="model">budget.template.wizard</field>
+        <field name="type">form</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <form string="Select a template">
+                <group >
+                    <field name="template_id"/>
+                </group>
+                <group string="Duration">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="template_selected" invisible="1"/>
+                </group>
+               
+            <footer>
+            <button name="load_lines" string="Load" type="object" attrs="{'invisible':[('template_selected','!=','True')]}" default_focus="1" class="oe_highlight"/>
+            <button name="create_budget" string="Create budget" type="object" attrs="{'invisible':[('template_selected','=','True')]}" default_focus="1" class="oe_highlight" />
+            <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+            
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="select_budget_template_action">
+        <field name="name">Select a Template</field>
+        <field name="res_model">budget.template.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+          
+    <menuitem id="print_template_menu" name="Import a Budget Template" parent="account.account_management_menu" 
+              action="select_budget_template_action" sequence="3"/>
+</odoo>
