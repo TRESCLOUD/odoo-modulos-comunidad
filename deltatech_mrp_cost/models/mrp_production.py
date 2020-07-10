@@ -101,7 +101,7 @@ class MrpProduction(models.Model):
         elif picking_type == self.env.ref('stock.picking_type_receipt_production', raise_if_not_found=True):
             dic.update({
                     'location_id': picking_type.default_location_src_id.id,
-                    'location_dest_id': production.location_src_id.id or picking_type.default_location_dest_id.id,
+                    'location_dest_id': production.location_dest_id.id or picking_type.default_location_dest_id.id,
                 })
         return dic
     
