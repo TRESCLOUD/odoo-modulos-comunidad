@@ -154,20 +154,35 @@ class MrpProduction(models.Model):
 
     @api.multi
     def action_see_picking(self):
-        pickings = self.env['stock.picking']
-        for move in self.move_raw_ids:
-            pickings |= move.picking_id
-        for move in self.move_finished_ids:
-            pickings |= move.picking_id
-        #siguiente line es agregado por trescloud.
-        returned = self.env['stock.picking'].search([('origin','in', tuple(pickings.mapped('name')))])
-        for piking in returned:
-             pickings |= piking
+        #siguiente linea modificada por Trescloud
+        pickings = self._get_pickings_production()
         action = self.env.ref('stock.action_picking_tree_all').read()[0]
         action['domain'] = "[('id','in',[0] )]" #if no pickings the domain excludes them all
         if pickings:
             action['domain'] = "[('id','in'," + str(pickings.ids) + " )]"
         return action
+
+    #Metodo Agregado por trescloud
+    def _get_pickings_production(self):
+        '''
+        Hook Obtiene los albaranes relacionados a la orde de produccióm
+        '''
+        pickings = self.env['stock.picking']
+        # picking materia Prima
+        for move in self.move_raw_ids:
+            pickings |= move.picking_id
+        # picking producto Terminado
+        for move in self.move_finished_ids:
+            pickings |= move.picking_id
+        if pickings:
+            # picking devoluciones
+            returned_move = self.env['stock.move'].search([
+                ('origin_returned_move_id', 'in',
+                 pickings.mapped('move_lines').ids)])
+            returned = returned_move.mapped('picking_id')
+            for picking in returned:
+                pickings |= picking
+        return pickings
 
     """
     @api.multi
