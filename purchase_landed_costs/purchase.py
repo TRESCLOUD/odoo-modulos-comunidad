@@ -533,7 +533,11 @@ class purchase_order(orm.Model):
                 landed_cost.distribution_type_id.landed_cost_type == 'per_unit'):
             qty = landed_cost.purchase_order_line_id.product_qty
         line_tax_ids = [x.id for x in landed_cost.product_id.supplier_taxes_id]
-        return {
+        onchange_product = self.pool['account.invoice.line'].product_id_change(cr, uid, [], landed_cost.product_id.id or False, 
+                                                                               False, qty=1, partner_id=landed_cost.partner_id.id,
+                                                                               type='in_invoice',
+                                                                               price_unit=landed_cost.amount)
+        data_line = {
             'name': landed_cost.product_id.name,
             'account_id': account_id,
             'invoice_id' : inv_id,
@@ -542,6 +546,8 @@ class purchase_order(orm.Model):
             'product_id': landed_cost.product_id.id or False,
             'invoice_line_tax_id': [(6, 0, line_tax_ids)],
         }
+        onchange_product['value'].update(data_line)
+        return onchange_product['value']
 
     def _prepare_landed_cost_inv(self, cr, uid, landed_cost, context=None):
         """ Collects require data from landed cost position that is used to
